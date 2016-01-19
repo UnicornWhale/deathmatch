@@ -5,7 +5,9 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
+import com.evilzoidberg.states.ClientMenuState;
 import com.evilzoidberg.states.MenuState;
+import com.evilzoidberg.states.ServerMenuState;
 
 public class Engine extends StateBasedGame {
 	public static int WindowWidth = 600;
@@ -13,6 +15,8 @@ public class Engine extends StateBasedGame {
 	
 	//States
 	public static int MenuStateID = 0;
+	public static int ClientMenuStateID = 1;
+	public static int ServerMenuStateID = 2;
 
 	public Engine() {
 		super("Deathmatch");
@@ -21,6 +25,8 @@ public class Engine extends StateBasedGame {
 	@Override
 	public void initStatesList(GameContainer gc) throws SlickException {
 		this.addState(new MenuState(MenuStateID));
+		this.addState(new ClientMenuState(ClientMenuStateID));
+		this.addState(new ServerMenuState(ServerMenuStateID));
 	}
 
 	public static void main(String[] args) {
