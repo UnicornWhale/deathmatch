@@ -22,7 +22,7 @@ public class MenuState extends BasicGameState {
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 		client = new Button("Client", 100, 100, 100, 50);
-		server = new Button("Server", 100, 300, 100, 50);
+		server = new Button("Server", 100, 200, 100, 50);
 	}
 
 	@Override

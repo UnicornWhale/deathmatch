@@ -1,0 +1,13 @@
+TODO:
+- Demo
+	1. Basic entity system
+	2. Basic map
+	3. Basic character controller
+	
+- Alpha
+	1. Basic Server
+	2. Clients can sync
+	3. Basic game
+	
+- Later
+	- Switch to using sprite sheets
