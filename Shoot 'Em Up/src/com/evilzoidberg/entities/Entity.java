@@ -15,6 +15,16 @@ public class Entity extends Rectangle {
 		this.image = image;
 	}
 	
+	public Entity(Color color, float x, float y) {
+		super(x, y, 50, 50);
+		this.color = color;
+	}
+	
+	public Entity(Color color, float x, float y, float width, float height) {
+		super(x, y, width, height);
+		this.color = color;
+	}
+	
 	public void paint(Graphics g) {
 		if(image != null) {
 			//For now, don't use sprite sheets, change this later.

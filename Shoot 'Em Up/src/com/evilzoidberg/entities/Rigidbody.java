@@ -1,19 +1,27 @@
 package com.evilzoidberg.entities;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Image;
 
 @SuppressWarnings("serial")
 public class Rigidbody extends Entity {
-	public static float baseGravity = 5;
-	float xVel = 0; //Velocities never change for base rigidbody unless
-	float yVel = 0; //some outside object changes them, children could differ
+	public static float baseGravity = 0.05f;
+	float xVel = 0.0f; //Velocities never change for base rigidbody unless
+	float yVel = 0.0f; //some outside object changes them, children could differ
 	boolean grounded = false;
 	float x2, y2; //Center of entity
 	float x3, y3; //Bottom right corner of entity
-	
 
 	public Rigidbody(Image image, float x, float y) {
 		super(image, x, y);
+	}
+
+	public Rigidbody(Color color, float x, float y) {
+		super(color, x, y);
+	}
+	
+	public Rigidbody(Color color, float x, float y, float width, float height) {
+		super(color, x, y, width, height);
 	}
 	
 	/**
@@ -35,16 +43,7 @@ public class Rigidbody extends Entity {
 			float toMoveX = xVel;
 			float toMoveY = yVel;
 			
-			if(xVel > yVel) {
-				float ratio = xVel / yVel; //Proportion of velocities, so moved in about a straight line
-				
-				//Add movement
-			}
-			else {
-				float ratio = yVel / xVel; //Proportion of velocities, so moved in about a straight line
-				
-				//Add movement
-			}
+			//Add movement
 		}
 	}
 	
@@ -70,7 +69,7 @@ public class Rigidbody extends Entity {
 		for(Entity e : objects) {
 			if(e.intersects(this)) {
 				grounded = true;
-				yVel = 0;
+				yVel = 0.0f;
 				y -= 1; //Undo test movement
 				
 				return; //No need to check more

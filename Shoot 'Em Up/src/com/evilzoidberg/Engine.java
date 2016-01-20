@@ -11,10 +11,6 @@ import com.evilzoidberg.states.MenuState;
 import com.evilzoidberg.states.ServerMenuState;
 
 public class Engine extends StateBasedGame {
-	public static int WindowWidth = 600;
-	public static int WindowHeight = 480;
-	
-	//States
 	public static int MenuStateID = 0;
 	public static int ClientMenuStateID = 1;
 	public static int ServerMenuStateID = 2;
@@ -35,7 +31,7 @@ public class Engine extends StateBasedGame {
 	public static void main(String[] args) {
 		try {
 			AppGameContainer agc = new AppGameContainer(new Engine());
-			agc.setDisplayMode(WindowWidth, WindowHeight, false);
+			agc.setDisplayMode(Settings.WindowWidth, Settings.WindowHeight, false);
 			agc.start();
 		} catch(SlickException e) {
 			e.printStackTrace();

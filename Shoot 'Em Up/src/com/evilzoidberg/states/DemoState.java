@@ -3,12 +3,20 @@ package com.evilzoidberg.states;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import com.evilzoidberg.Settings;
+import com.evilzoidberg.entities.Entity;
+import com.evilzoidberg.entities.Rigidbody;
+
 public class DemoState extends BasicGameState {
 	private int id;
+	Rigidbody body;
+	Entity ground, leftWall, rightWall;
+	Entity[] objects;
 	
 	public DemoState(int id) {
 		this.id = id;
@@ -16,23 +24,38 @@ public class DemoState extends BasicGameState {
 
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
+		body = new Rigidbody(Color.red, 300, 100);
 		
+		ground = new Entity(Color.blue, 0, Settings.WindowHeight - 50, Settings.WindowWidth, 50);
+		leftWall = new Entity(Color.blue, -45, 0, 50, Settings.WindowHeight);
+		rightWall = new Entity(Color.blue, Settings.WindowWidth - 5, 0, 50, Settings.WindowHeight);
+		
+		objects = new Entity[3];
+		objects[0] = ground;
+		objects[1] = leftWall;
+		objects[2] = rightWall;
 	}
 
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
-		g.setColor(Color.red);
-		g.fillRect(100, 100, 100, 100);
+		body.paint(g);
+		
+		for(Entity e : objects) {
+			e.paint(g);
+		}
 	}
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
+		body.update(delta, objects);
 		
+		if(gc.getInput().isKeyDown(Input.KEY_SPACE)) {
+			body.setLocation(300, 100);
+		}
 	}
 
 	@Override
 	public int getID() {
 		return id;
 	}
-
 }
