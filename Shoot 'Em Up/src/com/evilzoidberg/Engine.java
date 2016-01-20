@@ -32,6 +32,7 @@ public class Engine extends StateBasedGame {
 		try {
 			AppGameContainer agc = new AppGameContainer(new Engine());
 			agc.setDisplayMode(Settings.WindowWidth, Settings.WindowHeight, false);
+			agc.setMaximumLogicUpdateInterval(30);
 			agc.start();
 		} catch(SlickException e) {
 			e.printStackTrace();

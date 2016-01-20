@@ -48,9 +48,22 @@ public class DemoState extends BasicGameState {
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
 		body.update(delta, objects);
+
+		boolean moving = false;
+		if(gc.getInput().isKeyDown(Input.KEY_W)) {
+			body.yVel = -10;
+		}
+		if(gc.getInput().isKeyDown(Input.KEY_D)) {
+			body.xVel = 5;
+			moving = true;
+		}
+		if(gc.getInput().isKeyDown(Input.KEY_A)) {
+			body.xVel = -5;
+			moving = !moving;
+		}
 		
-		if(gc.getInput().isKeyDown(Input.KEY_SPACE)) {
-			body.setLocation(300, 100);
+		if(!moving) {
+			body.xVel = 0;
 		}
 	}
 
