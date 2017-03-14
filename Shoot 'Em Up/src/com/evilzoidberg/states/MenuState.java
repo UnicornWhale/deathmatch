@@ -9,10 +9,10 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import com.evilzoidberg.Engine;
 import com.evilzoidberg.ui.Button;
+import com.evilzoidberg.ui.StateChangeButton;
 
 public class MenuState extends BasicGameState {
-	Button client;
-	Button server;
+	Button[] buttons;
 	private int id;
 	
 	public MenuState(int id) {
@@ -21,14 +21,17 @@ public class MenuState extends BasicGameState {
 
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
-		client = new Button("Client", 100, 100, 100, 50);
-		server = new Button("Server", 100, 200, 100, 50);
+		buttons = new Button[] {
+				new StateChangeButton("Play", Engine.HeroSelectStateID, 100, 100, 100, 50, sbg),
+				new StateChangeButton("Exit", Engine.ExitStateID, 100, 200, 100, 50, sbg),
+		};
 	}
 
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
-		client.paint(g);
-		server.paint(g);
+		for(int i = 0; i < buttons.length; i++) {
+			buttons[i].paint(g);
+		}
 	}
 
 	@Override
@@ -39,11 +42,8 @@ public class MenuState extends BasicGameState {
 			int x = in.getMouseX();
 			int y = in.getMouseY();
 			
-			if(client.contains(x, y)) {
-				sbg.enterState(Engine.ClientMenuStateID);
-			}
-			else if(server.contains(x, y)) {
-				sbg.enterState(Engine.ServerMenuStateID);
+			for(int i = 0; i < buttons.length; i++) {
+				buttons[i].isClicked(x, y);
 			}
 		}
 	}

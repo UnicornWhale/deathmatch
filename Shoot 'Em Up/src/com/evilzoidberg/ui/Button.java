@@ -4,7 +4,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.geom.Rectangle;
 
-public class Button {
+public abstract class Button {
 	String text;
 	Rectangle rect;
 
@@ -13,8 +13,14 @@ public class Button {
 		this.text = text;
 	}
 	
-	public boolean contains(int x, int y) {
-		return rect.contains(x, y);
+	public boolean isClicked(int x, int y) {
+		/**
+		 * Returns whether the button is clicked or not at the given x and y of the mouse.
+		 */
+		if(rect.contains(x, y)) {
+			return true;
+		}
+		return false;
 	}
 	
 	public void paint(Graphics g) {

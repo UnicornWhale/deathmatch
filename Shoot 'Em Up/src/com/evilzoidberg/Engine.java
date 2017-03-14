@@ -5,16 +5,15 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
-import com.evilzoidberg.states.ClientMenuState;
-import com.evilzoidberg.states.DemoState;
+import com.evilzoidberg.states.HeroSelectState;
+import com.evilzoidberg.states.ExitState;
 import com.evilzoidberg.states.MenuState;
-import com.evilzoidberg.states.ServerMenuState;
 
 public class Engine extends StateBasedGame {
 	public static int MenuStateID = 0;
-	public static int ClientMenuStateID = 1;
-	public static int ServerMenuStateID = 2;
-	public static int DemoStateID = 3;
+	public static int HeroSelectStateID = 1;
+	public static int PlayStateID = 2;
+	public static int ExitStateID = 3;
 
 	public Engine() {
 		super("Deathmatch");
@@ -23,16 +22,15 @@ public class Engine extends StateBasedGame {
 	@Override
 	public void initStatesList(GameContainer gc) throws SlickException {
 		this.addState(new MenuState(MenuStateID));
-		this.addState(new ClientMenuState(ClientMenuStateID));
-		this.addState(new ServerMenuState(ServerMenuStateID));
-		this.addState(new DemoState(DemoStateID));
+		this.addState(new HeroSelectState(HeroSelectStateID));
+		this.addState(new ExitState(ExitStateID));
 	}
 
 	public static void main(String[] args) {
 		try {
 			AppGameContainer agc = new AppGameContainer(new Engine());
 			agc.setDisplayMode(Settings.WindowWidth, Settings.WindowHeight, false);
-			agc.setMaximumLogicUpdateInterval(30);
+			agc.setMaximumLogicUpdateInterval(60);
 			agc.start();
 		} catch(SlickException e) {
 			e.printStackTrace();

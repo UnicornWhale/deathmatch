@@ -1,17 +1,21 @@
 TODO:
 - Next
-	- Finish movement in rigidbody
-
-- Demo
-	1. Basic entity system
-	2. Basic map
-	3. Basic character controller
+	1. Add a play state
 	
 - Alpha
-	1. Basic Server
-	2. Clients can sync
-	3. Basic game
+	1. A few heroes with different abilities
+	2. A map to play on
+	3. Satisfying controls
+	4. A way to win
 	
-- Later
-	- Switch to using sprite sheets
-	- Make settings a file that is read from
+- Beta
+	1. Better Art
+	2. Fully fleshed out cast
+	3. Animations
+	4. Scoreboard
+	
+- Full
+	1. Different game modes
+	2. More maps
+	3. More heroes
+	4. Ultis?
