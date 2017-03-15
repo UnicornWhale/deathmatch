@@ -5,9 +5,10 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
-import com.evilzoidberg.states.HeroSelectState;
 import com.evilzoidberg.states.ExitState;
+import com.evilzoidberg.states.HeroSelectState;
 import com.evilzoidberg.states.MenuState;
+import com.evilzoidberg.states.PlayState;
 
 public class Engine extends StateBasedGame {
 	public static int MenuStateID = 0;
@@ -23,6 +24,7 @@ public class Engine extends StateBasedGame {
 	public void initStatesList(GameContainer gc) throws SlickException {
 		this.addState(new MenuState(MenuStateID));
 		this.addState(new HeroSelectState(HeroSelectStateID));
+		this.addState(new PlayState(PlayStateID));
 		this.addState(new ExitState(ExitStateID));
 	}
 

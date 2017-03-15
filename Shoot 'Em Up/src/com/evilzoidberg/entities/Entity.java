@@ -8,31 +8,30 @@ import org.newdawn.slick.geom.Rectangle;
 @SuppressWarnings("serial")
 public class Entity extends Rectangle {
 	Image image = null;
-	Color color = Color.red; //Default to a red square
+	float offsetX, offsetY;
 	
-	public Entity(Image image, float x, float y) {
+	public Entity(Image image, float x, float y, float offsetX, float offsetY) {
 		super(x, y, image.getWidth(), image.getHeight());
 		this.image = image;
+		this.offsetX = offsetX;
+		this.offsetY = offsetY;
 	}
 	
-	public Entity(Color color, float x, float y) {
-		super(x, y, 50, 50);
-		this.color = color;
-	}
-	
-	public Entity(Color color, float x, float y, float width, float height) {
-		super(x, y, width, height);
-		this.color = color;
+	public Entity(float x, float y, float offsetX, float offsetY) {
+		//Super hacky, but sue offsetX and offsetY as width and height for non-image things
+		super(x, y, offsetX, offsetY);
+		this.image = null;
+		this.offsetX = offsetX;
+		this.offsetY = offsetY;
 	}
 	
 	public void paint(Graphics g) {
 		if(image != null) {
-			//For now, don't use sprite sheets, change this later.
-			g.drawImage(image, x, y);
+			g.drawImage(image, x + offsetX, y + offsetY);
 		}
 		else {
-			g.setColor(color);
-			g.fillRect((int)x, (int)y, width, height);
+			g.setColor(Color.red);
+			g.fillRect(x, y, offsetX, offsetY);
 		}
 	}
 }

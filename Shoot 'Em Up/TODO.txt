@@ -1,6 +1,6 @@
 TODO:
 - Next
-	1. Add a play state
+	1. Fix movement
 	
 - Alpha
 	1. A few heroes with different abilities

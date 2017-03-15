@@ -8,7 +8,11 @@ public class Settings {
 	
 	public static int WindowWidth = 1200;
 	public static int WindowHeight = 680;
+	
+	//Universal Gravitation
+	public static float Gravity = 0.003f;
 
+	//Player 1 Controls
 	public static Color Player1Color = Color.red;
 	public static int Player1Up = Input.KEY_W;
 	public static int Player1Down = Input.KEY_S;
@@ -16,10 +20,15 @@ public class Settings {
 	public static int Player1Right = Input.KEY_D;
 	public static int Player1Shoot = Input.KEY_V;
 
+	//Player 2 Controls
 	public static Color Player2Color = Color.blue;
 	public static int Player2Up = Input.KEY_UP;
 	public static int Player2Down = Input.KEY_DOWN;
 	public static int Player2Left = Input.KEY_LEFT;
 	public static int Player2Right = Input.KEY_RIGHT;
 	public static int Player2Shoot = Input.KEY_ENTER;
+	
+	//Selected Heroes
+	public static int Player1Hero = -1;
+	public static int Player2Hero = -1;
 }

@@ -24,22 +24,22 @@ public class HeroSelectButton extends Button {
 		 */
 		super.paint(g);
 		
-		if(highlightedByPlayer1) {
+		if(selectedByPlayer1) {
 			g.setColor(Settings.Player1Color);
 			g.fillRect(rect.getMinX(), rect.getMinY(), rect.getWidth() / 2, rect.getHeight() / 4);
 		}
-		
-		if(highlightedByPlayer2) {
-			g.setColor(Settings.Player2Color);
-			g.fillRect(rect.getMaxX() - rect.getHeight() / 4, rect.getMinY(), rect.getWidth() / 2, rect.getHeight() / 4);
-		}
-		
-		if(selectedByPlayer1) {
-			
+		else if(highlightedByPlayer1) {
+			g.setColor(Settings.Player1Color);
+			g.drawRect(rect.getMinX(), rect.getMinY(), rect.getWidth() / 2, rect.getHeight() / 4);
 		}
 		
 		if(selectedByPlayer2) {
-			
+			g.setColor(Settings.Player2Color);
+			g.fillRect(rect.getMaxX() - rect.getHeight() / 4, rect.getMinY(), rect.getWidth() / 2, rect.getHeight() / 4);
+		}
+		else if(highlightedByPlayer2) {
+			g.setColor(Settings.Player2Color);
+			g.drawRect(rect.getMaxX() - rect.getHeight() / 4, rect.getMinY(), rect.getWidth() / 2, rect.getHeight() / 4);
 		}
 	}
 }
