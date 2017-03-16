@@ -10,10 +10,8 @@ import com.evilzoidberg.Settings;
 public class MoveableEntity extends Entity {
 	float dx = 0, dy = 0; //Velocity
 	float ddx = 0, ddy = 0; //Acceleration
+	float dxMax = 500.0f, dyMax = 2000.0f;
 	boolean onGround = false;
-	boolean onCeiling = false;
-	boolean onLeftWall = false;
-	boolean onRightWall = false;
 	boolean affectedByGravity = true;
 
 	public MoveableEntity(Image image, float x, float y, float offsetX, float offsetY) {
@@ -28,10 +26,8 @@ public class MoveableEntity extends Entity {
 		//Turn delta to a fraction of a second
 		float delta = ((float)deltaInt) / 1000.0f;
 		
-		if(!onGround) {
-			if(affectedByGravity) {
-				ddy = Settings.Gravity;
-			}
+		if(affectedByGravity) {
+			ddy = Settings.Gravity;
 		}
 		else {
 			ddy = 0.0f;
@@ -40,6 +36,20 @@ public class MoveableEntity extends Entity {
 		//Calculate distance to move
 		float totalDy = dy * delta;
 		float totalDx = dx * delta;
+
+		//Limit by maximums
+		if(totalDx > (dxMax * delta)) {
+			totalDx = dxMax * delta;
+		}
+		if(totalDy > (dyMax * delta)) {
+			totalDy = dyMax * delta;
+		}
+		if(totalDx < (dxMax * delta * -1.0f)) {
+			totalDx = dxMax * delta * -1.0f;
+		}
+		if(totalDy < (dyMax * delta * -1.0f)) {
+			totalDy = dyMax * delta * -1.0f;
+		}
 		
 		//Apply acceleration to velocity
 		dy += ddy * delta;
@@ -54,6 +64,7 @@ public class MoveableEntity extends Entity {
 			else if(totalDx > 0.0f) {
 				x++;
 				if(collidesWithSomething(mapEntities)) {
+					//Collision on right
 					float oldX = x;
 					x = (float)Math.floor(x);
 					if(x == oldX) {
@@ -61,16 +72,15 @@ public class MoveableEntity extends Entity {
 					}
 					totalDx = 0.0f;
 					dx = 0.0f;
-					onRightWall = true;
 				}
 				else {
 					totalDx--;
-					onLeftWall = false;
 				}
 			}
 			else if(totalDx < 0.0f) {
 				x--;
 				if(collidesWithSomething(mapEntities)) {
+					//Collision on left
 					float oldX = x;
 					x = (float)Math.ceil(x);
 					if(x == oldX) {
@@ -78,11 +88,9 @@ public class MoveableEntity extends Entity {
 					}
 					totalDx = 0.0f;
 					dx = 0.0f;
-					onLeftWall = true;
 				}
 				else {
 					totalDx++;
-					onRightWall = false;
 				}
 			}
 			
@@ -93,22 +101,23 @@ public class MoveableEntity extends Entity {
 			else if(totalDy > 0.0f) {
 				y++;
 				if(collidesWithSomething(mapEntities)) {
+					//Collision below
 					float oldY = y;
 					y = (float)Math.floor(y);
 					if(y == oldY) {
 						y--; //Cover whole numbers
 					}
 					totalDy = 0.0f;
-					onGround = true;
+					dy = 0.0f;
 				}
 				else {
 					totalDy--;
-					onCeiling = false;
 				}
 			}
 			else if(totalDy < 0.0f) {
 				y--;
 				if(collidesWithSomething(mapEntities)) {
+					//Collision above
 					float oldY = y;
 					y = (float)Math.ceil(y);
 					if(y == oldY) {
@@ -116,14 +125,22 @@ public class MoveableEntity extends Entity {
 					}
 					totalDy = 0.0f;
 					dy = 0.0f;
-					onCeiling = true;
 				}
 				else {
 					totalDy++;
-					onGround = false;
 				}
 			}
 		}
+		
+		//Check if on ground
+		y++;
+		if(collidesWithSomething(mapEntities)) {
+			onGround = true;
+		}
+		else {
+			onGround = false;
+		}
+		y--;
 	}
 	
 	private boolean collidesWithSomething(ArrayList<Entity> mapEntities) {

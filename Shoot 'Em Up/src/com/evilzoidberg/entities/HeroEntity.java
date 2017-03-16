@@ -10,7 +10,7 @@ import com.evilzoidberg.Settings;
 @SuppressWarnings("serial")
 public class HeroEntity extends MoveableEntity {
 	float walkSpeed = 800.0f;
-	float aerialDriftAcceleration = 500.0f;
+	float aerialDriftAcceleration = 5000.0f;
 	float jumpVelocity = -2300.0f; //Jumps go up, so is negative
 	float currentHealth = 100, maxHealth = 100;
 	int up, down, left, right, shoot;
@@ -57,10 +57,11 @@ public class HeroEntity extends MoveableEntity {
 		}
 		
 		if(onGround) {
-			if(in.isKeyDown(right) && !in.isKeyDown(left) && !onRightWall) {
+			ddx = 0.0f;
+			if(in.isKeyDown(right) && !in.isKeyDown(left)) {
 				dx = walkSpeed;
 			}
-			else if(in.isKeyDown(left) && !in.isKeyDown(right) && !onLeftWall) {
+			else if(in.isKeyDown(left) && !in.isKeyDown(right)) {
 				dx = walkSpeed * -1.0f;
 			}
 			else {
@@ -68,10 +69,10 @@ public class HeroEntity extends MoveableEntity {
 			}
 		}
 		else{
-			if(in.isKeyDown(right) && !in.isKeyDown(left) && !onRightWall) {
+			if(in.isKeyDown(right) && !in.isKeyDown(left)) {
 				ddx = aerialDriftAcceleration;
 			}
-			else if(in.isKeyDown(left) && !in.isKeyDown(right) && !onLeftWall) {
+			else if(in.isKeyDown(left) && !in.isKeyDown(right)) {
 				ddx = aerialDriftAcceleration * -1.0f;
 			}
 			else {
