@@ -21,7 +21,9 @@ public class ExitState extends BasicGameState {
 	
 	@Override
 	public void update(GameContainer arg0, StateBasedGame arg1, int arg2) throws SlickException {
-		//Having this state simply allows buttons to exit the game without modifying that class
+		/**
+		 * Having this state simply allows buttons to exit the game without modifying that class
+		 */
 		System.exit(0);
 	}
 

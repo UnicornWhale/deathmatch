@@ -43,6 +43,9 @@ public class HeroSelectState extends BasicGameState {
 
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
+		/**
+		 * Draw all buttons to the screen
+		 */
 		for(int i = 0; i < heroButtons.length; i++) {
 			heroButtons[i].paint(g);
 		}
@@ -53,6 +56,10 @@ public class HeroSelectState extends BasicGameState {
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
+		/**
+		 * Check all buttons to see if they are being clicked. If they are, update the highlighting
+		 * and selected heroes to visually show it.
+		 */
 		Input in = gc.getInput();
 		
 		//Start game

@@ -15,8 +15,8 @@ public class HeroEntity extends MoveableEntity {
 	float currentHealth = 100, maxHealth = 100;
 	int up, down, left, right, shoot;
 
-	public HeroEntity(Image image, int playerNumber, float x, float y, float offsetX, float offsetY) {
-		super(image, x, y, offsetX, offsetY);
+	public HeroEntity(Image image, int playerNumber, float x, float y, int width, int height, float offsetX, float offsetY) {
+		super(image, x, y, width, height, offsetX, offsetY);
 		if(playerNumber == 1) {
 			up = Settings.Player1Up;
 			down = Settings.Player1Down;
@@ -33,8 +33,8 @@ public class HeroEntity extends MoveableEntity {
 		}
 	}
 
-	public HeroEntity(int playerNumber, float x, float y, float offsetX, float offsetY) {
-		super(x, y, offsetX, offsetY);
+	public HeroEntity(int playerNumber, float x, float y, int width, int height, float offsetX, float offsetY) {
+		super(x, y, width, height, offsetX, offsetY);
 		if(playerNumber == 1) {
 			up = Settings.Player1Up;
 			down = Settings.Player1Down;
@@ -51,12 +51,18 @@ public class HeroEntity extends MoveableEntity {
 		}
 	}
 
-	public void update(Input in, int delta, ArrayList<Entity> mapEntities, ArrayList<ProjectileEntity> projectiles) {
-		if(onGround && in.isKeyDown(up)) {
+	public void update(Input in, int delta, ArrayList<Entity> mapEntities) {
+		/**
+		 * Reads keys set in settings to check for inputs and adjusts velocity and acceleration based on what keys
+		 * are being pressed. Then updates physics as any other MoveableEntity would.
+		 */
+		//Jump
+		if(onGround && in.isKeyPressed(up)) {
 			dy = jumpVelocity;
 		}
 		
 		if(onGround) {
+			//Grounded controls
 			ddx = 0.0f;
 			if(in.isKeyDown(right) && !in.isKeyDown(left)) {
 				dx = walkSpeed;
@@ -69,6 +75,7 @@ public class HeroEntity extends MoveableEntity {
 			}
 		}
 		else{
+			//Aerial controls
 			if(in.isKeyDown(right) && !in.isKeyDown(left)) {
 				ddx = aerialDriftAcceleration;
 			}
@@ -80,6 +87,7 @@ public class HeroEntity extends MoveableEntity {
 			}
 		}
 		
+		//Use MoveableEntity logic for movement
 		updatePhysics(delta, mapEntities);
 	}
 }

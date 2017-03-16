@@ -5,6 +5,8 @@ TODO:
 	- Add animations and a way to play them along with the delta time. Also an image handler so we don't load the same image twice.
 	- Artwork and animations
 	- Add different classes (list below)
+	- Add capability for up to four players (and possibly a way to set teams?)
+	- Add configurable controls (bonus to make sure game pads work as controllers. I think they should by default with slick)
 	
 	
 	

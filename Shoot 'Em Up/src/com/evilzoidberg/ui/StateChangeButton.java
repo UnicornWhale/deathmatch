@@ -16,7 +16,7 @@ public class StateChangeButton extends Button {
 	public boolean isClicked(int x, int y) {
 		/**
 		 * Returns whether the button is clicked or not, and also on click will change the game
-		 * state to the state the object was initialized with.
+		 * state to the state this was initialized with.
 		 */
 		if(rect.contains(x, y)) {
 			sbg.enterState(state);

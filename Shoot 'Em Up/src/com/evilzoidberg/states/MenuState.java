@@ -29,6 +29,9 @@ public class MenuState extends BasicGameState {
 
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
+		/**
+		 * Draw all buttons to the screen
+		 */
 		for(int i = 0; i < buttons.length; i++) {
 			buttons[i].paint(g);
 		}
@@ -36,6 +39,10 @@ public class MenuState extends BasicGameState {
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
+		/**
+		 * Check all buttons to see if they are being clicked, and if they are, change to the state
+		 * that button represents.
+		 */
 		Input in = gc.getInput();
 		
 		if(in.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {

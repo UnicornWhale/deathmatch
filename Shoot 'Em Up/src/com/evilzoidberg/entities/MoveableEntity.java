@@ -14,15 +14,22 @@ public class MoveableEntity extends Entity {
 	boolean onGround = false;
 	boolean affectedByGravity = true;
 
-	public MoveableEntity(Image image, float x, float y, float offsetX, float offsetY) {
-		super(image, x, y, offsetX, offsetY);
+	public MoveableEntity(Image image, float x, float y, int width, int height, float offsetX, float offsetY) {
+		super(image, x, y, width, height, offsetX, offsetY);
 	}
 
-	public MoveableEntity(float x, float y, float offsetX, float offsetY) {
-		super(x, y, offsetX, offsetY);
+	public MoveableEntity(float x, float y, int width, int height, float offsetX, float offsetY) {
+		super(x, y, width, height, offsetX, offsetY);
 	}
 
 	public void updatePhysics(int deltaInt, ArrayList<Entity> mapEntities) {
+		/**
+		 * Uses set velocities and accelerations to determine where this should move to, then moves it
+		 * step by step and stops on collision.
+		 * 
+		 * @param deltaInt The number of milliseconds that have passed since the last update
+		 * @param mapEntities All terrain entities that this should collide properly with
+		 */
 		//Turn delta to a fraction of a second
 		float delta = ((float)deltaInt) / 1000.0f;
 		
@@ -144,6 +151,10 @@ public class MoveableEntity extends Entity {
 	}
 	
 	private boolean collidesWithSomething(ArrayList<Entity> mapEntities) {
+		/**
+		 * Checks for collisions with all passed entities and returns true if it collides
+		 * with one or more of those entities. False otherwise.
+		 */
 		for(int object = 0; object < mapEntities.size(); object++) {
 			if(mapEntities.get(object).intersects(this)) {
 				return true;
