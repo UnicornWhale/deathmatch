@@ -139,6 +139,24 @@ public class MoveableEntity extends Entity {
 			}
 		}
 		
+		//Keep entities within the map
+		if(x < 0.0f) {
+			x = 0.0f;
+			dx = 0.0f;
+		}
+		if(x > Settings.WindowWidth - width) {
+			x = Settings.WindowWidth - width;
+			dx = 0.0f;
+		}
+		if(y < 0.0f) {
+			y = 0.0f;
+			dy = 0.0f;
+		}
+		if(y > Settings.WindowHeight - height) {
+			y = Settings.WindowHeight - height;
+			dy = 0.0f;
+		}
+		
 		//Check if on ground
 		y++;
 		if(collidesWithSomething(mapEntities)) {

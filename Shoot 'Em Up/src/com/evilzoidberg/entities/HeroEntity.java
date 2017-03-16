@@ -11,7 +11,7 @@ import com.evilzoidberg.Settings;
 public class HeroEntity extends MoveableEntity {
 	float walkSpeed = 800.0f;
 	float aerialDriftAcceleration = 5000.0f;
-	float jumpVelocity = -2300.0f; //Jumps go up, so is negative
+	float jumpVelocity = -2500.0f; //Jumps go up, so is negative
 	float currentHealth = 100, maxHealth = 100;
 	int up, down, left, right, shoot;
 

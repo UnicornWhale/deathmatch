@@ -6,8 +6,9 @@ import org.newdawn.slick.Input;
 public class Settings {
 	public static boolean debug = true;
 	
-	public static int WindowWidth = 1200;
-	public static int WindowHeight = 680;
+	public static int TileSize = 64;
+	public static int WindowWidth = 20 * TileSize;
+	public static int WindowHeight = 12 * TileSize;
 	
 	//Universal Gravitation
 	public static float Gravity = 10000.0f;
@@ -31,4 +32,11 @@ public class Settings {
 	//Selected Heroes
 	public static int Player1Hero = -1;
 	public static int Player2Hero = -1;
+
+	//Map Paths
+	public static String TestMap = "maps/test_map.txt";
+	
+	//Tile Image Paths
+	public static String BackgroundTilePath = "img/background_tile.png";
+	public static String PlatformTilePath = "img/platform_tile.png";
 }
