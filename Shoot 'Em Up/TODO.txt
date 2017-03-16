@@ -1,6 +1,6 @@
 TODO:
 - Next
-	1. Fix movement
+	1. Polish
 	
 - Alpha
 	1. A few heroes with different abilities
