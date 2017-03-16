@@ -8,7 +8,6 @@ import com.evilzoidberg.Settings;
 
 @SuppressWarnings("serial")
 public class MoveableEntity extends Entity {
-	float oldX, oldY; //Position
 	float dx = 0, dy = 0; //Velocity
 	float ddx = 0, ddy = 0; //Acceleration
 	boolean onGround = false;
@@ -19,19 +18,15 @@ public class MoveableEntity extends Entity {
 
 	public MoveableEntity(Image image, float x, float y, float offsetX, float offsetY) {
 		super(image, x, y, offsetX, offsetY);
-		oldX = x;
-		oldY = y;
 	}
 
 	public MoveableEntity(float x, float y, float offsetX, float offsetY) {
 		super(x, y, offsetX, offsetY);
-		oldX = x;
-		oldY = y;
 	}
 
-	public void updatePhysics(int delta, ArrayList<Entity> mapEntities) {
-		oldX = x;
-		oldY = y;
+	public void updatePhysics(int deltaInt, ArrayList<Entity> mapEntities) {
+		//Turn delta to a fraction of a second
+		float delta = ((float)deltaInt) / 1000.0f;
 		
 		if(!onGround) {
 			if(affectedByGravity) {
@@ -41,87 +36,102 @@ public class MoveableEntity extends Entity {
 		else {
 			ddy = 0.0f;
 		}
+
+		//Calculate distance to move
+		float totalDy = dy * delta;
+		float totalDx = dx * delta;
 		
 		//Apply acceleration to velocity
-		dy += ddy * (float)delta;
-		dx += ddx * (float)delta;
-
-		//Apply velocity to position
-		float totalDy = dy * (float)delta;
-		float totalDx = dx * (float)delta;
-		y += totalDy;
-		x += totalDx;
+		dy += ddy * delta;
+		dx += ddx * delta;
 		
-		//Check collisions
-		boolean carefulMoveNeeded = false;
-		for(int object = 0; object < mapEntities.size(); object++) {
-			if(mapEntities.get(object).intersects(this)) {
-				carefulMoveNeeded = true;
+		//Move it one at a time
+		while(totalDx != 0.0f || totalDy != 0.0f) {
+			//Horizontal movement
+			if(totalDx < 0.9f && totalDx > -0.9f){
+				totalDx = 0.0f;
 			}
-		}
-		
-		//Step by step move if there is a collision with terrain
-		if(carefulMoveNeeded) {
-			//Careful move in Y direction
-			if(totalDy > 0) {
-				for(; y < oldY + (int)Math.ceil(totalDy); y++) {
-					//Check collisions
-					for(int object = 0; object < mapEntities.size(); object++) {
-						if(mapEntities.get(object).intersects(this)) {
-							System.out.println("Hit something below me");
-							y--; //End loop, moved as far as needed
-							oldY = y - (int)Math.ceil(totalDy) - 1.0f;
-							onGround = true;
-							dy = 0.0f;
-							ddy = 0.0f;
-						}
+			else if(totalDx > 0.0f) {
+				x++;
+				if(collidesWithSomething(mapEntities)) {
+					float oldX = x;
+					x = (float)Math.floor(x);
+					if(x == oldX) {
+						x--; //Cover whole numbers
 					}
+					totalDx = 0.0f;
+					dx = 0.0f;
+					onRightWall = true;
+				}
+				else {
+					totalDx--;
+					onLeftWall = false;
 				}
 			}
-			else {
-				for(; y > oldY + (int)Math.floor(totalDy); y--) {
-					//Check collisions
-					for(int object = 0; object < mapEntities.size(); object++) {
-						if(mapEntities.get(object).intersects(this)) {
-							System.out.println("Hit something above me");
-							y++; //End loop, moved as far as needed
-							oldY = y - (int)Math.ceil(totalDy) + 1.0f;
-							onCeiling = true;
-							dy = 0.0f;
-						}
+			else if(totalDx < 0.0f) {
+				x--;
+				if(collidesWithSomething(mapEntities)) {
+					float oldX = x;
+					x = (float)Math.ceil(x);
+					if(x == oldX) {
+						x++; //Cover whole numbers
 					}
+					totalDx = 0.0f;
+					dx = 0.0f;
+					onLeftWall = true;
+				}
+				else {
+					totalDx++;
+					onRightWall = false;
 				}
 			}
 			
-			//Careful move in X direction
-			if(totalDx > 0) {
-				for(; x < oldX + (int)Math.ceil(totalDx); x++) {
-					//Check collisions
-					for(int object = 0; object < mapEntities.size(); object++) {
-						if(mapEntities.get(object).intersects(this)) {
-							System.out.println("Hit something to my right");
-							x--; //End loop, moved as far as needed
-							oldX = x - (int)Math.ceil(totalDx) - 1.0f;
-							onRightWall = true;
-							dx = 0.0f;
-						}
+			//Vertical movement
+			if(totalDy < 0.9f && totalDy > -0.9f){
+				totalDy = 0.0f;
+			}
+			else if(totalDy > 0.0f) {
+				y++;
+				if(collidesWithSomething(mapEntities)) {
+					float oldY = y;
+					y = (float)Math.floor(y);
+					if(y == oldY) {
+						y--; //Cover whole numbers
 					}
+					totalDy = 0.0f;
+					onGround = true;
+				}
+				else {
+					totalDy--;
+					onCeiling = false;
 				}
 			}
-			else {
-				for(; x > oldX + (int)Math.floor(totalDx); x--) {
-					//Check collisions
-					for(int object = 0; object < mapEntities.size(); object++) {
-						if(mapEntities.get(object).intersects(this)) {
-							System.out.println("Hit something to my left");
-							x++; //End loop, moved as far as needed
-							oldX = x - (int)Math.ceil(totalDx) + 1.0f;
-							onLeftWall = true;
-							dx = 0.0f;
-						}
+			else if(totalDy < 0.0f) {
+				y--;
+				if(collidesWithSomething(mapEntities)) {
+					float oldY = y;
+					y = (float)Math.ceil(y);
+					if(y == oldY) {
+						y++; //Cover whole numbers
 					}
+					totalDy = 0.0f;
+					dy = 0.0f;
+					onCeiling = true;
+				}
+				else {
+					totalDy++;
+					onGround = false;
 				}
 			}
 		}
+	}
+	
+	private boolean collidesWithSomething(ArrayList<Entity> mapEntities) {
+		for(int object = 0; object < mapEntities.size(); object++) {
+			if(mapEntities.get(object).intersects(this)) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

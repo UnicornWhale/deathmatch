@@ -10,7 +10,7 @@ public class Settings {
 	public static int WindowHeight = 680;
 	
 	//Universal Gravitation
-	public static float Gravity = 0.003f;
+	public static float Gravity = 10000.0f;
 
 	//Player 1 Controls
 	public static Color Player1Color = Color.red;
