@@ -39,4 +39,7 @@ public class Settings {
 	//Tile Image Paths
 	public static String BackgroundTilePath = "img/background_tile.png";
 	public static String PlatformTilePath = "img/platform_tile.png";
+	
+	//Hero Image Paths
+	public static String SugoiImagePath = "img/sugoi.png";
 }

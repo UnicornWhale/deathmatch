@@ -1,5 +1,7 @@
 package com.evilzoidberg.states;
 
+import java.util.ArrayList;
+
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -8,6 +10,8 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import com.evilzoidberg.Settings;
 import com.evilzoidberg.entities.HeroEntity;
+import com.evilzoidberg.entities.ProjectileEntity;
+import com.evilzoidberg.entities.Sugoi;
 import com.evilzoidberg.maploader.Map;
 import com.evilzoidberg.utility.ImageLoader;
 
@@ -16,6 +20,7 @@ public class PlayState extends BasicGameState {
 	HeroEntity player1;
 	HeroEntity player2;
 	Map map;
+	ArrayList<ProjectileEntity> projectiles = new ArrayList<ProjectileEntity>();
 	
 	public PlayState(int id) {
 		this.id = id;
@@ -23,7 +28,7 @@ public class PlayState extends BasicGameState {
 
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
-		player1 = new HeroEntity(ImageLoader.getImage("img/cowboy.png"), 1, 100.0f, 100.0f, 24, 50, -13.0f, -7.0f);
+		player1 = new Sugoi(1, 100.0f, 100.0f);
 		player2 = new HeroEntity(ImageLoader.getImage("img/cowboy.png"), 2, 300.0f, 100.0f, 24, 50, -13.0f, -7.0f);
 		map = new Map(Settings.TestMap);
 	}
@@ -45,8 +50,8 @@ public class PlayState extends BasicGameState {
 		/**
 		 * Calls update methods of all children so that they can use their own game logic to update.
 		 */
-		player1.update(gc.getInput(), delta, map.collideableTiles);
-		player2.update(gc.getInput(), delta, map.collideableTiles);
+		player1.update(gc.getInput(), delta, map.collideableTiles, projectiles);
+		player2.update(gc.getInput(), delta, map.collideableTiles, projectiles);
 	}
 
 	@Override

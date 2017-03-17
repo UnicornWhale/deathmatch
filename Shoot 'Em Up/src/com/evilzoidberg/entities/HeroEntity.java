@@ -2,6 +2,7 @@ package com.evilzoidberg.entities;
 
 import java.util.ArrayList;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
@@ -16,6 +17,8 @@ public class HeroEntity extends MoveableEntity {
 	float jumpVelocity = -2500.0f; //Jumps go up, so is negative
 	float currentHealth = 100, maxHealth = 100;
 	int up, down, left, right, shoot;
+	int healthBarLength = Settings.TileSize;
+	int healthBarHeight = 8;
 
 	public HeroEntity(Image image, int playerNumber, float x, float y, int width, int height, float offsetX, float offsetY) {
 		super(image, x, y, width, height, offsetX, offsetY);
@@ -53,7 +56,7 @@ public class HeroEntity extends MoveableEntity {
 		}
 	}
 
-	public void update(Input in, int delta, ArrayList<Entity> mapEntities) {
+	public void update(Input in, int delta, ArrayList<Entity> mapEntities, ArrayList<ProjectileEntity> projectiles) {
 		/**
 		 * Reads keys set in settings to check for inputs and adjusts velocity and acceleration based on what keys
 		 * are being pressed. Then updates physics as any other MoveableEntity would.
@@ -82,9 +85,11 @@ public class HeroEntity extends MoveableEntity {
 			//Aerial controls
 			if(in.isKeyDown(right) && !in.isKeyDown(left)) {
 				ddx = aerialDriftAcceleration;
+				facingRight = true;
 			}
 			else if(in.isKeyDown(left) && !in.isKeyDown(right)) {
 				ddx = aerialDriftAcceleration * -1.0f;
+				facingRight = false;
 			}
 			else {
 				ddx = 0.0f;
@@ -98,5 +103,12 @@ public class HeroEntity extends MoveableEntity {
 	@Override
 	public void paint(Graphics g) {
 		paint(g, facingRight);
+		
+		//Draw Health bar
+		int currentHealthBarLength = (int)(((double)currentHealth / 100.0) * (double)healthBarLength);
+		g.setColor(Color.red);
+		g.fillRect((x + (width / 2)) - (healthBarLength / 2), y - (healthBarHeight * 2), healthBarLength, healthBarHeight);
+		g.setColor(Color.green);
+		g.fillRect((x + (width / 2)) - (healthBarLength / 2), y - (healthBarHeight * 2), currentHealthBarLength, healthBarHeight);
 	}
 }
