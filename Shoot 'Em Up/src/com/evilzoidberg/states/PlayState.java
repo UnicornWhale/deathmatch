@@ -11,9 +11,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import com.evilzoidberg.Settings;
 import com.evilzoidberg.entities.HeroEntity;
 import com.evilzoidberg.entities.ProjectileEntity;
-import com.evilzoidberg.entities.Sugoi;
 import com.evilzoidberg.maploader.Map;
-import com.evilzoidberg.utility.ImageLoader;
 
 public class PlayState extends BasicGameState {
 	int id;
@@ -21,6 +19,7 @@ public class PlayState extends BasicGameState {
 	HeroEntity player2;
 	Map map;
 	ArrayList<ProjectileEntity> projectiles = new ArrayList<ProjectileEntity>();
+	boolean mapAndPlayersInitialized = false; //Init method is called at start of program, so work around it
 	
 	public PlayState(int id) {
 		this.id = id;
@@ -28,8 +27,8 @@ public class PlayState extends BasicGameState {
 
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
-		player1 = new Sugoi(1, 100.0f, 100.0f);
-		player2 = new HeroEntity(ImageLoader.getImage("img/cowboy.png"), 2, 300.0f, 100.0f, 24, 50, -13.0f, -7.0f);
+		player1 = HeroEntity.getHeroByNumber(1, Settings.Player1Hero);
+		player2 = HeroEntity.getHeroByNumber(2, Settings.Player2Hero);
 		map = new Map(Settings.TestMap);
 	}
 
@@ -50,6 +49,11 @@ public class PlayState extends BasicGameState {
 		/**
 		 * Calls update methods of all children so that they can use their own game logic to update.
 		 */
+		if(!mapAndPlayersInitialized) {
+			init(gc, sbg);
+			mapAndPlayersInitialized = true;
+		}
+		
 		player1.update(gc.getInput(), delta, map.collideableTiles, projectiles);
 		player2.update(gc.getInput(), delta, map.collideableTiles, projectiles);
 	}

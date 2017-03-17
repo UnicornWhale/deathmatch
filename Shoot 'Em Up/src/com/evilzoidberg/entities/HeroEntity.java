@@ -8,6 +8,7 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 
 import com.evilzoidberg.Settings;
+import com.evilzoidberg.utility.ImageLoader;
 
 @SuppressWarnings("serial")
 public class HeroEntity extends MoveableEntity {
@@ -110,5 +111,19 @@ public class HeroEntity extends MoveableEntity {
 		g.fillRect((x + (width / 2)) - (healthBarLength / 2), y - (healthBarHeight * 2), healthBarLength, healthBarHeight);
 		g.setColor(Color.green);
 		g.fillRect((x + (width / 2)) - (healthBarLength / 2), y - (healthBarHeight * 2), currentHealthBarLength, healthBarHeight);
+	}
+	
+	public static HeroEntity getHeroByNumber(int playerNumber, int heroNumber) {
+		int startX = Settings.Player1StartX;
+		int startY = Settings.Player1StartY;
+		if(playerNumber == 2) {
+			startX = Settings.Player2StartX;
+			startY = Settings.Player2StartY;
+		}
+		
+		if(heroNumber == 1) {
+			return new Sugoi(playerNumber, startX, startY);
+		}
+		return new HeroEntity(ImageLoader.getImage(Settings.TestHeroImagePath), playerNumber, startX, startY, 24, 50, -13.0f, -7.0f);
 	}
 }

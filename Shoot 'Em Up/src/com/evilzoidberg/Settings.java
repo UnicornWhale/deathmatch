@@ -32,6 +32,13 @@ public class Settings {
 	//Selected Heroes
 	public static int Player1Hero = -1;
 	public static int Player2Hero = -1;
+	
+	//Hero Start Locations
+	public static int Player1StartX = 100;
+	public static int Player1StartY = 100;
+	
+	public static int Player2StartX = 928;
+	public static int Player2StartY = 100;
 
 	//Map Paths
 	public static String TestMap = "maps/test_map.txt";
@@ -41,5 +48,6 @@ public class Settings {
 	public static String PlatformTilePath = "img/platform_tile.png";
 	
 	//Hero Image Paths
+	public static String TestHeroImagePath = "img/cowboy.png";
 	public static String SugoiImagePath = "img/sugoi.png";
 }

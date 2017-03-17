@@ -24,14 +24,13 @@ public class HeroSelectState extends BasicGameState {
 	
 	public HeroSelectState(int id) {
 		this.id = id;
-		
 	}
 
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 		heroButtons = new HeroSelectButton[] {
-				new HeroSelectButton("Soldier", 0, 100, 100, 50, 25),
-				new HeroSelectButton("Demo", 1, 175, 100, 50, 25)
+				new HeroSelectButton("Test Hero", 0, 100, 100, 50, 25),
+				new HeroSelectButton("Sugoi", 1, 175, 100, 50, 25)
 		};
 		stateButtons = new StateChangeButton[] {
 				new StateChangeButton("Back", Engine.MenuStateID, 50, 600, 100, 50, sbg)
@@ -100,12 +99,14 @@ public class HeroSelectState extends BasicGameState {
 			if(in.isKeyPressed(Settings.Player1Shoot)) {
 				player1SelectedHero = player1HighlightedHero;
 				heroButtons[player1HighlightedHero].selectedByPlayer1 = true;
+				Settings.Player1Hero = heroButtons[player1HighlightedHero].heroID;
 			}
 		}
 		else {
 			if(in.isKeyPressed(Settings.Player1Shoot)) {
 				player1SelectedHero = -1;
 				heroButtons[player1HighlightedHero].selectedByPlayer1 = false;
+				Settings.Player1Hero = -1;
 			}
 		}
 
@@ -130,12 +131,14 @@ public class HeroSelectState extends BasicGameState {
 			if(in.isKeyPressed(Settings.Player2Shoot)) {
 				player2SelectedHero = player2HighlightedHero;
 				heroButtons[player2HighlightedHero].selectedByPlayer2 = true;
+				Settings.Player2Hero = heroButtons[player2HighlightedHero].heroID;
 			}
 		}
 		else {
 			if(in.isKeyPressed(Settings.Player2Shoot)) {
 				player1SelectedHero = -1;
 				heroButtons[player2HighlightedHero].selectedByPlayer2 = false;
+				Settings.Player2Hero = -1;
 			}
 		}
 	}
