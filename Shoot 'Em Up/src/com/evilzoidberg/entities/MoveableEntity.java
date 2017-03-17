@@ -15,6 +15,7 @@ public class MoveableEntity extends Entity {
 	float dxMax = 500.0f, dyMax = 2000.0f;
 	boolean onGround = false;
 	boolean affectedByGravity = true;
+	boolean collidedThisTurn = false;
 
 	public MoveableEntity(Image image, float x, float y, int width, int height, float offsetX, float offsetY) {
 		super(image, x, y, width, height, offsetX, offsetY);
@@ -34,6 +35,8 @@ public class MoveableEntity extends Entity {
 		 */
 		//Turn delta to a fraction of a second
 		float delta = ((float)deltaInt) / 1000.0f;
+		
+		collidedThisTurn = false;
 		
 		if(affectedByGravity) {
 			ddy = Settings.Gravity;
@@ -74,6 +77,7 @@ public class MoveableEntity extends Entity {
 				x++;
 				if(collidesWithSomething(mapEntities)) {
 					//Collision on right
+					collidedThisTurn = true;
 					float oldX = x;
 					x = (float)Math.floor(x);
 					if(x == oldX) {
@@ -90,6 +94,7 @@ public class MoveableEntity extends Entity {
 				x--;
 				if(collidesWithSomething(mapEntities)) {
 					//Collision on left
+					collidedThisTurn = true;
 					float oldX = x;
 					x = (float)Math.ceil(x);
 					if(x == oldX) {
@@ -111,6 +116,7 @@ public class MoveableEntity extends Entity {
 				y++;
 				if(collidesWithSomething(mapEntities)) {
 					//Collision below
+					collidedThisTurn = true;
 					float oldY = y;
 					y = (float)Math.floor(y);
 					if(y == oldY) {
@@ -127,6 +133,7 @@ public class MoveableEntity extends Entity {
 				y--;
 				if(collidesWithSomething(mapEntities)) {
 					//Collision above
+					collidedThisTurn = true;
 					float oldY = y;
 					y = (float)Math.ceil(y);
 					if(y == oldY) {
@@ -145,18 +152,22 @@ public class MoveableEntity extends Entity {
 		if(x < 0.0f) {
 			x = 0.0f;
 			dx = 0.0f;
+			collidedThisTurn = true;
 		}
 		if(x > Settings.WindowWidth - width) {
 			x = Settings.WindowWidth - width;
 			dx = 0.0f;
+			collidedThisTurn = true;
 		}
 		if(y < 0.0f) {
 			y = 0.0f;
 			dy = 0.0f;
+			collidedThisTurn = true;
 		}
 		if(y > Settings.WindowHeight - height) {
 			y = Settings.WindowHeight - height;
 			dy = 0.0f;
+			collidedThisTurn = true;
 		}
 		
 		//Check if on ground

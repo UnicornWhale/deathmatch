@@ -29,8 +29,8 @@ public class HeroSelectState extends BasicGameState {
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 		heroButtons = new HeroSelectButton[] {
-				new HeroSelectButton("Test Hero", 0, 100, 100, 50, 25),
-				new HeroSelectButton("Sugoi", 1, 175, 100, 50, 25)
+				new HeroSelectButton("Sugoi", 1, 100, 100, 50, 25),
+				new HeroSelectButton("Brawn", 2, 175, 100, 50, 25)
 		};
 		stateButtons = new StateChangeButton[] {
 				new StateChangeButton("Back", Engine.MenuStateID, 50, 600, 100, 50, sbg)
@@ -63,8 +63,8 @@ public class HeroSelectState extends BasicGameState {
 		
 		//Start game
 		if(player1SelectedHero != -1 && player2SelectedHero != -1) {
-			Settings.Player1Hero = player1SelectedHero;
-			Settings.Player2Hero = player2SelectedHero;
+			Settings.Player1Hero = heroButtons[player1SelectedHero].heroID;
+			Settings.Player2Hero = heroButtons[player2SelectedHero].heroID;
 			sbg.enterState(Engine.PlayStateID);
 		}
 		
@@ -99,7 +99,6 @@ public class HeroSelectState extends BasicGameState {
 			if(in.isKeyPressed(Settings.Player1Shoot)) {
 				player1SelectedHero = player1HighlightedHero;
 				heroButtons[player1HighlightedHero].selectedByPlayer1 = true;
-				Settings.Player1Hero = heroButtons[player1HighlightedHero].heroID;
 			}
 		}
 		else {
@@ -131,7 +130,6 @@ public class HeroSelectState extends BasicGameState {
 			if(in.isKeyPressed(Settings.Player2Shoot)) {
 				player2SelectedHero = player2HighlightedHero;
 				heroButtons[player2HighlightedHero].selectedByPlayer2 = true;
-				Settings.Player2Hero = heroButtons[player2HighlightedHero].heroID;
 			}
 		}
 		else {

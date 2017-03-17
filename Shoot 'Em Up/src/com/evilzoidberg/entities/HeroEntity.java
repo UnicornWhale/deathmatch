@@ -12,11 +12,12 @@ import com.evilzoidberg.utility.ImageLoader;
 
 @SuppressWarnings("serial")
 public class HeroEntity extends MoveableEntity {
+	public boolean alive = true;
 	boolean facingRight = true;
 	float walkSpeed = 800.0f;
 	float aerialDriftAcceleration = 5000.0f;
-	float jumpVelocity = -2500.0f; //Jumps go up, so is negative
-	float currentHealth = 100, maxHealth = 100;
+	float jumpVelocity = -2200.0f; //Jumps go up, so is negative
+	float currentHealth = 10, maxHealth = 10;
 	int up, down, left, right, shoot;
 	int healthBarLength = Settings.TileSize;
 	int healthBarHeight = 8;
@@ -36,6 +37,7 @@ public class HeroEntity extends MoveableEntity {
 			left = Settings.Player2Left;
 			right = Settings.Player2Right;
 			shoot = Settings.Player2Shoot;
+			facingRight = false;
 		}
 	}
 
@@ -99,6 +101,21 @@ public class HeroEntity extends MoveableEntity {
 		
 		//Use MoveableEntity logic for movement
 		updatePhysics(delta, mapEntities);
+		
+		//Check projectile collisions
+		for(int i = 0; i < projectiles.size(); i++) {
+			if(projectiles.get(i).intersects(this)) {
+				projectiles.get(i).onHit(this);
+			}
+		}
+		
+		if(currentHealth <= 0) {
+			alive = false;
+		}
+	}
+	
+	public void damage(int damage) {
+		currentHealth -= damage;
 	}
 	
 	@Override
@@ -106,7 +123,7 @@ public class HeroEntity extends MoveableEntity {
 		paint(g, facingRight);
 		
 		//Draw Health bar
-		int currentHealthBarLength = (int)(((double)currentHealth / 100.0) * (double)healthBarLength);
+		int currentHealthBarLength = (int)(((double)currentHealth / maxHealth) * (double)healthBarLength);
 		g.setColor(Color.red);
 		g.fillRect((x + (width / 2)) - (healthBarLength / 2), y - (healthBarHeight * 2), healthBarLength, healthBarHeight);
 		g.setColor(Color.green);
@@ -123,6 +140,9 @@ public class HeroEntity extends MoveableEntity {
 		
 		if(heroNumber == 1) {
 			return new Sugoi(playerNumber, startX, startY);
+		}
+		else if(heroNumber == 2) {
+			return new Brawn(playerNumber, startX, startY);
 		}
 		return new HeroEntity(ImageLoader.getImage(Settings.TestHeroImagePath), playerNumber, startX, startY, 24, 50, -13.0f, -7.0f);
 	}

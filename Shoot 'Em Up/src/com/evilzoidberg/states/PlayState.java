@@ -9,16 +9,18 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import com.evilzoidberg.Settings;
+import com.evilzoidberg.entities.Giblet;
 import com.evilzoidberg.entities.HeroEntity;
+import com.evilzoidberg.entities.MoveableEntity;
 import com.evilzoidberg.entities.ProjectileEntity;
 import com.evilzoidberg.maploader.Map;
 
 public class PlayState extends BasicGameState {
 	int id;
-	HeroEntity player1;
-	HeroEntity player2;
+	ArrayList<HeroEntity> heroes;
 	Map map;
 	ArrayList<ProjectileEntity> projectiles = new ArrayList<ProjectileEntity>();
+	ArrayList<MoveableEntity> otherEntities = new ArrayList<MoveableEntity>();
 	boolean mapAndPlayersInitialized = false; //Init method is called at start of program, so work around it
 	
 	public PlayState(int id) {
@@ -27,8 +29,9 @@ public class PlayState extends BasicGameState {
 
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
-		player1 = HeroEntity.getHeroByNumber(1, Settings.Player1Hero);
-		player2 = HeroEntity.getHeroByNumber(2, Settings.Player2Hero);
+		heroes = new ArrayList<HeroEntity>();
+		heroes.add(HeroEntity.getHeroByNumber(1, Settings.Player1Hero));
+		heroes.add(HeroEntity.getHeroByNumber(2, Settings.Player2Hero));
 		map = new Map(Settings.TestMap);
 	}
 
@@ -40,8 +43,20 @@ public class PlayState extends BasicGameState {
 		for(int i = 0; i < map.tiles.size(); i++) {
 			map.tiles.get(i).paint(g);
 		}
-		player1.paint(g);
-		player2.paint(g);
+		
+		for(int i = 0; i < heroes.size(); i++) {
+			if(heroes.get(i).alive) {
+				heroes.get(i).paint(g);
+			}
+		}
+		
+		for(int i = 0; i < projectiles.size(); i++) {
+			projectiles.get(i).paint(g);
+		}
+		
+		for(int i = 0; i < otherEntities.size(); i++) {
+			otherEntities.get(i).paint(g);
+		}
 	}
 
 	@Override
@@ -53,9 +68,38 @@ public class PlayState extends BasicGameState {
 			init(gc, sbg);
 			mapAndPlayersInitialized = true;
 		}
+
+		//Update and cull projectiles
+		for(int i = projectiles.size() - 1; i >= 0; i--) {
+			projectiles.get(i).updatePhysics(delta, map.collideableTiles);
+			if(!projectiles.get(i).active) {
+				projectiles.remove(i);
+			}
+		}
+
+		//Update heroes
+		for(int i = 0; i < heroes.size(); i++) {
+			if(heroes.get(i).alive) {
+				heroes.get(i).update(gc.getInput(), delta, map.collideableTiles, projectiles);
+			}
+			else {
+				for(int n = 0; n < 10; n++) {
+					otherEntities.add(new Giblet(heroes.get(i).getX() + (heroes.get(i).getWidth() / 2), heroes.get(i).getY() + (heroes.get(i).getHeight() / 2)));
+				}
+			}
+		}
+
+		//Cull heroes
+		for(int i = heroes.size() - 1; i >= 0; i--) {
+			if(!heroes.get(i).alive) {
+				heroes.remove(i);
+			}
+		}
 		
-		player1.update(gc.getInput(), delta, map.collideableTiles, projectiles);
-		player2.update(gc.getInput(), delta, map.collideableTiles, projectiles);
+		//Update giblets
+		for(int i = 0; i < otherEntities.size(); i++) {
+			otherEntities.get(i).updatePhysics(delta, map.collideableTiles);
+		}
 	}
 
 	@Override

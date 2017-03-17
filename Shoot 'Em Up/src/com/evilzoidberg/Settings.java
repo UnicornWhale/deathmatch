@@ -11,7 +11,7 @@ public class Settings {
 	public static int WindowHeight = 12 * TileSize;
 	
 	//Universal Gravitation
-	public static float Gravity = 10000.0f;
+	public static float Gravity = 8000.0f;
 
 	//Player 1 Controls
 	public static Color Player1Color = Color.red;
@@ -37,7 +37,7 @@ public class Settings {
 	public static int Player1StartX = 100;
 	public static int Player1StartY = 100;
 	
-	public static int Player2StartX = 928;
+	public static int Player2StartX = WindowWidth - 100;
 	public static int Player2StartY = 100;
 
 	//Map Paths
@@ -50,4 +50,9 @@ public class Settings {
 	//Hero Image Paths
 	public static String TestHeroImagePath = "img/cowboy.png";
 	public static String SugoiImagePath = "img/sugoi.png";
+	public static String BrawnImagePath = "img/brawn.png";
+	
+	//Projectile Image Paths
+	public static String ShurikenImagePath = "img/shuriken.png";
+	public static String BulletImagePath = "img/bullet.png";
 }
