@@ -23,8 +23,8 @@ public class PlayState extends BasicGameState {
 
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
-		player1 = new HeroEntity(ImageLoader.getImage("img/cowboy.png"), 1, 100.0f, 100.0f, 24, 50, -25.0f, -7.0f);
-		player2 = new HeroEntity(ImageLoader.getImage("img/cowboy.png"), 2, 300.0f, 100.0f, 24, 50, -25.0f, -7.0f);
+		player1 = new HeroEntity(ImageLoader.getImage("img/cowboy.png"), 1, 100.0f, 100.0f, 24, 50, -13.0f, -7.0f);
+		player2 = new HeroEntity(ImageLoader.getImage("img/cowboy.png"), 2, 300.0f, 100.0f, 24, 50, -13.0f, -7.0f);
 		map = new Map(Settings.TestMap);
 	}
 

@@ -2,6 +2,8 @@ package com.evilzoidberg.entities;
 
 import java.util.ArrayList;
 
+import org.newdawn.slick.Color;
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
 import com.evilzoidberg.Settings;
@@ -179,5 +181,27 @@ public class MoveableEntity extends Entity {
 			}
 		}
 		return false;
+	}
+	
+	@Override
+	public void paint(Graphics g) {
+		super.paint(g);
+
+		//Draw hitboxes for debugging
+		if(Settings.debug) {
+			g.setColor(Color.blue);
+			g.drawRect(x, y, width, height);
+		}
+	}
+	
+	@Override
+	public void paint(Graphics g, boolean facingRight) {
+		super.paint(g, facingRight);
+
+		//Draw hitboxes for debugging
+		if(Settings.debug) {
+			g.setColor(Color.blue);
+			g.drawRect(x, y, width, height);
+		}
 	}
 }

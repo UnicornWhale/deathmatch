@@ -2,7 +2,7 @@ TODO:
 	- Add shooting/death/victory screen (just one generic class for now that shoots generic bullets, also involves writing projectile class)
 	- Deal with resolution. Either lock resolution and set the screen to that resolution always, or set up a way to deal with multiple resolutions and a place to change them.
 	- Add animations and a way to play them along with the delta time. I think slick has a way to do this easily.
-	- Better artwork and add animations/images facing left or right correctly. Figure out how to deal with hitboxes when flipping image so it stays lined up with image properly.
+	- Better artwork.
 	- Add different classes (list below)
 	- Add capability for up to four players (and possibly a way to set teams?)
 	- Add configurable controls (bonus to make sure game pads work as controllers. I think they should by default with slick)

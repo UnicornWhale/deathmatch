@@ -2,6 +2,7 @@ package com.evilzoidberg.entities;
 
 import java.util.ArrayList;
 
+import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 
@@ -9,6 +10,7 @@ import com.evilzoidberg.Settings;
 
 @SuppressWarnings("serial")
 public class HeroEntity extends MoveableEntity {
+	boolean facingRight = true;
 	float walkSpeed = 800.0f;
 	float aerialDriftAcceleration = 5000.0f;
 	float jumpVelocity = -2500.0f; //Jumps go up, so is negative
@@ -66,9 +68,11 @@ public class HeroEntity extends MoveableEntity {
 			ddx = 0.0f;
 			if(in.isKeyDown(right) && !in.isKeyDown(left)) {
 				dx = walkSpeed;
+				facingRight = true;
 			}
 			else if(in.isKeyDown(left) && !in.isKeyDown(right)) {
 				dx = walkSpeed * -1.0f;
+				facingRight = false;
 			}
 			else {
 				dx = 0.0f;
@@ -89,5 +93,10 @@ public class HeroEntity extends MoveableEntity {
 		
 		//Use MoveableEntity logic for movement
 		updatePhysics(delta, mapEntities);
+	}
+	
+	@Override
+	public void paint(Graphics g) {
+		paint(g, facingRight);
 	}
 }
