@@ -82,9 +82,12 @@ public class PlayState extends BasicGameState {
 			if(heroes.get(i).alive) {
 				heroes.get(i).update(gc.getInput(), delta, map.collideableTiles, projectiles);
 			}
-			else {
+			if(!heroes.get(i).alive) {
 				for(int n = 0; n < 10; n++) {
-					otherEntities.add(new Giblet(heroes.get(i).getX() + (heroes.get(i).getWidth() / 2), heroes.get(i).getY() + (heroes.get(i).getHeight() / 2)));
+					float spawnX = heroes.get(i).getX() + (heroes.get(i).getWidth() / 2.0f);
+					float spawnY = heroes.get(i).getY() + (heroes.get(i).getHeight() / 2.0f);
+					System.out.println("Spawning new giblet at " + spawnX + ", " + spawnY);
+					otherEntities.add(new Giblet(spawnX, spawnY));
 				}
 			}
 		}
@@ -92,6 +95,7 @@ public class PlayState extends BasicGameState {
 		//Cull heroes
 		for(int i = heroes.size() - 1; i >= 0; i--) {
 			if(!heroes.get(i).alive) {
+				System.out.println("Removing dead hero");
 				heroes.remove(i);
 			}
 		}
