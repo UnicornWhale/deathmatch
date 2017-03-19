@@ -19,6 +19,7 @@ public class HeroSelectState extends BasicGameState {
 	int player2SelectedHero = -1;
 	int player1HighlightedHero = 0;
 	int player2HighlightedHero = 1;
+	int waitCounter = 0;
 	
 	private int id;
 	
@@ -61,8 +62,16 @@ public class HeroSelectState extends BasicGameState {
 		 */
 		Input in = gc.getInput();
 		
-		//Start game
+		//Update wait timer
 		if(player1SelectedHero != -1 && player2SelectedHero != -1) {
+			waitCounter += delta;
+		}
+		else {
+			waitCounter = 0;
+		}
+		
+		//Start game
+		if(waitCounter >= Settings.waitOnCharacterSelect) {
 			Settings.Player1Hero = heroButtons[player1SelectedHero].heroID;
 			Settings.Player2Hero = heroButtons[player2SelectedHero].heroID;
 			sbg.enterState(Engine.PlayStateID);

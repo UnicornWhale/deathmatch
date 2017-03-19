@@ -8,6 +8,7 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import com.evilzoidberg.Engine;
 import com.evilzoidberg.Settings;
 import com.evilzoidberg.entities.Giblet;
 import com.evilzoidberg.entities.HeroEntity;
@@ -16,7 +17,7 @@ import com.evilzoidberg.entities.ProjectileEntity;
 import com.evilzoidberg.maploader.Map;
 
 public class PlayState extends BasicGameState {
-	int id;
+	int id, waitCounter = 0;
 	ArrayList<HeroEntity> heroes;
 	Map map;
 	ArrayList<ProjectileEntity> projectiles = new ArrayList<ProjectileEntity>();
@@ -67,6 +68,15 @@ public class PlayState extends BasicGameState {
 		if(!mapAndPlayersInitialized) {
 			init(gc, sbg);
 			mapAndPlayersInitialized = true;
+		}
+		
+		//Check Victory
+		if(heroes.size() == 1) {
+			waitCounter += delta;
+			
+			if(waitCounter >= Settings.waitOnVictory) {
+				sbg.enterState(Engine.HeroSelectStateID);
+			}
 		}
 
 		//Update and cull projectiles

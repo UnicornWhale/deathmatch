@@ -12,6 +12,10 @@ public class Settings {
 	
 	//Universal Gravitation
 	public static float Gravity = 8000.0f;
+	
+	//Wait times
+	public static int waitOnCharacterSelect = 1000;
+	public static int waitOnVictory = 1000;
 
 	//Player 1 Controls
 	public static Color Player1Color = Color.red;
