@@ -2,6 +2,7 @@ package com.evilzoidberg.entities;
 
 import java.util.ArrayList;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 
@@ -14,6 +15,20 @@ public class ProjectileEntity extends MoveableEntity {
 
 	public ProjectileEntity(Image image, float x, float y, int width, int height, float offsetX, float offsetY, boolean goesRight, HeroEntity parent) {
 		super(image, x, y, width, height, offsetX, offsetY);
+		this.parent = parent;
+		this.goesRight = goesRight;
+		affectedByGravity = false;
+		if(goesRight) {
+			dx = speed;
+		}
+		else {
+			dx = speed * -1;
+		}
+		dxMax = 999999; //Projectiles can go faster than everything else
+	}
+
+	public ProjectileEntity(Animation animation, float x, float y, int width, int height, float offsetX, float offsetY, boolean goesRight, HeroEntity parent) {
+		super(animation, x, y, width, height, offsetX, offsetY);
 		this.parent = parent;
 		this.goesRight = goesRight;
 		affectedByGravity = false;

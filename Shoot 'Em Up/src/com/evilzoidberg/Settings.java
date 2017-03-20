@@ -16,6 +16,9 @@ public class Settings {
 	//Wait times
 	public static int waitOnCharacterSelect = 1000;
 	public static int waitOnVictory = 1000;
+	
+	//Animation fps
+	public static int AnimationsFPS = 10;
 
 	//Player 1 Controls
 	public static Color Player1Color = Color.red;
@@ -48,15 +51,21 @@ public class Settings {
 	public static String TestMap = "maps/test_map.txt";
 	
 	//Tile Image Paths
-	public static String BackgroundTilePath = "img/background_tile.png";
-	public static String PlatformTilePath = "img/platform_tile.png";
+	public static String BackgroundTilePath = "img/map/background_tile.png";
+	public static String PlatformTilePath = "img/map/platform_tile.png";
 	
-	//Hero Image Paths
-	public static String TestHeroImagePath = "img/cowboy.png";
-	public static String SugoiImagePath = "img/sugoi.png";
-	public static String BrawnImagePath = "img/brawn.png";
+	//Giblet Image Path
+	public static String GibletImagePath = "img/giblet.png";
 	
-	//Projectile Image Paths
-	public static String ShurikenImagePath = "img/shuriken.png";
-	public static String BulletImagePath = "img/bullet.png";
+	//Sugoi Image Paths
+	public static String SugoiImagePath = "img/sugoi/sugoi.png";
+	public static String ShurikenImagePath = "img/sugoi/shuriken.png";
+	
+	//Brawn Image Paths
+	public static String BrawnIdleAnimationPath = "img/brawn/brawn_idle.png";
+	public static String BrawnJumpAnimationPath = "img/brawn/brawn_jump.png";
+	public static String BrawnRisingAnimationPath = "img/brawn/brawn_rising.png";
+	public static String BrawnFallingAnimationPath = "img/brawn/brawn_falling.png";
+	public static String BrawnShootingAnimationPath = "img/brawn/brawn_shoot.png";
+	public static String PlasmaBlastAnimationPath = "img/brawn/brawn_bullet.png";
 }

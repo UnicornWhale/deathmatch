@@ -1,10 +1,14 @@
 TODO:
-	- Add in the existing classes abilities. Also entails finding controls for them somewhere. Probably also involves setting up some sort of recognizable "state" variable for each class, and possibly one for hero entities as a whole.
+	- Add a state system to manage which animations the heroes are playing and also what they can/can't do from each state
+	- Add in the existing classes abilities. Also entails finding controls for them somewhere.
 	- Deal with resolution. Either lock resolution and set the screen to that resolution always, or set up a way to deal with multiple resolutions and a place to change them.
-	- Add animations and a way to play them along with the delta time. I think slick has a way to do this easily.
-	- Original artwork. Also sounds.
 	- Add capability for up to four players (and possibly a way to set teams?)
 	- Add configurable controls (bonus to make sure game pads work as controllers. I think they should by default with slick)
+	- Add sound/make sounds for the game.
+	
+	
+BUG-FIXING:
+	- Go through each state and look at interactions that happen with the init method only being called once and not each time the state is entered.
 	
 	
 	

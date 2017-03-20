@@ -6,7 +6,7 @@ import org.newdawn.slick.Input;
 
 import com.evilzoidberg.Settings;
 import com.evilzoidberg.utility.Cooldown;
-import com.evilzoidberg.utility.ImageLoader;
+import com.evilzoidberg.utility.MediaLoader;
 
 @SuppressWarnings("serial")
 public class Sugoi extends HeroEntity {
@@ -16,7 +16,7 @@ public class Sugoi extends HeroEntity {
 	Cooldown shurikenCooldown = new Cooldown(500);
 
 	public Sugoi(int playerNumber, float x, float y) {
-		super(ImageLoader.getImage(Settings.SugoiImagePath), playerNumber, x, y, 24, 54, -20.0f, -5.0f);
+		super(MediaLoader.getImage(Settings.SugoiImagePath), playerNumber, x, y, 24, 54, -20.0f, -5.0f);
 		maxHealth = 3;
 		currentHealth = 3;
 	}

@@ -2,13 +2,13 @@ package com.evilzoidberg.entities;
 
 import java.util.ArrayList;
 
-import org.newdawn.slick.Color;
-import org.newdawn.slick.Graphics;
+import com.evilzoidberg.Settings;
+import com.evilzoidberg.utility.MediaLoader;
 
 @SuppressWarnings("serial")
 public class Giblet extends MoveableEntity {
 	public Giblet(float x, float y) {
-		super(x, y, 5, 5, 0, 0);
+		super(MediaLoader.getImage(Settings.GibletImagePath), x, y, 5, 5, 0, 0);
 		dy = (float)(Math.random() * -1000.0);
 		if(Math.random() > 0.5) {
 			dx = (float)(Math.random() * 200.0);
@@ -25,11 +25,5 @@ public class Giblet extends MoveableEntity {
 		if(onGround) {
 			dx = 0.0f;
 		}
-	}
-	
-	@Override
-	public void paint(Graphics g) {
-		g.setColor(Color.red);
-		g.fillRect(x, y, width, height);
 	}
 }

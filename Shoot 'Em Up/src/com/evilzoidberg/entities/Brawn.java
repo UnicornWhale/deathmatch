@@ -6,14 +6,14 @@ import org.newdawn.slick.Input;
 
 import com.evilzoidberg.Settings;
 import com.evilzoidberg.utility.Cooldown;
-import com.evilzoidberg.utility.ImageLoader;
+import com.evilzoidberg.utility.MediaLoader;
 
 @SuppressWarnings("serial")
 public class Brawn extends HeroEntity {
 	Cooldown bulletCooldown = new Cooldown(200);
-
+	
 	public Brawn(int playerNumber, float x, float y) {
-		super(ImageLoader.getImage(Settings.BrawnImagePath), playerNumber, x, y, 24, 47, -19.0f, -8.0f);
+		super(MediaLoader.getAnimation(Settings.BrawnIdleAnimationPath, 64, 64), playerNumber, x, y, 35, 60, -10.0f, -5.0f);
 		maxHealth = 5;
 		currentHealth = 5;
 	}
@@ -35,7 +35,7 @@ public class Brawn extends HeroEntity {
 				projectileX = (int)(x - 5.0f);
 			}
 			int projectileY = (int)(y + (height / 2.0f)) - 3;
-			projectiles.add(new Bullet(projectileX, projectileY, facingRight, this));
+			projectiles.add(new PlasmaBlast(projectileX, projectileY, facingRight, this));
 		}
 	}
 }

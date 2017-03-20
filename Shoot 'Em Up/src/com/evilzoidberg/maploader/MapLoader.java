@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import com.evilzoidberg.Settings;
-import com.evilzoidberg.utility.ImageLoader;
+import com.evilzoidberg.utility.MediaLoader;
 
 public class MapLoader {
 	public static ArrayList<Tile> loadMap(String path) {
@@ -21,10 +21,10 @@ public class MapLoader {
 			    char[] chars = line.toCharArray();
 			    for(int x = 0; x < chars.length; x++) {
 			    	if(chars[x] == 'X') {
-			    		map.add(new Tile(ImageLoader.getImage(Settings.BackgroundTilePath), x * Settings.TileSize, y * Settings.TileSize, false));
+			    		map.add(new Tile(MediaLoader.getImage(Settings.BackgroundTilePath), x * Settings.TileSize, y * Settings.TileSize, false));
 			    	}
 			    	else {
-			    		map.add(new Tile(ImageLoader.getImage(Settings.PlatformTilePath), x * Settings.TileSize, y * Settings.TileSize, true));
+			    		map.add(new Tile(MediaLoader.getImage(Settings.PlatformTilePath), x * Settings.TileSize, y * Settings.TileSize, true));
 			    	}
 			    }
 			    y++;

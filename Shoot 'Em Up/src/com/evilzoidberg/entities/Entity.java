@@ -1,6 +1,6 @@
 package com.evilzoidberg.entities;
 
-import org.newdawn.slick.Color;
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Rectangle;
@@ -8,6 +8,7 @@ import org.newdawn.slick.geom.Rectangle;
 @SuppressWarnings("serial")
 public class Entity extends Rectangle {
 	Image image = null;
+	Animation currentAnimation;
 	float offsetX, offsetY;
 	
 	public Entity(Image image, float x, float y, int width, int height, float offsetX, float offsetY) {
@@ -17,11 +18,18 @@ public class Entity extends Rectangle {
 		this.offsetY = offsetY;
 	}
 	
-	public Entity(float x, float y, int width, int height, float offsetX, float offsetY) {
+	public Entity(Animation animation, float x, float y, int width, int height, float offsetX, float offsetY) {
 		super(x, y, width, height);
 		this.image = null;
+		this.currentAnimation = animation;
 		this.offsetX = offsetX;
 		this.offsetY = offsetY;
+	}
+	
+	public void update(int delta) {
+		if(currentAnimation != null) {
+			currentAnimation.update(delta);
+		}
 	}
 	
 	public void paint(Graphics g) {
@@ -31,11 +39,10 @@ public class Entity extends Rectangle {
 		 * will be drawn in blue.
 		 */
 		if(image != null) {
-			g.drawImage(image, x + offsetX, y + offsetY);
+			image.draw(x + offsetX, y + offsetY);
 		}
 		else {
-			g.setColor(Color.red);
-			g.fillRect(x + offsetX, y + offsetY, width, height);
+			currentAnimation.draw(x + offsetX, y + offsetY);
 		}
 	}
 	
@@ -51,18 +58,17 @@ public class Entity extends Rectangle {
 				image.draw(x + offsetX, y + offsetY);
 			}
 			else {
-				g.setColor(Color.red);
-				g.fillRect(x + offsetX, y + offsetY, width, height);
+				currentAnimation.getCurrentFrame().draw(x + offsetX, y + offsetY);
 			}
 		}
 		else {
-			int newOffset = (int)(-1.0f * (image.getWidth() - (width - offsetX)));
 			if(image != null) {
+				int newOffset = (int)(-1.0f * (image.getWidth() - (width - offsetX)));
 				image.getFlippedCopy(true, false).draw(x + newOffset, y + offsetY);
 			}
 			else {
-				g.setColor(Color.red);
-				g.fillRect(x + newOffset, y + offsetY, width, height);
+				int newOffset = (int)(-1.0f * (currentAnimation.getWidth() - (width - offsetX)));
+				currentAnimation.getCurrentFrame().getFlippedCopy(true, false).draw(x + newOffset, y + offsetY);
 			}
 		}
 	}

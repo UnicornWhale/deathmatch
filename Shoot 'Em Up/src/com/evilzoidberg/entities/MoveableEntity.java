@@ -2,6 +2,7 @@ package com.evilzoidberg.entities;
 
 import java.util.ArrayList;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -21,8 +22,13 @@ public class MoveableEntity extends Entity {
 		super(image, x, y, width, height, offsetX, offsetY);
 	}
 
-	public MoveableEntity(float x, float y, int width, int height, float offsetX, float offsetY) {
-		super(x, y, width, height, offsetX, offsetY);
+	public MoveableEntity(Animation animation, float x, float y, int width, int height, float offsetX, float offsetY) {
+		super(animation, x, y, width, height, offsetX, offsetY);
+	}
+	
+	public void update(int delta, ArrayList<Entity> mapEntities) {
+		super.update(delta);
+		updatePhysics(delta, mapEntities);
 	}
 
 	public void updatePhysics(int deltaInt, ArrayList<Entity> mapEntities) {

@@ -2,13 +2,13 @@ package com.evilzoidberg.entities;
 
 import java.util.ArrayList;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 
 import com.evilzoidberg.Settings;
-import com.evilzoidberg.utility.ImageLoader;
 
 @SuppressWarnings("serial")
 public class HeroEntity extends MoveableEntity {
@@ -41,8 +41,8 @@ public class HeroEntity extends MoveableEntity {
 		}
 	}
 
-	public HeroEntity(int playerNumber, float x, float y, int width, int height, float offsetX, float offsetY) {
-		super(x, y, width, height, offsetX, offsetY);
+	public HeroEntity(Animation animation, int playerNumber, float x, float y, int width, int height, float offsetX, float offsetY) {
+		super(animation, x, y, width, height, offsetX, offsetY);
 		if(playerNumber == 1) {
 			up = Settings.Player1Up;
 			down = Settings.Player1Down;
@@ -100,7 +100,7 @@ public class HeroEntity extends MoveableEntity {
 		}
 		
 		//Use MoveableEntity logic for movement
-		updatePhysics(delta, mapEntities);
+		super.update(delta, mapEntities);
 		
 		//Check projectile collisions
 		for(int i = 0; i < projectiles.size(); i++) {
@@ -131,6 +131,10 @@ public class HeroEntity extends MoveableEntity {
 	}
 	
 	public static HeroEntity getHeroByNumber(int playerNumber, int heroNumber) {
+		/**
+		 * Returns a hero object based on the hero number passed to this. If the hero number isn't
+		 * valid, it returns null.
+		 */
 		int startX = Settings.Player1StartX;
 		int startY = Settings.Player1StartY;
 		if(playerNumber == 2) {
@@ -144,6 +148,6 @@ public class HeroEntity extends MoveableEntity {
 		else if(heroNumber == 2) {
 			return new Brawn(playerNumber, startX, startY);
 		}
-		return new HeroEntity(ImageLoader.getImage(Settings.TestHeroImagePath), playerNumber, startX, startY, 24, 50, -13.0f, -7.0f);
+		return null;
 	}
 }

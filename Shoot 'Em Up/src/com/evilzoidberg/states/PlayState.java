@@ -75,6 +75,7 @@ public class PlayState extends BasicGameState {
 			waitCounter += delta;
 			
 			if(waitCounter >= Settings.waitOnVictory) {
+				mapAndPlayersInitialized = false;
 				sbg.enterState(Engine.HeroSelectStateID);
 			}
 		}
@@ -96,7 +97,6 @@ public class PlayState extends BasicGameState {
 				for(int n = 0; n < 10; n++) {
 					float spawnX = heroes.get(i).getX() + (heroes.get(i).getWidth() / 2.0f);
 					float spawnY = heroes.get(i).getY() + (heroes.get(i).getHeight() / 2.0f);
-					System.out.println("Spawning new giblet at " + spawnX + ", " + spawnY);
 					otherEntities.add(new Giblet(spawnX, spawnY));
 				}
 			}
@@ -105,14 +105,13 @@ public class PlayState extends BasicGameState {
 		//Cull heroes
 		for(int i = heroes.size() - 1; i >= 0; i--) {
 			if(!heroes.get(i).alive) {
-				System.out.println("Removing dead hero");
 				heroes.remove(i);
 			}
 		}
 		
 		//Update giblets
 		for(int i = 0; i < otherEntities.size(); i++) {
-			otherEntities.get(i).updatePhysics(delta, map.collideableTiles);
+			otherEntities.get(i).update(delta, map.collideableTiles);
 		}
 	}
 
