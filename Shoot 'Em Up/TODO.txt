@@ -5,6 +5,7 @@ TODO:
 	- Add capability for up to four players (and possibly a way to set teams?)
 	- Add configurable controls (bonus to make sure game pads work as controllers. I think they should by default with slick)
 	- Add sound/make sounds for the game.
+	- Add map selection after character selection and add more maps.
 	
 	
 BUG-FIXING:
