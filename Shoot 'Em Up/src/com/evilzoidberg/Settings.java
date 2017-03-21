@@ -4,7 +4,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Input;
 
 public class Settings {
-	public static boolean debug = true;
+	public static boolean debug = false;
 	
 	public static int TileSize = 64;
 	public static int WindowWidth = 20 * TileSize;
@@ -58,14 +58,15 @@ public class Settings {
 	public static String GibletImagePath = "img/giblet.png";
 	
 	//Sugoi Image Paths
-	public static String SugoiImagePath = "img/sugoi/sugoi.png";
-	public static String ShurikenImagePath = "img/sugoi/shuriken.png";
+	public static String SugoiIdleAnimationPath = "img/sugoi/sugoi_idle.png";
+	public static String SugoiShootAnimationPath = "img/sugoi/sugoi_idle.png";
+	public static String ShurikenAnimationPath = "img/sugoi/shuriken.png";
 	
 	//Brawn Image Paths
 	public static String BrawnIdleAnimationPath = "img/brawn/brawn_idle.png";
 	public static String BrawnJumpAnimationPath = "img/brawn/brawn_jump.png";
 	public static String BrawnRisingAnimationPath = "img/brawn/brawn_rising.png";
 	public static String BrawnFallingAnimationPath = "img/brawn/brawn_falling.png";
-	public static String BrawnShootingAnimationPath = "img/brawn/brawn_shoot.png";
+	public static String BrawnShootAnimationPath = "img/brawn/brawn_shoot.png";
 	public static String PlasmaBlastAnimationPath = "img/brawn/brawn_bullet.png";
 }

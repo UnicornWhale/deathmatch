@@ -18,6 +18,7 @@ TODO:
 	
 BUG-FIXING:
 	- Go through each state and look at interactions that happen with the init method only being called once and not each time the state is entered.
+	- (Kyle probably but Duncan maybe depending on if it's needed for state stuff) Added shooting animations, but they don't play right. Fix it.
 	
 	
 	

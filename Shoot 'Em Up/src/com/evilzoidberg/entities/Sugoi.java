@@ -2,6 +2,7 @@ package com.evilzoidberg.entities;
 
 import java.util.ArrayList;
 
+import org.newdawn.slick.Animation;
 import org.newdawn.slick.Input;
 
 import com.evilzoidberg.Settings;
@@ -14,11 +15,15 @@ public class Sugoi extends HeroEntity {
 	int timeSinceLastOnGround = 0;
 	int minAirTimeBeforeDoubleJump = 100;
 	Cooldown shurikenCooldown = new Cooldown(500);
+	static Animation idleAnimation = MediaLoader.getAnimation(Settings.SugoiIdleAnimationPath, 64, 64);
+	static Animation shootAnimation = MediaLoader.getAnimation(Settings.SugoiShootAnimationPath, 64, 64);
 
 	public Sugoi(int playerNumber, float x, float y) {
-		super(MediaLoader.getImage(Settings.SugoiImagePath), playerNumber, x, y, 24, 54, -20.0f, -5.0f);
+		super(idleAnimation, playerNumber, x, y, 24, 54, -20.0f, -5.0f);
 		maxHealth = 3;
 		currentHealth = 3;
+		idleAnimation.setLooping(true);
+		shootAnimation.setLooping(false);
 	}
 	
 	@Override
@@ -27,6 +32,10 @@ public class Sugoi extends HeroEntity {
 		 * Updates as a HeroEntity then responds to any hero specific inputs.
 		 */
 		super.update(in, delta, mapEntities, projectiles);
+		
+		if(currentAnimation.isStopped()) {
+			currentAnimation = idleAnimation;
+		}
 		
 		if(onGround) {
 			timeSinceLastOnGround = 0;
@@ -59,6 +68,7 @@ public class Sugoi extends HeroEntity {
 			}
 			int projectileY = (int)(y + (height / 2.0f)) - 3;
 			projectiles.add(new Shuriken(projectileX, projectileY, facingRight, this));
+			currentAnimation = shootAnimation;
 		}
 	}
 }
