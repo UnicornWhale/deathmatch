@@ -1,10 +1,14 @@
-package com.evilzoidberg.entities;
+package com.evilzoidberg.entities.projectiles;
 
 import java.util.ArrayList;
 
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+
+import com.evilzoidberg.entities.Entity;
+import com.evilzoidberg.entities.HeroEntity;
+import com.evilzoidberg.entities.MoveableEntity;
 
 @SuppressWarnings("serial")
 public class ProjectileEntity extends MoveableEntity {

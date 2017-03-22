@@ -1,38 +1,24 @@
 TODO:
-	- (Duncan) Add a state system to manage which animations the heroes are playing and also what they can/can't do from each state
-		(temp list)
-		- Idle
-		- Jump
-		- Rising
-		- Falling
-		- Shoot
-		- Any additional states from abilities
-		- Also probably dead but we already have an alive variable, I guess mix that in.
-	- Add in the existing classes abilities. Also entails finding controls for them somewhere.
-	- (Duncan) Deal with resolution. Either lock resolution and set the screen to that resolution always, or set up a way to deal with multiple resolutions and a place to change them.
-	- (Kyle) Add capability for up to four players (and possibly a way to set teams?)
+	- (Kyle) Brawn's animations play properly, Sugoi's don't. Figure that out. I'm really confused.
+	- Add in Blaze of Glory, Quick, and both ultis. Fix Sugoi's wall cling.
+	- (Duncan) Deal with resolution.
+	- Add capability for up to four players (and possibly a way to set teams?)
 	- Add configurable controls (bonus to make sure game pads work as controllers. I think they should by default with slick)
 	- Add sound/make sounds for the game.
-	- Add map selection after character selection and add more maps.
-	
-	
-BUG-FIXING:
-	- Go through each state and look at interactions that happen with the init method only being called once and not each time the state is entered.
-	- (Kyle probably but Duncan maybe depending on if it's needed for state stuff) Added shooting animations, but they don't play right. Fix it.
 	
 	
 	
 	
 	
 Classes:
-	Brawn: Dude with big gun. Original concept is a machine gun but we'll have to assess how that works with the amount of health and the style of gameplay we want.
-		- Flex: Absorb all damage either completely or at drastically reduced rate for a very short time.
+	(Added) Brawn: Dude with big gun. Original concept is a machine gun but we'll have to assess how that works with the amount of health and the style of gameplay we want.
+		(Done) - Flex: Absorb all damage either completely or at drastically reduced rate for a very short time.
 		- Blaze of Glory: On death, rip shirt off and become invincible for 5 seconds before finally dying.
 		- One Man Army (Ulti): Big ol' barrage of weaponry.
 		
-	Sugoi: Ninja lady. Very mobile and skill based. Throws shurikens.
+	(Added) Sugoi: Ninja lady. Very mobile and skill based. Throws shurikens.
 		- Quick: Works on ground, in air, and as a wave dash.
-		- Nimble: Double jump and maybe cling to walls.
+		(Half Done) - Nimble: Double jump and maybe cling to walls.
 		- Shadow Clone (Ulti): Reveals current position as a fake (little log anime schtick). Teleports in any cardinal direction immediately.
 		
 	Alister: Melee fighter. Can avoid damage fairly well and is very lethal, but no ranged options.

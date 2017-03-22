@@ -1,6 +1,7 @@
-package com.evilzoidberg.entities;
+package com.evilzoidberg.entities.projectiles;
 
 import com.evilzoidberg.Settings;
+import com.evilzoidberg.entities.HeroEntity;
 import com.evilzoidberg.utility.MediaLoader;
 
 @SuppressWarnings("serial")

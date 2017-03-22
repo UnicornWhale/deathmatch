@@ -1,8 +1,10 @@
-package com.evilzoidberg.entities;
+package com.evilzoidberg.entities.projectiles;
 
 import java.util.ArrayList;
 
 import com.evilzoidberg.Settings;
+import com.evilzoidberg.entities.Entity;
+import com.evilzoidberg.entities.MoveableEntity;
 import com.evilzoidberg.utility.MediaLoader;
 
 @SuppressWarnings("serial")

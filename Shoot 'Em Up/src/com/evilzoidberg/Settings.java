@@ -4,7 +4,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Input;
 
 public class Settings {
-	public static boolean debug = false;
+	public static boolean debug = true;
 	
 	public static int TileSize = 64;
 	public static int WindowWidth = 20 * TileSize;
@@ -27,6 +27,7 @@ public class Settings {
 	public static int Player1Left = Input.KEY_A;
 	public static int Player1Right = Input.KEY_D;
 	public static int Player1Shoot = Input.KEY_V;
+	public static int Player1Ability1 = Input.KEY_C;
 
 	//Player 2 Controls
 	public static Color Player2Color = Color.blue;
@@ -35,10 +36,7 @@ public class Settings {
 	public static int Player2Left = Input.KEY_LEFT;
 	public static int Player2Right = Input.KEY_RIGHT;
 	public static int Player2Shoot = Input.KEY_ENTER;
-	
-	//Selected Heroes
-	public static int Player1Hero = -1;
-	public static int Player2Hero = -1;
+	public static int Player2Ability1 = Input.KEY_RSHIFT;
 	
 	//Hero Start Locations
 	public static int Player1StartX = 100;
@@ -46,9 +44,27 @@ public class Settings {
 	
 	public static int Player2StartX = WindowWidth - 100;
 	public static int Player2StartY = 100;
+	
+	//Selected Heroes
+	public static int Player1Hero = -1;
+	public static int Player2Hero = -1;
+	
+	//Selected Map
+	public static int SelectedMap = 0;
 
 	//Map Paths
-	public static String TestMap = "maps/test_map.txt";
+	public static String[] MapPaths = new String[] {
+			"maps/test_map.txt",
+			"maps/battlefield.txt",
+			"maps/nooksandcrannys.txt"
+	};
+
+	//Map Names
+	public static String[] MapNames = new String[] {
+			"Test Map",
+			"Battlefield",
+			"Nooks and Crannys"
+	};
 	
 	//Tile Image Paths
 	public static String BackgroundTilePath = "img/map/background_tile.png";
@@ -68,5 +84,6 @@ public class Settings {
 	public static String BrawnRisingAnimationPath = "img/brawn/brawn_rising.png";
 	public static String BrawnFallingAnimationPath = "img/brawn/brawn_falling.png";
 	public static String BrawnShootAnimationPath = "img/brawn/brawn_shoot.png";
+	public static String BrawnFlexAnimationPath = "img/brawn/brawn_flex.png";
 	public static String PlasmaBlastAnimationPath = "img/brawn/brawn_bullet.png";
 }

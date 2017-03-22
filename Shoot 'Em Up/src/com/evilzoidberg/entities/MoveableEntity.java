@@ -11,12 +11,13 @@ import com.evilzoidberg.Settings;
 
 @SuppressWarnings("serial")
 public class MoveableEntity extends Entity {
-	float dx = 0, dy = 0; //Velocity
-	float ddx = 0, ddy = 0; //Acceleration
-	float dxMax = 500.0f, dyMax = 2000.0f;
-	boolean onGround = false;
-	boolean affectedByGravity = true;
-	boolean collidedThisTurn = false;
+	protected float dx = 0; //Velocity
+	protected float dy = 0;
+	protected float ddx = 0, ddy = 0; //Acceleration
+	protected float dxMax = 500.0f, dyMax = 2000.0f;
+	protected boolean onGround = false, onRightWall = false, onLeftWall = false;
+	protected boolean affectedByGravity = true;
+	protected boolean collidedThisTurn = false;
 
 	public MoveableEntity(Image image, float x, float y, int width, int height, float offsetX, float offsetY) {
 		super(image, x, y, width, height, offsetX, offsetY);
@@ -81,9 +82,11 @@ public class MoveableEntity extends Entity {
 			}
 			else if(totalDx > 0.0f) {
 				x++;
+				onLeftWall = false;
 				if(collidesWithSomething(mapEntities)) {
 					//Collision on right
 					collidedThisTurn = true;
+					onRightWall = true;
 					float oldX = x;
 					x = (float)Math.floor(x);
 					if(x == oldX) {
@@ -98,9 +101,11 @@ public class MoveableEntity extends Entity {
 			}
 			else if(totalDx < 0.0f) {
 				x--;
+				onRightWall = false;
 				if(collidesWithSomething(mapEntities)) {
 					//Collision on left
 					collidedThisTurn = true;
+					onLeftWall = true;
 					float oldX = x;
 					x = (float)Math.ceil(x);
 					if(x == oldX) {

@@ -15,10 +15,8 @@ import com.evilzoidberg.ui.StateChangeButton;
 public class HeroSelectState extends BasicGameState {
 	HeroSelectButton[] heroButtons;
 	StateChangeButton[] stateButtons;
-	int player1SelectedHero = -1;
-	int player2SelectedHero = -1;
-	int player1HighlightedHero = 0;
-	int player2HighlightedHero = 1;
+	int player1SelectedHero, player2SelectedHero;
+	int player1HighlightedHero, player2HighlightedHero;
 	int waitCounter = 0;
 	
 	private int id;
@@ -28,7 +26,10 @@ public class HeroSelectState extends BasicGameState {
 	}
 
 	@Override
-	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
+	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {}
+	
+	@Override
+	public void enter(GameContainer gc, StateBasedGame sbg) {
 		heroButtons = new HeroSelectButton[] {
 				new HeroSelectButton("Sugoi", 1, 100, 100, 50, 25),
 				new HeroSelectButton("Brawn", 2, 175, 100, 50, 25)
@@ -37,6 +38,14 @@ public class HeroSelectState extends BasicGameState {
 				new StateChangeButton("Back", Engine.MenuStateID, 50, 600, 100, 50, sbg)
 		};
 
+		Settings.Player1Hero = -1;
+		Settings.Player2Hero = -1;
+		player1SelectedHero = -1;
+		player2SelectedHero = -1;
+		player1HighlightedHero = 0;
+		player2HighlightedHero = 1;
+		waitCounter = 0;
+		
 		heroButtons[player1HighlightedHero].highlightedByPlayer1 = true;
 		heroButtons[player2HighlightedHero].highlightedByPlayer2 = true;
 	}
@@ -74,7 +83,7 @@ public class HeroSelectState extends BasicGameState {
 		if(waitCounter >= Settings.waitOnCharacterSelect) {
 			Settings.Player1Hero = heroButtons[player1SelectedHero].heroID;
 			Settings.Player2Hero = heroButtons[player2SelectedHero].heroID;
-			sbg.enterState(Engine.PlayStateID);
+			sbg.enterState(Engine.MapSelectStateID);
 		}
 		
 		//State buttons

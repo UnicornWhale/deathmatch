@@ -6,21 +6,26 @@ import org.newdawn.slick.Animation;
 import org.newdawn.slick.Input;
 
 import com.evilzoidberg.Settings;
+import com.evilzoidberg.entities.projectiles.PlasmaBlast;
+import com.evilzoidberg.entities.projectiles.ProjectileEntity;
+import com.evilzoidberg.entities.states.BrawnState;
 import com.evilzoidberg.utility.Cooldown;
 import com.evilzoidberg.utility.MediaLoader;
 
 @SuppressWarnings("serial")
 public class Brawn extends HeroEntity {
+	BrawnState actionState = BrawnState.IDLE;
+	int timeSinceShootingStarted = 0, minTimeForShootAnimation = 250;
+	int timeSinceFlexingStarted = 0, minTimeForFlexAnimation = 200;
 	Cooldown bulletCooldown = new Cooldown(200);
 	static Animation idleAnimation = MediaLoader.getAnimation(Settings.BrawnIdleAnimationPath, 64, 64);
 	static Animation shootAnimation = MediaLoader.getAnimation(Settings.BrawnShootAnimationPath, 64, 64);
+	static Animation flexAnimation = MediaLoader.getAnimation(Settings.BrawnFlexAnimationPath, 64, 64);
 	
 	public Brawn(int playerNumber, float x, float y) {
 		super(idleAnimation, playerNumber, x, y, 35, 60, -10.0f, 0.0f);
 		maxHealth = 5;
 		currentHealth = 5;
-		idleAnimation.setLooping(true);
-		shootAnimation.setLooping(false);
 	}
 	
 	@Override
@@ -30,22 +35,71 @@ public class Brawn extends HeroEntity {
 		 */
 		super.update(in, delta, mapEntities, projectiles);
 		
-		if(currentAnimation.isStopped()) {
-			currentAnimation = idleAnimation;
+		//Update whether still shooting
+		if(actionState == BrawnState.SHOOTING) {
+			if(timeSinceShootingStarted >= minTimeForShootAnimation) {
+				canMove = true;
+				timeSinceShootingStarted = 0;
+				actionState = BrawnState.IDLE;
+				currentAnimation = idleAnimation;
+			}
+			else {
+				timeSinceShootingStarted += delta;
+			}
+		}
+		
+		//Update whether still flexing
+		if(actionState == BrawnState.FLEXING) {
+			if(timeSinceFlexingStarted >= minTimeForFlexAnimation) {
+				canMove = true;
+				timeSinceFlexingStarted = 0;
+				actionState = BrawnState.IDLE;
+				currentAnimation = idleAnimation;
+			}
+			else {
+				timeSinceFlexingStarted += delta;
+			}
 		}
 		
 		//Update cooldowns
 		bulletCooldown.update(delta);
 		
-		//Shooting controls
-		if(in.isKeyDown(shoot) && bulletCooldown.attemptToUse()) {
-			int projectileX = (int)(x + width);
-			if(facingRight) {
-				projectileX = (int)(x - 5.0f);
+		if(canMove) {
+			//Shooting controls
+			if(in.isKeyDown(shoot) && bulletCooldown.attemptToUse()) {
+				int projectileX = (int)(x - 10.0f);
+				if(facingRight) {
+					projectileX = (int)(x + width);
+				}
+				int projectileY = (int)(y + (height / 2.0f)) - 3;
+				currentAnimation = shootAnimation;
+				shootAnimation.restart();
+				canMove = false;
+				if(onGround) {
+					dx = 0.0f;
+				}
+				actionState = BrawnState.SHOOTING;
+				projectiles.add(new PlasmaBlast(projectileX, projectileY, facingRight, this));
 			}
-			int projectileY = (int)(y + (height / 2.0f)) - 3;
-			currentAnimation = shootAnimation;
-			projectiles.add(new PlasmaBlast(projectileX, projectileY, facingRight, this));
+			
+			//Flexing controls
+			if(in.isKeyDown(ability1)) {
+				currentAnimation = flexAnimation;
+				flexAnimation.restart();
+				canMove = false;
+				if(onGround) {
+					dx = 0.0f;
+				}
+				actionState = BrawnState.FLEXING;
+			}
+		}
+	}
+	
+	@Override
+	public void damage(int damage) {
+		//Ignore damage while flexing
+		if(actionState != BrawnState.FLEXING) {
+			super.damage(damage);
 		}
 	}
 }

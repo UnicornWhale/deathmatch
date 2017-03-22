@@ -10,10 +10,11 @@ import org.newdawn.slick.state.StateBasedGame;
 
 import com.evilzoidberg.Engine;
 import com.evilzoidberg.Settings;
-import com.evilzoidberg.entities.Giblet;
 import com.evilzoidberg.entities.HeroEntity;
 import com.evilzoidberg.entities.MoveableEntity;
-import com.evilzoidberg.entities.ProjectileEntity;
+import com.evilzoidberg.entities.projectiles.Giblet;
+import com.evilzoidberg.entities.projectiles.ProjectileEntity;
+import com.evilzoidberg.entities.states.MovementState;
 import com.evilzoidberg.maploader.Map;
 
 public class PlayState extends BasicGameState {
@@ -22,18 +23,20 @@ public class PlayState extends BasicGameState {
 	Map map;
 	ArrayList<ProjectileEntity> projectiles = new ArrayList<ProjectileEntity>();
 	ArrayList<MoveableEntity> otherEntities = new ArrayList<MoveableEntity>();
-	boolean mapAndPlayersInitialized = false; //Init method is called at start of program, so work around it
 	
 	public PlayState(int id) {
 		this.id = id;
 	}
 
 	@Override
-	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
+	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {}
+
+	@Override
+	public void enter(GameContainer gc, StateBasedGame sbg) {
 		heroes = new ArrayList<HeroEntity>();
 		heroes.add(HeroEntity.getHeroByNumber(1, Settings.Player1Hero));
 		heroes.add(HeroEntity.getHeroByNumber(2, Settings.Player2Hero));
-		map = new Map(Settings.TestMap);
+		map = new Map(Settings.MapPaths[Settings.SelectedMap]);
 	}
 
 	@Override
@@ -46,7 +49,7 @@ public class PlayState extends BasicGameState {
 		}
 		
 		for(int i = 0; i < heroes.size(); i++) {
-			if(heroes.get(i).alive) {
+			if(heroes.get(i).state != MovementState.DEAD) {
 				heroes.get(i).paint(g);
 			}
 		}
@@ -64,18 +67,12 @@ public class PlayState extends BasicGameState {
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
 		/**
 		 * Calls update methods of all children so that they can use their own game logic to update.
-		 */
-		if(!mapAndPlayersInitialized) {
-			init(gc, sbg);
-			mapAndPlayersInitialized = true;
-		}
-		
+		 */		
 		//Check Victory
 		if(heroes.size() == 1) {
 			waitCounter += delta;
 			
 			if(waitCounter >= Settings.waitOnVictory) {
-				mapAndPlayersInitialized = false;
 				sbg.enterState(Engine.HeroSelectStateID);
 			}
 		}
@@ -90,10 +87,10 @@ public class PlayState extends BasicGameState {
 
 		//Update heroes
 		for(int i = 0; i < heroes.size(); i++) {
-			if(heroes.get(i).alive) {
+			if(heroes.get(i).state != MovementState.DEAD) {
 				heroes.get(i).update(gc.getInput(), delta, map.collideableTiles, projectiles);
 			}
-			if(!heroes.get(i).alive) {
+			if(heroes.get(i).state == MovementState.DEAD) {
 				for(int n = 0; n < 10; n++) {
 					float spawnX = heroes.get(i).getX() + (heroes.get(i).getWidth() / 2.0f);
 					float spawnY = heroes.get(i).getY() + (heroes.get(i).getHeight() / 2.0f);
@@ -104,7 +101,7 @@ public class PlayState extends BasicGameState {
 
 		//Cull heroes
 		for(int i = heroes.size() - 1; i >= 0; i--) {
-			if(!heroes.get(i).alive) {
+			if(heroes.get(i).state == MovementState.DEAD) {
 				heroes.remove(i);
 			}
 		}

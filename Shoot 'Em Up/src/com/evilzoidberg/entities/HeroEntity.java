@@ -9,16 +9,19 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.Input;
 
 import com.evilzoidberg.Settings;
+import com.evilzoidberg.entities.projectiles.ProjectileEntity;
+import com.evilzoidberg.entities.states.MovementState;
 
 @SuppressWarnings("serial")
 public class HeroEntity extends MoveableEntity {
-	public boolean alive = true;
+	public MovementState state = MovementState.IDLE;
 	boolean facingRight = true;
+	boolean canMove = true;
 	float walkSpeed = 800.0f;
 	float aerialDriftAcceleration = 5000.0f;
 	float jumpVelocity = -2200.0f; //Jumps go up, so is negative
 	float currentHealth = 10, maxHealth = 10;
-	int up, down, left, right, shoot;
+	int up, down, left, right, shoot, ability1;
 	int healthBarLength = Settings.TileSize;
 	int healthBarHeight = 8;
 
@@ -30,6 +33,7 @@ public class HeroEntity extends MoveableEntity {
 			left = Settings.Player1Left;
 			right = Settings.Player1Right;
 			shoot = Settings.Player1Shoot;
+			ability1 = Settings.Player1Ability1;
 		}
 		else {
 			up = Settings.Player2Up;
@@ -37,6 +41,7 @@ public class HeroEntity extends MoveableEntity {
 			left = Settings.Player2Left;
 			right = Settings.Player2Right;
 			shoot = Settings.Player2Shoot;
+			ability1 = Settings.Player2Ability1;
 			facingRight = false;
 		}
 	}
@@ -49,6 +54,7 @@ public class HeroEntity extends MoveableEntity {
 			left = Settings.Player1Left;
 			right = Settings.Player1Right;
 			shoot = Settings.Player1Shoot;
+			ability1 = Settings.Player1Ability1;
 		}
 		else {
 			up = Settings.Player2Up;
@@ -56,6 +62,7 @@ public class HeroEntity extends MoveableEntity {
 			left = Settings.Player2Left;
 			right = Settings.Player2Right;
 			shoot = Settings.Player2Shoot;
+			ability1 = Settings.Player2Ability1;
 		}
 	}
 
@@ -64,38 +71,50 @@ public class HeroEntity extends MoveableEntity {
 		 * Reads keys set in settings to check for inputs and adjusts velocity and acceleration based on what keys
 		 * are being pressed. Then updates physics as any other MoveableEntity would.
 		 */
-		//Jump
-		if(onGround && in.isKeyPressed(up)) {
-			dy = jumpVelocity;
-		}
-		
-		if(onGround) {
-			//Grounded controls
-			ddx = 0.0f;
-			if(in.isKeyDown(right) && !in.isKeyDown(left)) {
-				dx = walkSpeed;
-				facingRight = true;
+		if(canMove) {
+			//Jump
+			if(onGround && in.isKeyPressed(up)) {
+				dy = jumpVelocity;
 			}
-			else if(in.isKeyDown(left) && !in.isKeyDown(right)) {
-				dx = walkSpeed * -1.0f;
-				facingRight = false;
-			}
-			else {
-				dx = 0.0f;
-			}
-		}
-		else{
-			//Aerial controls
-			if(in.isKeyDown(right) && !in.isKeyDown(left)) {
-				ddx = aerialDriftAcceleration;
-				facingRight = true;
-			}
-			else if(in.isKeyDown(left) && !in.isKeyDown(right)) {
-				ddx = aerialDriftAcceleration * -1.0f;
-				facingRight = false;
-			}
-			else {
+			
+			if(onGround) {
+				//Grounded controls
 				ddx = 0.0f;
+				if(in.isKeyDown(right) && !in.isKeyDown(left)) {
+					dx = walkSpeed;
+					facingRight = true;
+					state = MovementState.WALKING;
+				}
+				else if(in.isKeyDown(left) && !in.isKeyDown(right)) {
+					dx = walkSpeed * -1.0f;
+					facingRight = false;
+					state = MovementState.WALKING;
+				}
+				else {
+					dx = 0.0f;
+					state = MovementState.IDLE;
+				}
+			}
+			else{
+				//Aerial controls
+				if(in.isKeyDown(right) && !in.isKeyDown(left)) {
+					ddx = aerialDriftAcceleration;
+					facingRight = true;
+				}
+				else if(in.isKeyDown(left) && !in.isKeyDown(right)) {
+					ddx = aerialDriftAcceleration * -1.0f;
+					facingRight = false;
+				}
+				else {
+					ddx = 0.0f;
+				}
+				
+				if(dy >= 0) {
+					state = MovementState.FALLING;
+				}
+				else {
+					state = MovementState.RISING;
+				}
 			}
 		}
 		
@@ -108,14 +127,14 @@ public class HeroEntity extends MoveableEntity {
 				projectiles.get(i).onHit(this);
 			}
 		}
-		
-		if(currentHealth <= 0) {
-			alive = false;
-		}
 	}
 	
 	public void damage(int damage) {
 		currentHealth -= damage;
+		
+		if(currentHealth <= 0) {
+			state = MovementState.DEAD;
+		}
 	}
 	
 	@Override

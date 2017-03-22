@@ -20,7 +20,10 @@ public class MenuState extends BasicGameState {
 	}
 
 	@Override
-	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
+	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {}
+	
+	@Override
+	public void enter(GameContainer gc, StateBasedGame sbg) {
 		buttons = new Button[] {
 				new StateChangeButton("Play", Engine.HeroSelectStateID, 100, 100, 100, 50, sbg),
 				new StateChangeButton("Exit", Engine.ExitStateID, 100, 200, 100, 50, sbg),

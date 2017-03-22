@@ -20,7 +20,7 @@ public class MapLoader {
 			while((line=in.readLine())!=null){
 			    char[] chars = line.toCharArray();
 			    for(int x = 0; x < chars.length; x++) {
-			    	if(chars[x] == 'X') {
+			    	if(chars[x] == '.') {
 			    		map.add(new Tile(MediaLoader.getImage(Settings.BackgroundTilePath), x * Settings.TileSize, y * Settings.TileSize, false));
 			    	}
 			    	else {
