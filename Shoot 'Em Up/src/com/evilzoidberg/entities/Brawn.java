@@ -37,6 +37,10 @@ public class Brawn extends HeroEntity {
 		
 		//Update whether still shooting
 		if(actionState == BrawnState.SHOOTING) {
+			if(onGround) {
+				//Stops weird sliding when landing while shooting
+				dx = 0.0f;
+			}
 			if(timeSinceShootingStarted >= minTimeForShootAnimation) {
 				canMove = true;
 				timeSinceShootingStarted = 0;
@@ -66,24 +70,24 @@ public class Brawn extends HeroEntity {
 		
 		if(canMove) {
 			//Shooting controls
-			if(in.isKeyDown(shoot) && bulletCooldown.attemptToUse()) {
+			if(in.isKeyPressed(shoot) && bulletCooldown.attemptToUse()) {
 				int projectileX = (int)(x - 10.0f);
 				if(facingRight) {
 					projectileX = (int)(x + width);
 				}
 				int projectileY = (int)(y + (height / 2.0f)) - 3;
+				projectiles.add(new PlasmaBlast(projectileX, projectileY, facingRight, this));
+				actionState = BrawnState.SHOOTING;
 				currentAnimation = shootAnimation;
 				shootAnimation.restart();
 				canMove = false;
 				if(onGround) {
 					dx = 0.0f;
 				}
-				actionState = BrawnState.SHOOTING;
-				projectiles.add(new PlasmaBlast(projectileX, projectileY, facingRight, this));
 			}
 			
 			//Flexing controls
-			if(in.isKeyDown(ability1)) {
+			if(in.isKeyPressed(ability1)) {
 				currentAnimation = flexAnimation;
 				flexAnimation.restart();
 				canMove = false;

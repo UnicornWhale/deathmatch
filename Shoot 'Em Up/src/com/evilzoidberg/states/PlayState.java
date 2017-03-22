@@ -37,6 +37,8 @@ public class PlayState extends BasicGameState {
 		heroes.add(HeroEntity.getHeroByNumber(1, Settings.Player1Hero));
 		heroes.add(HeroEntity.getHeroByNumber(2, Settings.Player2Hero));
 		map = new Map(Settings.MapPaths[Settings.SelectedMap]);
+		otherEntities.clear();
+		projectiles.clear();
 	}
 
 	@Override

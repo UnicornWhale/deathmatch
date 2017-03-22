@@ -4,7 +4,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Input;
 
 public class Settings {
-	public static boolean debug = true;
+	public static boolean debug = false;
 	
 	public static int TileSize = 64;
 	public static int WindowWidth = 20 * TileSize;
@@ -54,14 +54,14 @@ public class Settings {
 
 	//Map Paths
 	public static String[] MapPaths = new String[] {
-			"maps/test_map.txt",
+			"maps/showdown.txt",
 			"maps/battlefield.txt",
 			"maps/nooksandcrannys.txt"
 	};
 
 	//Map Names
 	public static String[] MapNames = new String[] {
-			"Test Map",
+			"Showdown",
 			"Battlefield",
 			"Nooks and Crannys"
 	};
@@ -75,7 +75,7 @@ public class Settings {
 	
 	//Sugoi Image Paths
 	public static String SugoiIdleAnimationPath = "img/sugoi/sugoi_idle.png";
-	public static String SugoiShootAnimationPath = "img/sugoi/sugoi_idle.png";
+	public static String SugoiShootAnimationPath = "img/sugoi/sugoi_shoot.png";
 	public static String ShurikenAnimationPath = "img/sugoi/shuriken.png";
 	
 	//Brawn Image Paths

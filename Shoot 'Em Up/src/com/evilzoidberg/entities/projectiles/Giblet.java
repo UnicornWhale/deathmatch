@@ -11,12 +11,12 @@ import com.evilzoidberg.utility.MediaLoader;
 public class Giblet extends MoveableEntity {
 	public Giblet(float x, float y) {
 		super(MediaLoader.getImage(Settings.GibletImagePath), x, y, 5, 5, 0, 0);
-		dy = (float)(Math.random() * -1000.0);
+		dy = (float)(Math.random() * -1500.0);
 		if(Math.random() > 0.5) {
-			dx = (float)(Math.random() * 200.0);
+			dx = (float)(Math.random() * 400.0);
 		}
 		else {
-			dx = (float)(Math.random() * -200.0);
+			dx = (float)(Math.random() * -400.0);
 		}
 	}
 	

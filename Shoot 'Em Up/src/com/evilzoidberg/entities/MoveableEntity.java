@@ -97,6 +97,7 @@ public class MoveableEntity extends Entity {
 				}
 				else {
 					totalDx--;
+					onRightWall = false;
 				}
 			}
 			else if(totalDx < 0.0f) {
@@ -116,6 +117,7 @@ public class MoveableEntity extends Entity {
 				}
 				else {
 					totalDx++;
+					onLeftWall = false;
 				}
 			}
 			
@@ -138,6 +140,7 @@ public class MoveableEntity extends Entity {
 				}
 				else {
 					totalDy--;
+					onGround = false;
 				}
 			}
 			else if(totalDy < 0.0f) {
@@ -164,11 +167,13 @@ public class MoveableEntity extends Entity {
 			x = 0.0f;
 			dx = 0.0f;
 			collidedThisTurn = true;
+			onLeftWall = true;
 		}
 		if(x > Settings.WindowWidth - width) {
 			x = Settings.WindowWidth - width;
 			dx = 0.0f;
 			collidedThisTurn = true;
+			onRightWall = true;
 		}
 		if(y < 0.0f) {
 			y = 0.0f;
@@ -179,6 +184,7 @@ public class MoveableEntity extends Entity {
 			y = Settings.WindowHeight - height;
 			dy = 0.0f;
 			collidedThisTurn = true;
+			onGround = true;
 		}
 		
 		//Check if on ground

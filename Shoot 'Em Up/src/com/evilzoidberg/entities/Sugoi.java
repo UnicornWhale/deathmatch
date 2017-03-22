@@ -17,7 +17,7 @@ public class Sugoi extends HeroEntity {
 	SugoiState actionState = SugoiState.IDLE;
 	boolean hasDoubleJump = true;
 	int timeSinceShootingStarted = 0;
-	int minTimeForShootAnimation = 500;
+	int minTimeForShootAnimation = 250;
 	int timeSinceLastOnGround = 0;
 	int minAirTimeBeforeDoubleJump = 100;
 	Cooldown shurikenCooldown = new Cooldown(500);
@@ -37,17 +37,12 @@ public class Sugoi extends HeroEntity {
 		 */
 		super.update(in, delta, mapEntities, projectiles);
 		
-		//Update has double jump
-		if(onGround) {
-			timeSinceLastOnGround = 0;
-			hasDoubleJump = true;
-		}
-		else {
-			timeSinceLastOnGround += delta;
-		}
-		
 		//Update whether still shooting
 		if(actionState == SugoiState.SHOOTING) {
+			if(onGround) {
+				//Stops weird sliding when landing while shooting
+				dx = 0.0f;
+			}
 			if(timeSinceShootingStarted >= minTimeForShootAnimation) {
 				canMove = true;
 				timeSinceShootingStarted = 0;
@@ -59,18 +54,27 @@ public class Sugoi extends HeroEntity {
 			}
 		}
 		
+		//Update has double jump
+		if(onGround) {
+			timeSinceLastOnGround = 0;
+			hasDoubleJump = true;
+		}
+		else {
+			timeSinceLastOnGround += delta;
+		}
+		
 		//Update Cooldowns
 		shurikenCooldown.update(delta);
 		
 		if(canMove) {
 			//Wall cling controls
-			if(!onGround && in.isKeyPressed(right) && onRightWall) {
+			if(!onGround && in.isKeyDown(right) && onRightWall && dy > 0.0f) {
 				actionState = SugoiState.WALL_CLINGING;
 				dy = 0.0f;
 				affectedByGravity = false;
 				hasDoubleJump = true;
 			}
-			else if(!onGround && in.isKeyPressed(left) && onLeftWall) {
+			else if(!onGround && in.isKeyDown(left) && onLeftWall && dy > 0.0f) {
 				actionState = SugoiState.WALL_CLINGING;
 				dy = 0.0f;
 				affectedByGravity = false;
@@ -94,16 +98,20 @@ public class Sugoi extends HeroEntity {
 			}
 		
 			//Shooting controls
-			if(in.isKeyDown(shoot) && shurikenCooldown.attemptToUse()) {
-				int projectileX = (int)(x + width);
+			if(in.isKeyPressed(shoot) && shurikenCooldown.attemptToUse()) {
+				int projectileX = (int)(x - 5.0f);
 				if(facingRight) {
-					projectileX = (int)(x - 5.0f);
+					projectileX = (int)(x + width);
 				}
 				int projectileY = (int)(y + (height / 2.0f)) - 3;
 				projectiles.add(new Shuriken(projectileX, projectileY, facingRight, this));
-				currentAnimation = shootAnimation;
 				actionState = SugoiState.SHOOTING;
+				currentAnimation = shootAnimation;
+				shootAnimation.restart();
 				canMove = false;
+				if(onGround) {
+					dx = 0.0f;
+				}
 			}
 		}
 	}
