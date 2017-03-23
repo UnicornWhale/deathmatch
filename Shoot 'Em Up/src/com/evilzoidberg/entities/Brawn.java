@@ -24,8 +24,8 @@ public class Brawn extends HeroEntity {
 	
 	public Brawn(int playerNumber, float x, float y) {
 		super(idleAnimation, playerNumber, x, y, 35, 60, -10.0f, 0.0f);
-		maxHealth = 5;
-		currentHealth = 5;
+		maxHealth = 3;
+		currentHealth = 3;
 	}
 	
 	@Override

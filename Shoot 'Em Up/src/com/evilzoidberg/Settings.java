@@ -39,11 +39,11 @@ public class Settings {
 	public static int Player2Ability1 = Input.KEY_RSHIFT;
 	
 	//Hero Start Locations
-	public static int Player1StartX = 100;
-	public static int Player1StartY = 100;
+	public static int Player1StartX = 50;
+	public static int Player1StartY = 200;
 	
-	public static int Player2StartX = WindowWidth - 100;
-	public static int Player2StartY = 100;
+	public static int Player2StartX = WindowWidth - 50;
+	public static int Player2StartY = 200;
 	
 	//Selected Heroes
 	public static int Player1Hero = -1;
