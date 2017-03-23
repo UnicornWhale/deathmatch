@@ -22,12 +22,6 @@ public class ProjectileEntity extends MoveableEntity {
 		this.parent = parent;
 		this.goesRight = goesRight;
 		affectedByGravity = false;
-		if(goesRight) {
-			dx = speed;
-		}
-		else {
-			dx = speed * -1;
-		}
 		dxMax = 999999; //Projectiles can go faster than everything else
 	}
 
@@ -36,12 +30,6 @@ public class ProjectileEntity extends MoveableEntity {
 		this.parent = parent;
 		this.goesRight = goesRight;
 		affectedByGravity = false;
-		if(goesRight) {
-			dx = speed;
-		}
-		else {
-			dx = speed * -1;
-		}
 		dxMax = 999999; //Projectiles can go faster than everything else
 	}
 	
@@ -52,6 +40,13 @@ public class ProjectileEntity extends MoveableEntity {
 	
 	@Override
 	public void updatePhysics(int delta, ArrayList<Entity> mapEntities) {
+		if(goesRight) {
+			dx = speed;
+		}
+		else {
+			dx = speed * -1;
+		}
+		
 		super.updatePhysics(delta, mapEntities);
 		
 		if(collidedThisTurn) {

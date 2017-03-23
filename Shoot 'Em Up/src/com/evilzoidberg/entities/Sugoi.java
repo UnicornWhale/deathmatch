@@ -20,7 +20,7 @@ public class Sugoi extends HeroEntity {
 	int minTimeForShootAnimation = 250;
 	int timeSinceLastOnGround = 0;
 	int minAirTimeBeforeDoubleJump = 100;
-	Cooldown shurikenCooldown = new Cooldown(500);
+	Cooldown shurikenCooldown = new Cooldown(350);
 	static Animation idleAnimation = MediaLoader.getAnimation(Settings.SugoiIdleAnimationPath, 64, 64);
 	static Animation shootAnimation = MediaLoader.getAnimation(Settings.SugoiShootAnimationPath, 64, 64);
 

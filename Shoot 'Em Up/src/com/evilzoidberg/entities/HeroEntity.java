@@ -17,9 +17,9 @@ public class HeroEntity extends MoveableEntity {
 	public MovementState state = MovementState.IDLE;
 	boolean facingRight = true;
 	boolean canMove = true;
-	float walkSpeed = 800.0f;
+	float walkSpeed = 500.0f;
 	float aerialDriftAcceleration = 5000.0f;
-	float jumpVelocity = -2000.0f; //Jumps go up, so is negative
+	float jumpVelocity = -1600.0f; //Jumps go up, so is negative
 	float currentHealth = 10, maxHealth = 10;
 	int up, down, left, right, shoot, ability1;
 	int healthBarLength = Settings.TileSize;

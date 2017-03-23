@@ -8,5 +8,6 @@ import com.evilzoidberg.utility.MediaLoader;
 public class PlasmaBlast extends ProjectileEntity {
 	public PlasmaBlast(float x, float y, boolean goesRight, HeroEntity parent) {
 		super(MediaLoader.getAnimation(Settings.PlasmaBlastAnimationPath, 10, 10), x, y, 10, 10, 0, 0, goesRight, parent);
+		speed = 500;
 	}
 }

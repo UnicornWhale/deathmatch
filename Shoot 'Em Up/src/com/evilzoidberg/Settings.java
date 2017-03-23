@@ -11,7 +11,7 @@ public class Settings {
 	public static int WindowHeight = 12 * TileSize;
 	
 	//Universal Gravitation
-	public static float Gravity = 8000.0f;
+	public static float Gravity = 5000.0f;
 	
 	//Wait times
 	public static int waitOnCharacterSelect = 1000;
