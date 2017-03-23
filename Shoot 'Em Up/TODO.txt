@@ -4,6 +4,7 @@ TODO (Roughly Prioritized):
 	- (Either) Restructure resources folders to not be so spread out.
 	- (Duncan) Deal with resolution.
 	- (Either) Make it possible to play Bo5s or Bo3s or whatever so we don't have to restart whenever someone dies.
+	- (Either) Add Towerfall style wrapping of the game area (top to bottom, side to side)?
 	- (Kyle) Add configurable controls (bonus to make sure game pads work as controllers. I think they should by default with slick)
 	- (Kyle) Add sound/make sounds for the game.
 	- (Either) Add other characters.
