@@ -21,7 +21,7 @@ public class HeroEntity extends MoveableEntity {
 	float aerialDriftAcceleration = 5000.0f;
 	float jumpVelocity = -1600.0f; //Jumps go up, so is negative
 	float currentHealth = 10, maxHealth = 10;
-	int up, down, left, right, shoot, ability1;
+	int up, down, left, right, shoot, ability1, ability2;
 	int healthBarLength = Settings.TileSize;
 	int healthBarHeight = 8;
 
@@ -34,6 +34,7 @@ public class HeroEntity extends MoveableEntity {
 			right = Settings.Player1Right;
 			shoot = Settings.Player1Shoot;
 			ability1 = Settings.Player1Ability1;
+			ability2 = Settings.Player1Ability2;
 		}
 		else {
 			up = Settings.Player2Up;
@@ -42,6 +43,7 @@ public class HeroEntity extends MoveableEntity {
 			right = Settings.Player2Right;
 			shoot = Settings.Player2Shoot;
 			ability1 = Settings.Player2Ability1;
+			ability2 = Settings.Player2Ability2;
 			facingRight = false;
 		}
 	}

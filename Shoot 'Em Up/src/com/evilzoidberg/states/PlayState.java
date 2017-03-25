@@ -39,6 +39,7 @@ public class PlayState extends BasicGameState {
 		map = new Map(Settings.MapPaths[Settings.SelectedMap]);
 		otherEntities.clear();
 		projectiles.clear();
+		waitCounter = 0;
 	}
 
 	@Override

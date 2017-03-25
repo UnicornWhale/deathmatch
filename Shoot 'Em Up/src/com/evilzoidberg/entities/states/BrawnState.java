@@ -3,5 +3,6 @@ package com.evilzoidberg.entities.states;
 public enum BrawnState {
 	IDLE,
 	SHOOTING,
-	FLEXING
+	FLEXING,
+	BLAZE_OF_GLORY
 }

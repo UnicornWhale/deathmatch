@@ -16,13 +16,14 @@ import com.evilzoidberg.utility.MediaLoader;
 public class Sugoi extends HeroEntity {
 	SugoiState actionState = SugoiState.IDLE;
 	boolean hasDoubleJump = true;
-	int timeSinceShootingStarted = 0;
-	int minTimeForShootAnimation = 250;
-	int timeSinceLastOnGround = 0;
-	int minAirTimeBeforeDoubleJump = 100;
+	int dashSpeed = 1000, dashDx, dashDy;
+	int timeSinceShootingStarted = 0, minTimeForShootAnimation = 250;
+	int timeSinceLastOnGround = 0, minAirTimeBeforeDoubleJump = 100;
+	int timeSinceDashingStarted = 0, minTimeForDash = 200;
 	Cooldown shurikenCooldown = new Cooldown(350);
 	static Animation idleAnimation = MediaLoader.getAnimation(Settings.SugoiIdleAnimationPath, 64, 64);
 	static Animation shootAnimation = MediaLoader.getAnimation(Settings.SugoiShootAnimationPath, 64, 64);
+	static Animation dashAnimation = MediaLoader.getAnimation(Settings.SugoiDashAnimationPath, 64, 64);
 
 	public Sugoi(int playerNumber, float x, float y) {
 		super(idleAnimation, playerNumber, x, y, 24, 54, -20.0f, -5.0f);
@@ -35,6 +36,22 @@ public class Sugoi extends HeroEntity {
 		/**
 		 * Updates as a HeroEntity then responds to any hero specific inputs.
 		 */
+		
+		//Update whether still dashing
+		if(actionState == SugoiState.DASHING) {
+			if(timeSinceDashingStarted >= minTimeForDash) {
+				canMove = true;
+				timeSinceDashingStarted = 0;
+				actionState = SugoiState.IDLE;
+				currentAnimation = idleAnimation;
+			}
+			else {
+				timeSinceDashingStarted += delta;
+				dx = dashDx;
+				dy = dashDy;
+			}
+		}
+		
 		super.update(in, delta, mapEntities, projectiles);
 		
 		//Update whether still shooting
@@ -95,6 +112,37 @@ public class Sugoi extends HeroEntity {
 				if(in.isKeyPressed(left) && !in.isKeyPressed(right)) {
 					dx = walkSpeed * -1.0f;
 				}
+			}
+			
+			//Dash controls
+			if(in.isKeyPressed(ability1)) {
+				actionState = SugoiState.DASHING;
+				currentAnimation = dashAnimation;
+				dashAnimation.restart();
+				canMove = false;
+				
+				if(in.isKeyDown(right) && !in.isKeyDown(left)) {
+					dashDx = dashSpeed;
+				}
+				else if(in.isKeyDown(left) && !in.isKeyDown(right)) {
+					dashDx = dashSpeed * -1;
+				}
+				else {
+					dashDx = 0;
+				}
+				
+				if(in.isKeyDown(up) && !in.isKeyDown(down)) {
+					dashDy = dashSpeed * -1;
+				}
+				else if(in.isKeyDown(down) && !in.isKeyDown(up)) {
+					dashDy = dashSpeed;
+				}
+				else {
+					dashDy = 0;
+				}
+				
+				dx = dashDx;
+				dy = dashDy;
 			}
 		
 			//Shooting controls

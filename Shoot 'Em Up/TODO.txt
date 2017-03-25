@@ -1,6 +1,5 @@
 TODO (Roughly Prioritized):
-	- (Kyle) Art for BoG, Quick, and ultis so Duncan can add over the weekend.
-	- (Duncan) Add in Blaze of Glory, Quick, and both ultis.
+	- (Either) Fix Sugoi's dash. X component of the dash doesn't seem to be working.
 	- (Either) Restructure resources folders to not be so spread out.
 	- (Duncan) Deal with resolution.
 	- (Either) Make it possible to play Bo5s or Bo3s or whatever so we don't have to restart whenever someone dies.
@@ -16,46 +15,39 @@ BUGS:
 	
 	
 Classes:
-	(Added) Brawn: Dude with big gun.
+	(Done) Brawn: Dude with big gun.
 		Plan: Use damage absorbtion and high hp pool to slowly corner enemy with your slow moving projectiles.
-		(Done) - Flex: Absorb all damage either completely or at drastically reduced rate for a very short time.
+		- Flex: Absorb all damage either completely or at drastically reduced rate for a very short time.
 		- Blaze of Glory: On death, rip shirt off and become invincible for 5 seconds before finally dying.
-		- One Man Army (Ulti): Big ol' barrage of weaponry.
 		
-	(Added) Sugoi: Ninja.
+	(Done) Sugoi: Ninja.
 		Plan: Use movement abilities to get around other people's shots and take carefully aimed shots of her own.
 		- Quick: Works on ground, in air, and as a wave dash.
-		(Done) - Nimble: Double jump and maybe cling to walls.
-		- Shadow Clone (Ulti): Reveals current position as a fake (little log anime schtick). Teleports in any cardinal direction immediately.
+		- Nimble: Double jump and maybe cling to walls.
 		
 	Alistair: Melee fighter. Can avoid damage fairly well and is very lethal, but no ranged options.
 		Plan: Use damage avoidance and different attack angles to get around enemy projectiles and get close.
 		- Dive: Horizontal flurry of blows that dodges all attacks.
 		- Uppercut: SHORYUKEN up a ways. Dodges attacks.
-		- ONE PUNCH! (Ulti): Big horizontal punch that one shots anyone it connects with.
 		
 	TBD: Archer, shoots in an arc.
 		Plan: Use area denial to keep enemy off of level ground with you, then use shot arc to poke at them where they can't hit you.
 		- Wall jump
 		- Flaming arrow that makes a blanket of fire on the ground, can be used for area denial
-		- The Legolas: Shoot three (or maybe 5) arrows out at once in a cone
 		
 	TBD: Grenadier a la Junkrat or Demoman.
 		Plan: Use mine and sticky bomb to corner opponents, then lob grenades at them.
 		- Sticky grenade / trap that sticks to walls and is remote detonated.
 		- Proximity Mine
-		- RPG (straight, dumb fire rocket)
 		
 	TBD: Cowboy
 		Plan: Predict enemy movements and call them out with charged shots. Win with the first six shots because reload is lengthy.
 		- Six Shooter: Must reload after six shots
 		- The Long Arm: Holster gun and charge up (can be canceled) if charged for long enough, can take a hitscan shot. Can't move while charging
-		- TBD
 		
 	TBD: Shotgun
 		- Double Barrelled: Must reload after 2 shots, each shot is a cone with moderate range
 		- Skeet Shooter: Shoot diagonally upwards at a 45 degree angle
-		- TBD
 		
 	TBD: Flamethrower?
 		

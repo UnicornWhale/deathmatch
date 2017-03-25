@@ -4,5 +4,6 @@ public enum SugoiState {
 	IDLE,
 	DOUBLE_JUMPING,
 	SHOOTING,
-	WALL_CLINGING
+	WALL_CLINGING,
+	DASHING
 }

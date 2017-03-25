@@ -9,6 +9,7 @@ import com.evilzoidberg.Settings;
 import com.evilzoidberg.entities.projectiles.PlasmaBlast;
 import com.evilzoidberg.entities.projectiles.ProjectileEntity;
 import com.evilzoidberg.entities.states.BrawnState;
+import com.evilzoidberg.entities.states.MovementState;
 import com.evilzoidberg.utility.Cooldown;
 import com.evilzoidberg.utility.MediaLoader;
 
@@ -17,9 +18,14 @@ public class Brawn extends HeroEntity {
 	BrawnState actionState = BrawnState.IDLE;
 	int timeSinceShootingStarted = 0, minTimeForShootAnimation = 250;
 	int timeSinceFlexingStarted = 0, minTimeForFlexAnimation = 200;
+	int timeSinceBoGStarted = 0, timeForBoG = 500;
+	int timeSinceBoGLifeStarted = 0, timeForBoGLife = 5000;
 	Cooldown bulletCooldown = new Cooldown(200);
 	static Animation idleAnimation = MediaLoader.getAnimation(Settings.BrawnIdleAnimationPath, 64, 64);
 	static Animation shootAnimation = MediaLoader.getAnimation(Settings.BrawnShootAnimationPath, 64, 64);
+	static Animation BoGIdleAnimation = MediaLoader.getAnimation(Settings.BrawnBoGIdleAnimationPath, 64, 64);
+	static Animation BoGShootAnimation = MediaLoader.getAnimation(Settings.BrawnBoGShootAnimationPath, 64, 64);
+	static Animation BoGAnimation = MediaLoader.getAnimation(Settings.BrawnBoGAnimationPath, 64, 64);
 	static Animation flexAnimation = MediaLoader.getAnimation(Settings.BrawnFlexAnimationPath, 64, 64);
 	
 	public Brawn(int playerNumber, float x, float y) {
@@ -35,6 +41,28 @@ public class Brawn extends HeroEntity {
 		 */
 		super.update(in, delta, mapEntities, projectiles);
 		
+		//Update whether still ripping shirt off
+		if(actionState == BrawnState.BLAZE_OF_GLORY) {
+			if(timeSinceBoGStarted >= timeForBoG) {
+				canMove = true;
+				actionState = BrawnState.IDLE;
+				currentAnimation = BoGIdleAnimation;
+			}
+			else {
+				timeSinceBoGStarted += delta;
+			}
+		}
+		
+		//Update whether still in BoG life
+		if(currentHealth <= 0) {
+			timeSinceBoGLifeStarted += delta;
+		}
+		
+		//Update whether still alive
+		if(timeSinceBoGLifeStarted >= timeForBoGLife) {
+			state = MovementState.DEAD;
+		}
+		
 		//Update whether still shooting
 		if(actionState == BrawnState.SHOOTING) {
 			if(onGround) {
@@ -45,7 +73,12 @@ public class Brawn extends HeroEntity {
 				canMove = true;
 				timeSinceShootingStarted = 0;
 				actionState = BrawnState.IDLE;
-				currentAnimation = idleAnimation;
+				if(currentHealth > 0) {
+					currentAnimation = idleAnimation;
+				}
+				else {
+					currentAnimation = BoGIdleAnimation;
+				}
 			}
 			else {
 				timeSinceShootingStarted += delta;
@@ -58,7 +91,12 @@ public class Brawn extends HeroEntity {
 				canMove = true;
 				timeSinceFlexingStarted = 0;
 				actionState = BrawnState.IDLE;
-				currentAnimation = idleAnimation;
+				if(currentHealth > 0) {
+					currentAnimation = idleAnimation;
+				}
+				else {
+					currentAnimation = BoGIdleAnimation;
+				}
 			}
 			else {
 				timeSinceFlexingStarted += delta;
@@ -78,7 +116,12 @@ public class Brawn extends HeroEntity {
 				int projectileY = (int)(y + (height / 2.0f)) - 3;
 				projectiles.add(new PlasmaBlast(projectileX, projectileY, facingRight, this));
 				actionState = BrawnState.SHOOTING;
-				currentAnimation = shootAnimation;
+				if(currentHealth > 0) {
+					currentAnimation = shootAnimation;
+				}
+				else {
+					currentAnimation = BoGShootAnimation;
+				}
 				shootAnimation.restart();
 				canMove = false;
 				if(onGround) {
@@ -87,7 +130,7 @@ public class Brawn extends HeroEntity {
 			}
 			
 			//Flexing controls
-			if(in.isKeyPressed(ability1)) {
+			if(in.isKeyPressed(ability1) && currentHealth > 0) {
 				currentAnimation = flexAnimation;
 				flexAnimation.restart();
 				canMove = false;
@@ -102,8 +145,14 @@ public class Brawn extends HeroEntity {
 	@Override
 	public void damage(int damage) {
 		//Ignore damage while flexing
-		if(actionState != BrawnState.FLEXING) {
-			super.damage(damage);
+		if(actionState != BrawnState.FLEXING && currentHealth > 0) {
+			currentHealth -= damage;
+		}
+		if(currentHealth == 0 && timeSinceBoGLifeStarted == 0) {
+			actionState = BrawnState.BLAZE_OF_GLORY;
+			canMove = false;
+			currentAnimation = BoGAnimation;
+			BoGAnimation.restart();
 		}
 	}
 }

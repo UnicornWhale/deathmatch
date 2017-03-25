@@ -28,6 +28,7 @@ public class Settings {
 	public static int Player1Right = Input.KEY_D;
 	public static int Player1Shoot = Input.KEY_V;
 	public static int Player1Ability1 = Input.KEY_C;
+	public static int Player1Ability2 = Input.KEY_B;
 
 	//Player 2 Controls
 	public static Color Player2Color = Color.blue;
@@ -37,6 +38,7 @@ public class Settings {
 	public static int Player2Right = Input.KEY_RIGHT;
 	public static int Player2Shoot = Input.KEY_ENTER;
 	public static int Player2Ability1 = Input.KEY_RSHIFT;
+	public static int Player2Ability2 = Input.KEY_BACKSLASH;
 	
 	//Hero Start Locations
 	public static int Player1StartX = 50;
@@ -76,14 +78,15 @@ public class Settings {
 	//Sugoi Image Paths
 	public static String SugoiIdleAnimationPath = "img/sugoi/sugoi_idle.png";
 	public static String SugoiShootAnimationPath = "img/sugoi/sugoi_shoot.png";
+	public static String SugoiDashAnimationPath = "img/sugoi/sugoi_dash.png";
 	public static String ShurikenAnimationPath = "img/sugoi/shuriken.png";
 	
 	//Brawn Image Paths
 	public static String BrawnIdleAnimationPath = "img/brawn/brawn_idle.png";
-	public static String BrawnJumpAnimationPath = "img/brawn/brawn_jump.png";
-	public static String BrawnRisingAnimationPath = "img/brawn/brawn_rising.png";
-	public static String BrawnFallingAnimationPath = "img/brawn/brawn_falling.png";
 	public static String BrawnShootAnimationPath = "img/brawn/brawn_shoot.png";
+	public static String BrawnBoGIdleAnimationPath = "img/brawn/brawn_bog_idle.png";
+	public static String BrawnBoGShootAnimationPath = "img/brawn/brawn_bog_shoot.png";
 	public static String BrawnFlexAnimationPath = "img/brawn/brawn_flex.png";
+	public static String BrawnBoGAnimationPath = "img/brawn/brawn_bog.png";
 	public static String PlasmaBlastAnimationPath = "img/brawn/brawn_bullet.png";
 }
