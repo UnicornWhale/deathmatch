@@ -1,10 +1,11 @@
 package com.evilzoidberg.utility;
 
 public class Cooldown {
-	int length, current = 0;
+	int length, current;
 	
 	public Cooldown(int length) {
 		this.length = length;
+		current = length;
 	}
 	
 	public void update(int delta) {
@@ -14,6 +15,10 @@ public class Cooldown {
 		if(current < length ) {
 			current += delta;
 		}
+	}
+	
+	public boolean running() {
+		return current < length;
 	}
 	
 	public boolean attemptToUse() {

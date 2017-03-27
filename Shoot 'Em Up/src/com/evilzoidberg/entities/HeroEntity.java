@@ -20,7 +20,7 @@ public class HeroEntity extends MoveableEntity {
 	float walkSpeed = 500.0f;
 	float aerialDriftAcceleration = 5000.0f;
 	float jumpVelocity = -1600.0f; //Jumps go up, so is negative
-	float currentHealth = 10, maxHealth = 10;
+	int currentHealth = 10, maxHealth = 10;
 	int up, down, left, right, shoot, ability1, ability2;
 	int healthBarLength = Settings.TileSize;
 	int healthBarHeight = 8;

@@ -10,23 +10,20 @@ import com.evilzoidberg.entities.projectiles.PlasmaBlast;
 import com.evilzoidberg.entities.projectiles.ProjectileEntity;
 import com.evilzoidberg.entities.states.BrawnState;
 import com.evilzoidberg.entities.states.MovementState;
+import com.evilzoidberg.utility.Ability;
 import com.evilzoidberg.utility.Cooldown;
 import com.evilzoidberg.utility.MediaLoader;
 
 @SuppressWarnings("serial")
 public class Brawn extends HeroEntity {
 	BrawnState actionState = BrawnState.IDLE;
-	int timeSinceShootingStarted = 0, minTimeForShootAnimation = 250;
-	int timeSinceFlexingStarted = 0, minTimeForFlexAnimation = 200;
-	int timeSinceBoGStarted = 0, timeForBoG = 500;
-	int timeSinceBoGLifeStarted = 0, timeForBoGLife = 5000;
-	Cooldown bulletCooldown = new Cooldown(200);
+	Cooldown bogLifeTimer = new Cooldown(5000);
+	Ability shootAbility = new Ability(MediaLoader.getAnimation(Settings.BrawnShootAnimationPath, 64, 64), 200);
+	Ability flexAbility = new Ability(MediaLoader.getAnimation(Settings.BrawnFlexAnimationPath, 64, 64), 200);
+	Ability bogAbility = new Ability(MediaLoader.getAnimation(Settings.BrawnBoGAnimationPath, 64, 64), 300);
 	static Animation idleAnimation = MediaLoader.getAnimation(Settings.BrawnIdleAnimationPath, 64, 64);
-	static Animation shootAnimation = MediaLoader.getAnimation(Settings.BrawnShootAnimationPath, 64, 64);
 	static Animation BoGIdleAnimation = MediaLoader.getAnimation(Settings.BrawnBoGIdleAnimationPath, 64, 64);
 	static Animation BoGShootAnimation = MediaLoader.getAnimation(Settings.BrawnBoGShootAnimationPath, 64, 64);
-	static Animation BoGAnimation = MediaLoader.getAnimation(Settings.BrawnBoGAnimationPath, 64, 64);
-	static Animation flexAnimation = MediaLoader.getAnimation(Settings.BrawnFlexAnimationPath, 64, 64);
 	
 	public Brawn(int playerNumber, float x, float y) {
 		super(idleAnimation, playerNumber, x, y, 35, 60, -10.0f, 0.0f);
@@ -41,25 +38,25 @@ public class Brawn extends HeroEntity {
 		 */
 		super.update(in, delta, mapEntities, projectiles);
 		
+		//Update abilities
+		flexAbility.update(delta);
+		shootAbility.update(delta);
+		bogAbility.update(delta);
+		
 		//Update whether still ripping shirt off
 		if(actionState == BrawnState.BLAZE_OF_GLORY) {
-			if(timeSinceBoGStarted >= timeForBoG) {
-				canMove = true;
+			if(!bogAbility.running()) {
 				actionState = BrawnState.IDLE;
-				currentAnimation = BoGIdleAnimation;
-			}
-			else {
-				timeSinceBoGStarted += delta;
 			}
 		}
 		
 		//Update whether still in BoG life
 		if(currentHealth <= 0) {
-			timeSinceBoGLifeStarted += delta;
+			bogLifeTimer.update(delta);
 		}
 		
 		//Update whether still alive
-		if(timeSinceBoGLifeStarted >= timeForBoGLife) {
+		if(!bogLifeTimer.running() && currentHealth <= 0) {
 			state = MovementState.DEAD;
 		}
 		
@@ -69,46 +66,21 @@ public class Brawn extends HeroEntity {
 				//Stops weird sliding when landing while shooting
 				dx = 0.0f;
 			}
-			if(timeSinceShootingStarted >= minTimeForShootAnimation) {
-				canMove = true;
-				timeSinceShootingStarted = 0;
+			if(!shootAbility.running()) {
 				actionState = BrawnState.IDLE;
-				if(currentHealth > 0) {
-					currentAnimation = idleAnimation;
-				}
-				else {
-					currentAnimation = BoGIdleAnimation;
-				}
-			}
-			else {
-				timeSinceShootingStarted += delta;
 			}
 		}
 		
 		//Update whether still flexing
 		if(actionState == BrawnState.FLEXING) {
-			if(timeSinceFlexingStarted >= minTimeForFlexAnimation) {
-				canMove = true;
-				timeSinceFlexingStarted = 0;
+			if(!flexAbility.running()) {
 				actionState = BrawnState.IDLE;
-				if(currentHealth > 0) {
-					currentAnimation = idleAnimation;
-				}
-				else {
-					currentAnimation = BoGIdleAnimation;
-				}
-			}
-			else {
-				timeSinceFlexingStarted += delta;
 			}
 		}
 		
-		//Update cooldowns
-		bulletCooldown.update(delta);
-		
 		if(canMove) {
 			//Shooting controls
-			if(in.isKeyPressed(shoot) && bulletCooldown.attemptToUse()) {
+			if(in.isKeyPressed(shoot) && shootAbility.attemptToUse(this)) {
 				int projectileX = (int)(x - 10.0f);
 				if(facingRight) {
 					projectileX = (int)(x + width);
@@ -116,29 +88,52 @@ public class Brawn extends HeroEntity {
 				int projectileY = (int)(y + (height / 2.0f)) - 3;
 				projectiles.add(new PlasmaBlast(projectileX, projectileY, facingRight, this));
 				actionState = BrawnState.SHOOTING;
-				if(currentHealth > 0) {
-					currentAnimation = shootAnimation;
-				}
-				else {
-					currentAnimation = BoGShootAnimation;
-				}
-				shootAnimation.restart();
-				canMove = false;
+				BoGShootAnimation.restart();
 				if(onGround) {
 					dx = 0.0f;
 				}
 			}
 			
 			//Flexing controls
-			if(in.isKeyPressed(ability1) && currentHealth > 0) {
-				currentAnimation = flexAnimation;
-				flexAnimation.restart();
-				canMove = false;
+			if(in.isKeyPressed(ability1) && currentHealth > 0 && flexAbility.attemptToUse(this)) {
 				if(onGround) {
 					dx = 0.0f;
 				}
 				actionState = BrawnState.FLEXING;
 			}
+		}
+		
+		updateByState();
+	}
+	
+	public void updateByState() {
+		/**
+		 * Sets the current animation based on the state of the character if needed
+		 * and updates the canMove variable based on the state
+		 */
+		switch(actionState) {
+		case IDLE:
+			if(currentHealth == 0) {
+				currentAnimation = BoGIdleAnimation;
+			}
+			else {
+				currentAnimation = idleAnimation;
+			}
+			canMove = true;
+			break;
+		case SHOOTING:
+			canMove = false;
+			break;
+		case FLEXING:
+			canMove = false;
+			break;
+		case BLAZE_OF_GLORY:
+			canMove = false;
+			break;
+		default:
+			currentAnimation = idleAnimation;
+			canMove = true;
+			break;
 		}
 	}
 	
@@ -148,11 +143,13 @@ public class Brawn extends HeroEntity {
 		if(actionState != BrawnState.FLEXING && currentHealth > 0) {
 			currentHealth -= damage;
 		}
-		if(currentHealth == 0 && timeSinceBoGLifeStarted == 0) {
+		System.out.println("Health at " + currentHealth);
+		if(currentHealth == 0 && !bogLifeTimer.running()) {
 			actionState = BrawnState.BLAZE_OF_GLORY;
 			canMove = false;
-			currentAnimation = BoGAnimation;
-			BoGAnimation.restart();
+			bogAbility.attemptToUse(this);
+			bogLifeTimer.attemptToUse();
+			shootAbility.animation = BoGShootAnimation;
 		}
 	}
 }

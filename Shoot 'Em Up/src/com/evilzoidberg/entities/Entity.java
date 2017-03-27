@@ -8,7 +8,7 @@ import org.newdawn.slick.geom.Rectangle;
 @SuppressWarnings("serial")
 public class Entity extends Rectangle {
 	Image image = null;
-	Animation currentAnimation;
+	public Animation currentAnimation;
 	float offsetX, offsetY;
 	
 	public Entity(Image image, float x, float y, int width, int height, float offsetX, float offsetY) {
