@@ -18,6 +18,10 @@ public class Ability extends Cooldown {
 		animation.update(delta);
 	}
 	
+	public boolean ready() {
+		return current >= length;
+	}
+	
 	public boolean attemptToUse(HeroEntity hero) {
 		if(super.attemptToUse()) {
 			animation.restart();

@@ -16,7 +16,9 @@ import com.evilzoidberg.utility.MediaLoader;
 public class Sugoi extends HeroEntity {
 	SugoiState actionState = SugoiState.IDLE;
 	boolean hasDoubleJump = true;
-	Ability shootAbility = new Ability(MediaLoader.getAnimation(Settings.SugoiShootAnimationPath, 80, 80), 300);
+	Ability shootAbility;
+	static Animation shootAnimation = MediaLoader.getAnimation(Settings.SugoiShootAnimationPath, 80, 80);
+	static Animation airShootAnimation = MediaLoader.getAnimation(Settings.SugoiAirShootAnimationPath, 80, 80);
 	static Animation idleAnimation = MediaLoader.getAnimation(Settings.SugoiIdleAnimationPath, 80, 80);
 	static Animation airIdleAnimation = MediaLoader.getAnimation(Settings.SugoiAirIdleAnimationPath, 80, 80);
 
@@ -24,6 +26,7 @@ public class Sugoi extends HeroEntity {
 		super(idleAnimation, playerNumber, x, y, 34, 75, -24.0f, -2.0f);
 		maxHealth = 3;
 		currentHealth = 3;
+		shootAbility = new Ability(shootAnimation, 300);
 	}
 	
 	@Override
@@ -131,7 +134,14 @@ public class Sugoi extends HeroEntity {
 //			}
 		
 			//Shooting controls
-			if(controller.isShoot(in) && shootAbility.attemptToUse(this)) {
+			if(controller.isShoot(in) && shootAbility.ready()) {
+				if(onGround) {
+					shootAbility.animation = shootAnimation;
+				}
+				else {
+					shootAbility.animation = airShootAnimation;
+				}
+				shootAbility.attemptToUse(this);
 				int projectileX = (int)(x - 5.0f);
 				if(facingRight) {
 					projectileX = (int)(x + width);

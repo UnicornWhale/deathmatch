@@ -1,7 +1,6 @@
 TODO (Roughly Prioritized):
 	- (Kyle) Add "Art 2.0" for Brawn and for Sugoi's dash.
 	- (Kyle) Add walk cycles.
-	- (Kyle) Add Sugoi air shoot animation.
 	- (Kyle) Add a way to specify ranges of time during an animation for things to happen.
 	- (Either) Make a delay on when the projectile is created so that the animations can sync up with when the projectile appears.
 	- (Either) Add Sugoi's dash as an ability and make the x component work correctly EDIT: I think it was only messing up due to the max x velocity in MoveableEntity. Check on this

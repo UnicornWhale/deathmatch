@@ -79,6 +79,7 @@ public class Settings {
 	public static String SugoiIdleAnimationPath = "res/animations/sugoi/sugoi_idle.png";
 	public static String SugoiAirIdleAnimationPath = "res/animations/sugoi/sugoi_air_idle.png";
 	public static String SugoiShootAnimationPath = "res/animations/sugoi/sugoi_shoot.png";
+	public static String SugoiAirShootAnimationPath = "res/animations/sugoi/sugoi_air_shoot.png";
 	public static String ShurikenAnimationPath = "res/animations/sugoi/shuriken.png";
 	
 	//Brawn Image Paths
