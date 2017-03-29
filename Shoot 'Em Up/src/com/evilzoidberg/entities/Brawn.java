@@ -143,7 +143,6 @@ public class Brawn extends HeroEntity {
 		if(actionState != BrawnState.FLEXING && currentHealth > 0) {
 			currentHealth -= damage;
 		}
-		System.out.println("Health at " + currentHealth);
 		if(currentHealth == 0 && !bogLifeTimer.running()) {
 			actionState = BrawnState.BLAZE_OF_GLORY;
 			canMove = false;

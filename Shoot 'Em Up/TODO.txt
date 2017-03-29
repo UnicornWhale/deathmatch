@@ -1,12 +1,10 @@
 TODO (Roughly Prioritized):
 	- (Kyle) Add "Art 2.0" for Brawn and for Sugoi's dash.
 	- (Kyle) Add walk cycles.
-	- (Kyle) Add Sugoi air shoot.
+	- (Kyle) Add Sugoi air shoot animation.
 	- (Kyle) Add a way to specify ranges of time during an animation for things to happen.
-	- (Either) Make Sugoi's shuriken in air go diagonal down.
-	- (Either) Make a delay on when the projectile is created so that the animations can sink up with when the projectile appears.
-	- (Either) Add Sugoi's dash as an ability and make the x component work correctly
-	- (Either) Restructure resources folders to not be so spread out.
+	- (Either) Make a delay on when the projectile is created so that the animations can sync up with when the projectile appears.
+	- (Either) Add Sugoi's dash as an ability and make the x component work correctly EDIT: I think it was only messing up due to the max x velocity in MoveableEntity. Check on this
 	- (Duncan) Deal with resolution.
 	- (Either) Make it possible to play Bo5s or Bo3s or whatever so we don't have to restart whenever someone dies.
 	- (Either) Add Towerfall style wrapping of the game area (top to bottom, side to side)?

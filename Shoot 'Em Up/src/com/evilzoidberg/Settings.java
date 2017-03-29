@@ -56,9 +56,9 @@ public class Settings {
 
 	//Map Paths
 	public static String[] MapPaths = new String[] {
-			"maps/showdown.txt",
-			"maps/battlefield.txt",
-			"maps/nooksandcrannys.txt"
+			"res/maps/showdown.txt",
+			"res/maps/battlefield.txt",
+			"res/maps/nooksandcrannys.txt"
 	};
 
 	//Map Names
@@ -69,24 +69,24 @@ public class Settings {
 	};
 	
 	//Tile Image Paths
-	public static String BackgroundTilePath = "img/map/background_tile.png";
-	public static String PlatformTilePath = "img/map/platform_tile.png";
+	public static String BackgroundTilePath = "res/images/map/background_tile.png";
+	public static String PlatformTilePath = "res/images/map/platform_tile.png";
 	
 	//Giblet Image Path
-	public static String GibletImagePath = "img/giblet.png";
+	public static String GibletImagePath = "res/images/giblet.png";
 	
 	//Sugoi Image Paths
-	public static String SugoiIdleAnimationPath = "img/sugoi/sugoi_idle.png";
-	public static String SugoiAirIdleAnimationPath = "img/sugoi/sugoi_air_idle.png";
-	public static String SugoiShootAnimationPath = "img/sugoi/sugoi_shoot.png";
-	public static String ShurikenAnimationPath = "img/sugoi/shuriken.png";
+	public static String SugoiIdleAnimationPath = "res/animations/sugoi/sugoi_idle.png";
+	public static String SugoiAirIdleAnimationPath = "res/animations/sugoi/sugoi_air_idle.png";
+	public static String SugoiShootAnimationPath = "res/animations/sugoi/sugoi_shoot.png";
+	public static String ShurikenAnimationPath = "res/animations/sugoi/shuriken.png";
 	
 	//Brawn Image Paths
-	public static String BrawnIdleAnimationPath = "img/brawn/brawn_idle.png";
-	public static String BrawnShootAnimationPath = "img/brawn/brawn_shoot.png";
-	public static String BrawnBoGIdleAnimationPath = "img/brawn/brawn_bog_idle.png";
-	public static String BrawnBoGShootAnimationPath = "img/brawn/brawn_bog_shoot.png";
-	public static String BrawnFlexAnimationPath = "img/brawn/brawn_flex.png";
-	public static String BrawnBoGAnimationPath = "img/brawn/brawn_bog.png";
-	public static String PlasmaBlastAnimationPath = "img/brawn/brawn_bullet.png";
+	public static String BrawnIdleAnimationPath = "res/animations/brawn/brawn_idle.png";
+	public static String BrawnShootAnimationPath = "res/animations/brawn/brawn_shoot.png";
+	public static String BrawnBoGIdleAnimationPath = "res/animations/brawn/brawn_bog_idle.png";
+	public static String BrawnBoGShootAnimationPath = "res/animations/brawn/brawn_bog_shoot.png";
+	public static String BrawnFlexAnimationPath = "res/animations/brawn/brawn_flex.png";
+	public static String BrawnBoGAnimationPath = "res/animations/brawn/brawn_bog.png";
+	public static String PlasmaBlastAnimationPath = "res/animations/brawn/brawn_bullet.png";
 }

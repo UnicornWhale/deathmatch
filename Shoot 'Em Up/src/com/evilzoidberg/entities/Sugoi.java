@@ -137,7 +137,7 @@ public class Sugoi extends HeroEntity {
 					projectileX = (int)(x + width);
 				}
 				int projectileY = (int)(y + (height / 2.0f)) - 3;
-				projectiles.add(new Shuriken(projectileX, projectileY, facingRight, this));
+				projectiles.add(new Shuriken(projectileX, projectileY, facingRight, onGround, this));
 				actionState = SugoiState.SHOOTING;
 				if(onGround) {
 					dx = 0.0f;
