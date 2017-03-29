@@ -80,7 +80,7 @@ public class Brawn extends HeroEntity {
 		
 		if(canMove) {
 			//Shooting controls
-			if(in.isKeyPressed(shoot) && shootAbility.attemptToUse(this)) {
+			if(controller.isShoot(in) && shootAbility.attemptToUse(this)) {
 				int projectileX = (int)(x - 10.0f);
 				if(facingRight) {
 					projectileX = (int)(x + width);
@@ -95,7 +95,7 @@ public class Brawn extends HeroEntity {
 			}
 			
 			//Flexing controls
-			if(in.isKeyPressed(ability1) && currentHealth > 0 && flexAbility.attemptToUse(this)) {
+			if(controller.isAbility1(in) && currentHealth > 0 && flexAbility.attemptToUse(this)) {
 				if(onGround) {
 					dx = 0.0f;
 				}

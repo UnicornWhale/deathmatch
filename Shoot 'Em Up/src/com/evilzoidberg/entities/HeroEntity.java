@@ -11,60 +11,34 @@ import org.newdawn.slick.Input;
 import com.evilzoidberg.Settings;
 import com.evilzoidberg.entities.projectiles.ProjectileEntity;
 import com.evilzoidberg.entities.states.MovementState;
+import com.evilzoidberg.utility.Controller;
 
 @SuppressWarnings("serial")
 public class HeroEntity extends MoveableEntity {
 	public MovementState state = MovementState.IDLE;
+	Controller controller;
 	boolean facingRight = true;
 	boolean canMove = true;
 	float walkSpeed = 500.0f;
 	float aerialDriftAcceleration = 5000.0f;
 	float jumpVelocity = -1600.0f; //Jumps go up, so is negative
 	int currentHealth = 10, maxHealth = 10;
-	int up, down, left, right, shoot, ability1, ability2;
 	int healthBarLength = Settings.TileSize;
 	int healthBarHeight = 8;
 
 	public HeroEntity(Image image, int playerNumber, float x, float y, int width, int height, float offsetX, float offsetY) {
 		super(image, x, y, width, height, offsetX, offsetY);
-		if(playerNumber == 1) {
-			up = Settings.Player1Up;
-			down = Settings.Player1Down;
-			left = Settings.Player1Left;
-			right = Settings.Player1Right;
-			shoot = Settings.Player1Shoot;
-			ability1 = Settings.Player1Ability1;
-			ability2 = Settings.Player1Ability2;
-		}
-		else {
-			up = Settings.Player2Up;
-			down = Settings.Player2Down;
-			left = Settings.Player2Left;
-			right = Settings.Player2Right;
-			shoot = Settings.Player2Shoot;
-			ability1 = Settings.Player2Ability1;
-			ability2 = Settings.Player2Ability2;
+		controller = new Controller(playerNumber);
+		if(playerNumber == 2) {
 			facingRight = false;
 		}
 	}
 
 	public HeroEntity(Animation animation, int playerNumber, float x, float y, int width, int height, float offsetX, float offsetY) {
 		super(animation, x, y, width, height, offsetX, offsetY);
-		if(playerNumber == 1) {
-			up = Settings.Player1Up;
-			down = Settings.Player1Down;
-			left = Settings.Player1Left;
-			right = Settings.Player1Right;
-			shoot = Settings.Player1Shoot;
-			ability1 = Settings.Player1Ability1;
-		}
-		else {
-			up = Settings.Player2Up;
-			down = Settings.Player2Down;
-			left = Settings.Player2Left;
-			right = Settings.Player2Right;
-			shoot = Settings.Player2Shoot;
-			ability1 = Settings.Player2Ability1;
+		controller = new Controller(playerNumber);
+		if(playerNumber == 2) {
+			facingRight = false;
 		}
 	}
 
@@ -75,19 +49,19 @@ public class HeroEntity extends MoveableEntity {
 		 */
 		if(canMove) {
 			//Jump
-			if(onGround && in.isKeyPressed(up)) {
+			if(onGround && controller.isUp(in)) {
 				dy = jumpVelocity;
 			}
 			
 			if(onGround) {
 				//Grounded controls
 				ddx = 0.0f;
-				if(in.isKeyDown(right) && !in.isKeyDown(left)) {
+				if(controller.isRight(in) && !controller.isLeft(in)) {
 					dx = walkSpeed;
 					facingRight = true;
 					state = MovementState.WALKING;
 				}
-				else if(in.isKeyDown(left) && !in.isKeyDown(right)) {
+				else if(controller.isLeft(in) && !controller.isRight(in)) {
 					dx = walkSpeed * -1.0f;
 					facingRight = false;
 					state = MovementState.WALKING;
@@ -99,11 +73,11 @@ public class HeroEntity extends MoveableEntity {
 			}
 			else{
 				//Aerial controls
-				if(in.isKeyDown(right) && !in.isKeyDown(left)) {
+				if(controller.isRight(in) && !controller.isLeft(in)) {
 					ddx = aerialDriftAcceleration;
 					facingRight = true;
 				}
-				else if(in.isKeyDown(left) && !in.isKeyDown(right)) {
+				else if(controller.isLeft(in) && !controller.isRight(in)) {
 					ddx = aerialDriftAcceleration * -1.0f;
 					facingRight = false;
 				}

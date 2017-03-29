@@ -70,13 +70,13 @@ public class Sugoi extends HeroEntity {
 		
 		if(canMove) {
 			//Wall cling controls
-			if(!onGround && in.isKeyDown(right) && onRightWall && dy > 0.0f) {
+			if(!onGround && controller.isRight(in) && onRightWall && dy > 0.0f) {
 				actionState = SugoiState.WALL_CLINGING;
 				dy = 0.0f;
 				affectedByGravity = false;
 				hasDoubleJump = true;
 			}
-			else if(!onGround && in.isKeyDown(left) && onLeftWall && dy > 0.0f) {
+			else if(!onGround && controller.isLeft(in) && onLeftWall && dy > 0.0f) {
 				actionState = SugoiState.WALL_CLINGING;
 				dy = 0.0f;
 				affectedByGravity = false;
@@ -88,13 +88,13 @@ public class Sugoi extends HeroEntity {
 			}
 			
 			//Double jump controls
-			if(in.isKeyPressed(up) && !onGround && hasDoubleJump) {
+			if(controller.isUp(in) && !onGround && hasDoubleJump) {
 				dy = jumpVelocity;
 				hasDoubleJump = false;
-				if(in.isKeyPressed(right) && !in.isKeyPressed(left)) {
+				if(controller.isRight(in) && !controller.isLeft(in)) {
 					dx = walkSpeed;
 				}
-				if(in.isKeyPressed(left) && !in.isKeyPressed(right)) {
+				if(controller.isLeft(in) && !controller.isRight(in)) {
 					dx = walkSpeed * -1.0f;
 				}
 			}
@@ -131,7 +131,7 @@ public class Sugoi extends HeroEntity {
 //			}
 		
 			//Shooting controls
-			if(in.isKeyPressed(shoot) && shootAbility.attemptToUse(this)) {
+			if(controller.isShoot(in) && shootAbility.attemptToUse(this)) {
 				int projectileX = (int)(x - 5.0f);
 				if(facingRight) {
 					projectileX = (int)(x + width);

@@ -1,6 +1,9 @@
 TODO (Roughly Prioritized):
-	- (Kyle) Make controls for gamepads.
-	- (Kyle) Add "Art 2.0" for Brawn and for Sugoi's dash
+	- (Kyle) Add "Art 2.0" for Brawn and for Sugoi's dash.
+	- (Kyle) Add walk cycles.
+	- (Kyle) Add Sugoi air shoot.
+	- (Kyle) Add a way to specify ranges of time during an animation for things to happen.
+	- (Either) Make Sugoi's shuriken in air go diagonal down.
 	- (Either) Make a delay on when the projectile is created so that the animations can sink up with when the projectile appears.
 	- (Either) Add Sugoi's dash as an ability and make the x component work correctly
 	- (Either) Restructure resources folders to not be so spread out.
@@ -51,6 +54,10 @@ Classes:
 	TBD: Shotgun
 		- Double Barrelled: Must reload after 2 shots, each shot is a cone with moderate range
 		- Skeet Shooter: Shoot diagonally upwards at a 45 degree angle
+	
+	TBD: Pro Wrestler (MUSCLE POWER)
+		- The Chair: Swing a folding chair and reflect projectiles that you hit with it. If it hits an enemy, one shot them.
+		- Bodyslam: Fall straight down from where you are, one shot any opponents you hit.
 		
 	TBD: Flamethrower?
 		
