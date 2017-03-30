@@ -1,9 +1,10 @@
 TODO (Roughly Prioritized):
 	- (Either) Sugoi's double jump doesn't work off keyboard controls.
 	- (Either) P2 after deselecting can't move cursor
+	- (Either) Add Sugoi's dash
 	- (Kyle) Add walk cycles.
-	- (Kyle) Add a way to specify ranges of time during an animation for things to happen.
-	- (Kyle) Add a way to specify what fps a certain animation should play at, instead of a global timing.
+	- (Either) Add a way to specify ranges of time during an animation for things to happen.
+	- (Either) Add a way to specify what fps a certain animation should play at, instead of a global timing.
 	- (Either) Make a delay on when the projectile is created so that the animations can sync up with when the projectile appears.
 	- (Duncan) Deal with resolution.
 	- (Either) Make it possible to play Bo5s or Bo3s or whatever so we don't have to restart whenever someone dies.
