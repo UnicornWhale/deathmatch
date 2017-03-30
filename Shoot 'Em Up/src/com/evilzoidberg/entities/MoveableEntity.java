@@ -15,7 +15,9 @@ public class MoveableEntity extends Entity {
 	protected float dy = 0;
 	protected float ddx = 0, ddy = 0; //Acceleration
 	protected float dxMax = 500.0f, dyMax = 2000.0f;
-	protected boolean onGround = false, onRightWall = false, onLeftWall = false;
+	public boolean onGround = false;
+	protected boolean onRightWall = false;
+	protected boolean onLeftWall = false;
 	protected boolean affectedByGravity = true;
 	protected boolean collidedThisTurn = false;
 

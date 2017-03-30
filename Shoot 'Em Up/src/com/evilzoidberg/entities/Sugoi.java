@@ -21,12 +21,13 @@ public class Sugoi extends HeroEntity {
 	static Animation airShootAnimation = MediaLoader.getAnimation(Settings.SugoiAirShootAnimationPath, 80, 80);
 	static Animation idleAnimation = MediaLoader.getAnimation(Settings.SugoiIdleAnimationPath, 80, 80);
 	static Animation airIdleAnimation = MediaLoader.getAnimation(Settings.SugoiAirIdleAnimationPath, 80, 80);
+	static Animation wallclingAnimation = MediaLoader.getAnimation(Settings.SugoiWallclingAnimationPath, 80, 80);
 
 	public Sugoi(int playerNumber, float x, float y) {
 		super(idleAnimation, playerNumber, x, y, 34, 75, -24.0f, -2.0f);
 		maxHealth = 3;
 		currentHealth = 3;
-		shootAbility = new Ability(shootAnimation, 300);
+		shootAbility = new Ability(shootAnimation, airShootAnimation, 300);
 	}
 	
 	@Override
@@ -34,22 +35,6 @@ public class Sugoi extends HeroEntity {
 		/**
 		 * Updates as a HeroEntity then responds to any hero specific inputs.
 		 */
-		
-		//Update whether still dashing
-//		if(actionState == SugoiState.DASHING) {
-//			if(timeSinceDashingStarted >= minTimeForDash) {
-//				canMove = true;
-//				timeSinceDashingStarted = 0;
-//				actionState = SugoiState.IDLE;
-//				currentAnimation = idleAnimation;
-//			}
-//			else {
-//				timeSinceDashingStarted += delta;
-//				dx = dashDx;
-//				dy = dashDy;
-//			}
-//		}
-		
 		super.update(in, delta, mapEntities, projectiles);
 		
 		//Update Abilities
@@ -101,46 +86,9 @@ public class Sugoi extends HeroEntity {
 					dx = walkSpeed * -1.0f;
 				}
 			}
-			
-			//Dash controls
-//			if(in.isKeyPressed(ability1)) {
-//				actionState = SugoiState.DASHING;
-//				currentAnimation = dashAnimation;
-//				dashAnimation.restart();
-//				canMove = false;
-//				
-//				if(in.isKeyDown(right) && !in.isKeyDown(left)) {
-//					dashDx = dashSpeed;
-//				}
-//				else if(in.isKeyDown(left) && !in.isKeyDown(right)) {
-//					dashDx = dashSpeed * -1;
-//				}
-//				else {
-//					dashDx = 0;
-//				}
-//				
-//				if(in.isKeyDown(up) && !in.isKeyDown(down)) {
-//					dashDy = dashSpeed * -1;
-//				}
-//				else if(in.isKeyDown(down) && !in.isKeyDown(up)) {
-//					dashDy = dashSpeed;
-//				}
-//				else {
-//					dashDy = 0;
-//				}
-//				
-//				dx = dashDx;
-//				dy = dashDy;
-//			}
 		
 			//Shooting controls
 			if(controller.isShoot(in) && shootAbility.ready()) {
-				if(onGround) {
-					shootAbility.animation = shootAnimation;
-				}
-				else {
-					shootAbility.animation = airShootAnimation;
-				}
 				shootAbility.attemptToUse(this);
 				int projectileX = (int)(x - 5.0f);
 				if(facingRight) {
@@ -177,7 +125,7 @@ public class Sugoi extends HeroEntity {
 			canMove = false;
 			break;
 		case WALL_CLINGING:
-			currentAnimation = idleAnimation;
+			currentAnimation = wallclingAnimation;
 			canMove = true;
 			break;
 		default:

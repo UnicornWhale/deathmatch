@@ -17,18 +17,30 @@ import com.evilzoidberg.utility.MediaLoader;
 @SuppressWarnings("serial")
 public class Brawn extends HeroEntity {
 	BrawnState actionState = BrawnState.IDLE;
-	Cooldown bogLifeTimer = new Cooldown(5000);
-	Ability shootAbility = new Ability(MediaLoader.getAnimation(Settings.BrawnShootAnimationPath, 64, 64), 200);
-	Ability flexAbility = new Ability(MediaLoader.getAnimation(Settings.BrawnFlexAnimationPath, 64, 64), 200);
-	Ability bogAbility = new Ability(MediaLoader.getAnimation(Settings.BrawnBoGAnimationPath, 64, 64), 300);
-	static Animation idleAnimation = MediaLoader.getAnimation(Settings.BrawnIdleAnimationPath, 64, 64);
-	static Animation BoGIdleAnimation = MediaLoader.getAnimation(Settings.BrawnBoGIdleAnimationPath, 64, 64);
-	static Animation BoGShootAnimation = MediaLoader.getAnimation(Settings.BrawnBoGShootAnimationPath, 64, 64);
+	Cooldown bogLifeTimer = new Cooldown(4000);
+	Ability shootAbility, flexAbility, bogAbility, bogShootAbility;
+	static Animation idleAnimation, airIdleAnimation;
+	static Animation shootAnimation = MediaLoader.getAnimation(Settings.BrawnShootAnimationPath, 80, 80);
+	static Animation flexAnimation = MediaLoader.getAnimation(Settings.BrawnFlexAnimationPath, 80, 80);
+	static Animation airFlexAnimation = MediaLoader.getAnimation(Settings.BrawnAirFlexAnimationPath, 80, 80);
+	static Animation airShootAnimation = MediaLoader.getAnimation(Settings.BrawnAirShootAnimationPath, 80, 80);
+	static Animation BoGAnimation = MediaLoader.getAnimation(Settings.BrawnBoGAnimationPath, 80, 80);
+	static Animation BoGIdleAnimation = MediaLoader.getAnimation(Settings.BrawnBoGIdleAnimationPath, 80, 80);
+	static Animation BoGAirIdleAnimation = MediaLoader.getAnimation(Settings.BrawnBoGAirIdleAnimationPath, 80, 80);
+	static Animation BoGShootAnimation = MediaLoader.getAnimation(Settings.BrawnBoGShootAnimationPath, 80, 80);
+	static Animation BoGAirShootAnimation = MediaLoader.getAnimation(Settings.BrawnBoGAirShootAnimationPath, 80, 80);
 	
 	public Brawn(int playerNumber, float x, float y) {
-		super(idleAnimation, playerNumber, x, y, 35, 60, -10.0f, 0.0f);
+		super(idleAnimation, playerNumber, x, y, 38, 76, -18.0f, -2.0f);
+		idleAnimation = MediaLoader.getAnimation(Settings.BrawnIdleAnimationPath, 80, 80);
+		airIdleAnimation = MediaLoader.getAnimation(Settings.BrawnAirIdleAnimationPath, 80, 80);
+		shootAnimation = MediaLoader.getAnimation(Settings.BrawnShootAnimationPath, 80, 80);
 		maxHealth = 3;
 		currentHealth = 3;
+		shootAbility = new Ability(shootAnimation, airShootAnimation, 300);
+		flexAbility = new Ability(flexAnimation, airFlexAnimation, 300);
+		bogAbility = new Ability(BoGAnimation, 250);
+		bogShootAbility = new Ability(BoGShootAnimation, BoGAirShootAnimation, 300);
 	}
 	
 	@Override
@@ -113,11 +125,11 @@ public class Brawn extends HeroEntity {
 		 */
 		switch(actionState) {
 		case IDLE:
-			if(currentHealth == 0) {
-				currentAnimation = BoGIdleAnimation;
+			if(onGround) {
+				currentAnimation = idleAnimation;
 			}
 			else {
-				currentAnimation = idleAnimation;
+				currentAnimation = airIdleAnimation;
 			}
 			canMove = true;
 			break;
@@ -148,7 +160,10 @@ public class Brawn extends HeroEntity {
 			canMove = false;
 			bogAbility.attemptToUse(this);
 			bogLifeTimer.attemptToUse();
-			shootAbility.animation = BoGShootAnimation;
+			//Override to get bog animations
+			shootAbility = bogShootAbility;
+			idleAnimation = BoGIdleAnimation;
+			airIdleAnimation = BoGAirIdleAnimation;
 		}
 	}
 }

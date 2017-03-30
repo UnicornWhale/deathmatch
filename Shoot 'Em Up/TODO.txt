@@ -1,9 +1,10 @@
 TODO (Roughly Prioritized):
-	- (Kyle) Add "Art 2.0" for Brawn and for Sugoi's dash.
+	- (Either) Sugoi's double jump doesn't work off keyboard controls.
+	- (Either) P2 after deselecting can't move cursor
 	- (Kyle) Add walk cycles.
 	- (Kyle) Add a way to specify ranges of time during an animation for things to happen.
+	- (Kyle) Add a way to specify what fps a certain animation should play at, instead of a global timing.
 	- (Either) Make a delay on when the projectile is created so that the animations can sync up with when the projectile appears.
-	- (Either) Add Sugoi's dash as an ability and make the x component work correctly EDIT: I think it was only messing up due to the max x velocity in MoveableEntity. Check on this
 	- (Duncan) Deal with resolution.
 	- (Either) Make it possible to play Bo5s or Bo3s or whatever so we don't have to restart whenever someone dies.
 	- (Either) Add Towerfall style wrapping of the game area (top to bottom, side to side)?
@@ -25,7 +26,7 @@ Classes:
 		
 	(Done-ish) Sugoi: Ninja.
 		Plan: Use movement abilities to get around other people's shots and take carefully aimed shots of her own.
-		- Quick: Works on ground, in air, and as a wave dash.
+		- Quick: Shuriken's in air go at a diagonal down angle (sheik needle style).
 		- Nimble: Double jump and maybe cling to walls.
 		
 	Alistair: Melee fighter. Can avoid damage fairly well and is very lethal, but no ranged options.
