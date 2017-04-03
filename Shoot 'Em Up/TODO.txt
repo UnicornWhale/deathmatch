@@ -1,11 +1,15 @@
 TODO (Roughly Prioritized):
+	- (Kyle) Make graphics for menu buttons and character select
+	- (Either) change the way that motion animations (states controlled by the movement state) are handled so that the code can live in hero entity and be shared by all heroes
+	- (Either) program in the walk animations that are in the res folder.
 	- (Either) Sugoi's double jump doesn't work off keyboard controls.
 	- (Either) P2 after deselecting can't move cursor
 	- (Either) Add Sugoi's dash
-	- (Kyle) Add walk cycles.
 	- (Either) Add a way to specify ranges of time during an animation for things to happen.
 	- (Either) Add a way to specify what fps a certain animation should play at, instead of a global timing.
 	- (Either) Make a delay on when the projectile is created so that the animations can sync up with when the projectile appears.
+	- (Kyle) Make taunt and victory animations
+	- (Either) Program in taunts and victory animations
 	- (Duncan) Deal with resolution.
 	- (Either) Make it possible to play Bo5s or Bo3s or whatever so we don't have to restart whenever someone dies.
 	- (Either) Add Towerfall style wrapping of the game area (top to bottom, side to side)?
