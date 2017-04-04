@@ -203,7 +203,7 @@ public class HeroSelectState extends BasicGameState {
 	
 	private Animation getAnimationByHeroNumber(int heroNumber, boolean selectedAnimation) {
 		Animation anim;
-		if(heroNumber == 1) {
+		if(heroNumber == 0) {
 			if(selectedAnimation) {
 				anim = MediaLoader.getAnimation(Settings.SugoiTauntAnimationPath, 80, 80);
 			}

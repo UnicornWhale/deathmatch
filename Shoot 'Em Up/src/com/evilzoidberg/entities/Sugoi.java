@@ -17,14 +17,15 @@ public class Sugoi extends HeroEntity {
 	SugoiState actionState = SugoiState.IDLE;
 	boolean hasDoubleJump = true;
 	Ability shootAbility;
-	static Animation shootAnimation = MediaLoader.getAnimation(Settings.SugoiShootAnimationPath, 80, 80);
-	static Animation airShootAnimation = MediaLoader.getAnimation(Settings.SugoiAirShootAnimationPath, 80, 80);
-	static Animation idleAnimation = MediaLoader.getAnimation(Settings.SugoiIdleAnimationPath, 80, 80);
-	static Animation airIdleAnimation = MediaLoader.getAnimation(Settings.SugoiAirIdleAnimationPath, 80, 80);
-	static Animation wallclingAnimation = MediaLoader.getAnimation(Settings.SugoiWallclingAnimationPath, 80, 80);
+	static Animation shootAnimation, airShootAnimation, idleAnimation, airIdleAnimation, wallclingAnimation;
 
 	public Sugoi(int playerNumber, float x, float y) {
-		super(idleAnimation, playerNumber, x, y, 34, 75, -24.0f, -2.0f);
+		super(MediaLoader.getAnimation(Settings.SugoiIdleAnimationPath, 80, 80), playerNumber, x, y, 34, 75, -24.0f, -2.0f);
+		shootAnimation = MediaLoader.getAnimation(Settings.SugoiShootAnimationPath, 80, 80);
+		airShootAnimation = MediaLoader.getAnimation(Settings.SugoiAirShootAnimationPath, 80, 80);
+		idleAnimation = MediaLoader.getAnimation(Settings.SugoiIdleAnimationPath, 80, 80);
+		airIdleAnimation = MediaLoader.getAnimation(Settings.SugoiAirIdleAnimationPath, 80, 80);
+		wallclingAnimation = MediaLoader.getAnimation(Settings.SugoiWallclingAnimationPath, 80, 80);
 		maxHealth = 3;
 		currentHealth = 3;
 		shootAbility = new Ability(shootAnimation, airShootAnimation, 300);
