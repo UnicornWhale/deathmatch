@@ -14,7 +14,7 @@ public class Settings {
 	public static float Gravity = 5000.0f;
 	
 	//Wait times
-	public static int waitOnCharacterSelect = 1000;
+	public static int waitOnCharacterSelect = 2000;
 	public static int waitOnVictory = 1000;
 
 	//Player 1 Controls
@@ -65,6 +65,17 @@ public class Settings {
 			"Nooks and Crannys"
 	};
 	
+	//Menu Buttons Image Paths
+	public static String PlayButtonImagePath = "res/images/menu/play_button.png";
+	public static String ExitButtonImagePath = "res/images/menu/exit_button.png";
+	public static String BackButtonImagePath = "res/images/menu/back_button.png";
+	
+	//Character Select Image Paths
+	public static String BrawnButtonImagePath = "res/images/menu/brawn_char_select.png";
+	public static String SugoiButtonImagePath = "res/images/menu/sugoi_char_select.png";
+	public static String Player1FlagImagePath = "res/images/menu/player_1_flag.png";
+	public static String Player2FlagImagePath = "res/images/menu/player_2_flag.png";
+	
 	//Tile Image Paths
 	public static String BackgroundTilePath = "res/images/map/background_tile.png";
 	public static String PlatformTilePath = "res/images/map/platform_tile.png";
@@ -74,6 +85,7 @@ public class Settings {
 	
 	//Sugoi Image Paths
 	public static String SugoiIdleAnimationPath = "res/animations/sugoi/sugoi_idle.png";
+	public static String SugoiTauntAnimationPath = "res/animations/sugoi/sugoi_taunt.png";
 	public static String SugoiWallclingAnimationPath = "res/animations/sugoi/sugoi_wallcling.png";
 	public static String SugoiAirIdleAnimationPath = "res/animations/sugoi/sugoi_air_idle.png";
 	public static String SugoiShootAnimationPath = "res/animations/sugoi/sugoi_shoot.png";
@@ -82,6 +94,7 @@ public class Settings {
 	
 	//Brawn Image Paths
 	public static String BrawnIdleAnimationPath = "res/animations/brawn/brawn_idle.png";
+	public static String BrawnTauntAnimationPath = "res/animations/brawn/brawn_taunt.png";
 	public static String BrawnShootAnimationPath = "res/animations/brawn/brawn_shoot.png";
 	public static String BrawnAirIdleAnimationPath = "res/animations/brawn/brawn_air_idle.png";
 	public static String BrawnAirShootAnimationPath = "res/animations/brawn/brawn_air_shoot.png";

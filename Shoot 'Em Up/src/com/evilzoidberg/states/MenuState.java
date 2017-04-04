@@ -1,5 +1,6 @@
 package com.evilzoidberg.states;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -8,8 +9,10 @@ import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
 import com.evilzoidberg.Engine;
+import com.evilzoidberg.Settings;
 import com.evilzoidberg.ui.Button;
 import com.evilzoidberg.ui.StateChangeButton;
+import com.evilzoidberg.utility.MediaLoader;
 
 public class MenuState extends BasicGameState {
 	Button[] buttons;
@@ -25,8 +28,8 @@ public class MenuState extends BasicGameState {
 	@Override
 	public void enter(GameContainer gc, StateBasedGame sbg) {
 		buttons = new Button[] {
-				new StateChangeButton("Play", Engine.HeroSelectStateID, 100, 100, 100, 50, sbg),
-				new StateChangeButton("Exit", Engine.ExitStateID, 100, 200, 100, 50, sbg),
+				new StateChangeButton(MediaLoader.getImage(Settings.PlayButtonImagePath), Engine.HeroSelectStateID, 100, 100, sbg),
+				new StateChangeButton(MediaLoader.getImage(Settings.ExitButtonImagePath), Engine.ExitStateID, 100, 200, sbg),
 		};
 	}
 
@@ -35,6 +38,8 @@ public class MenuState extends BasicGameState {
 		/**
 		 * Draw all buttons to the screen
 		 */
+		g.setBackground(Color.darkGray);
+		
 		for(int i = 0; i < buttons.length; i++) {
 			buttons[i].paint(g);
 		}

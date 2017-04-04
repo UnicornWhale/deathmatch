@@ -1,18 +1,20 @@
 package com.evilzoidberg.ui;
 
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 
 import com.evilzoidberg.Settings;
+import com.evilzoidberg.utility.MediaLoader;
 
 public class HeroSelectButton extends Button {
 	public int heroID;
 	public boolean highlightedByPlayer1 = false;
 	public boolean highlightedByPlayer2 = false;
-	public boolean selectedByPlayer1 = false;
-	public boolean selectedByPlayer2 = false;
+	Image player1Flag = MediaLoader.getImage(Settings.Player1FlagImagePath);
+	Image player2Flag = MediaLoader.getImage(Settings.Player2FlagImagePath);
 
-	public HeroSelectButton(String text, int heroID, int x, int y, int width, int height) {
-		super(text, x, y, width, height);
+	public HeroSelectButton(Image image, int heroID, int x, int y) {
+		super(image, x, y);
 		this.heroID = heroID;
 	}
 	
@@ -22,24 +24,13 @@ public class HeroSelectButton extends Button {
 		 * Draws the button to the screen and adds highlighting to show if this button
 		 * is selected by one or more players.
 		 */
-		super.paint(g);
+		image.getScaledCopy(3).draw(rect.getX(), rect.getY());
 		
-		if(selectedByPlayer1) {
-			g.setColor(Settings.Player1Color);
-			g.fillRect(rect.getMinX(), rect.getMinY(), rect.getWidth() / 2, rect.getHeight() / 4);
+		if(highlightedByPlayer1) {
+			player1Flag.draw(rect.getX(), rect.getY());
 		}
-		else if(highlightedByPlayer1) {
-			g.setColor(Settings.Player1Color);
-			g.drawRect(rect.getMinX(), rect.getMinY(), rect.getWidth() / 2, rect.getHeight() / 4);
-		}
-		
-		if(selectedByPlayer2) {
-			g.setColor(Settings.Player2Color);
-			g.fillRect(rect.getMaxX() - rect.getHeight() / 4, rect.getMinY(), rect.getWidth() / 2, rect.getHeight() / 4);
-		}
-		else if(highlightedByPlayer2) {
-			g.setColor(Settings.Player2Color);
-			g.drawRect(rect.getMaxX() - rect.getHeight() / 4, rect.getMinY(), rect.getWidth() / 2, rect.getHeight() / 4);
+		if(highlightedByPlayer2) {
+			player2Flag.draw(rect.getX() + (image.getWidth() * 3) - player2Flag.getWidth(), rect.getY());
 		}
 	}
 }

@@ -1,5 +1,7 @@
 package com.evilzoidberg.states;
 
+import org.newdawn.slick.Animation;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -12,6 +14,7 @@ import com.evilzoidberg.Settings;
 import com.evilzoidberg.ui.HeroSelectButton;
 import com.evilzoidberg.ui.StateChangeButton;
 import com.evilzoidberg.utility.Controller;
+import com.evilzoidberg.utility.MediaLoader;
 
 public class HeroSelectState extends BasicGameState {
 	HeroSelectButton[] heroButtons;
@@ -21,6 +24,7 @@ public class HeroSelectState extends BasicGameState {
 	int player1HighlightedHero, player2HighlightedHero;
 	int waitCounter = 0;
 	int player1ScrollWait = 100, player2ScrollWait = 100, scrollWait = 100;
+	Animation player1Display, player2Display;
 	
 	private int id;
 	
@@ -34,11 +38,11 @@ public class HeroSelectState extends BasicGameState {
 	@Override
 	public void enter(GameContainer gc, StateBasedGame sbg) {
 		heroButtons = new HeroSelectButton[] {
-				new HeroSelectButton("Sugoi", 1, 100, 100, 50, 25),
-				new HeroSelectButton("Brawn", 2, 175, 100, 50, 25)
+				new HeroSelectButton(MediaLoader.getImage(Settings.SugoiButtonImagePath), 1, 600, 100),
+				new HeroSelectButton(MediaLoader.getImage(Settings.BrawnButtonImagePath), 2, 600, 300),
 		};
 		stateButtons = new StateChangeButton[] {
-				new StateChangeButton("Back", Engine.MenuStateID, 50, 600, 100, 50, sbg)
+				new StateChangeButton(MediaLoader.getImage(Settings.BackButtonImagePath), Engine.MenuStateID, 50, 600, sbg)
 		};
 
 		Settings.Player1Hero = -1;
@@ -51,6 +55,9 @@ public class HeroSelectState extends BasicGameState {
 		
 		heroButtons[player1HighlightedHero].highlightedByPlayer1 = true;
 		heroButtons[player2HighlightedHero].highlightedByPlayer2 = true;
+		
+		player1Display = getAnimationByHeroNumber(player1HighlightedHero, false);
+		player2Display = getAnimationByHeroNumber(player2HighlightedHero, false);
 	}
 
 	@Override
@@ -58,12 +65,17 @@ public class HeroSelectState extends BasicGameState {
 		/**
 		 * Draw all buttons to the screen
 		 */
+		g.setBackground(Color.darkGray);
+		
 		for(int i = 0; i < heroButtons.length; i++) {
 			heroButtons[i].paint(g);
 		}
 		for(int i = 0; i < stateButtons.length; i++) {
 			stateButtons[i].paint(g);
 		}
+
+		player1Display.getCurrentFrame().getScaledCopy(4).draw(100, 100);
+		player2Display.getCurrentFrame().getScaledCopy(4).draw(800, 100);
 	}
 
 	@Override
@@ -73,6 +85,15 @@ public class HeroSelectState extends BasicGameState {
 		 * and selected heroes to visually show it.
 		 */
 		Input in = gc.getInput();
+
+		if(player1Display.isStopped()) {
+			player1Display = getAnimationByHeroNumber(player1HighlightedHero, false);
+		}
+		if(player2Display.isStopped()) {
+			player2Display = getAnimationByHeroNumber(player2HighlightedHero, false);
+		}
+		player1Display.update(delta);
+		player2Display.update(delta);
 		
 		//Update wait timer
 		if(player1SelectedHero != -1 && player2SelectedHero != -1) {
@@ -117,6 +138,7 @@ public class HeroSelectState extends BasicGameState {
 					player1HighlightedHero = heroButtons.length -1;
 				}
 				heroButtons[player1HighlightedHero].highlightedByPlayer1 = true;
+				player1Display = getAnimationByHeroNumber(player1HighlightedHero, false);
 			}
 			if(controller1.isRight(in) && player1ScrollWait >= scrollWait) {
 				player1ScrollWait = 0;
@@ -126,18 +148,19 @@ public class HeroSelectState extends BasicGameState {
 					player1HighlightedHero = 0;
 				}
 				heroButtons[player1HighlightedHero].highlightedByPlayer1 = true;
+				player1Display = getAnimationByHeroNumber(player1HighlightedHero, false);
 			}
 			if(controller1.isMenuConfirm(in)) {
 				player1SelectedHero = player1HighlightedHero;
-				heroButtons[player1HighlightedHero].selectedByPlayer1 = true;
+				player1Display = getAnimationByHeroNumber(player1HighlightedHero, true);
 			}
 		}
 		else {
 			if(controller1.isMenuDeny(in)) {
 				player1ScrollWait = scrollWait;
 				player1SelectedHero = -1;
-				heroButtons[player1HighlightedHero].selectedByPlayer1 = false;
 				Settings.Player1Hero = -1;
+				player1Display = getAnimationByHeroNumber(player1HighlightedHero, false);
 			}
 		}
 
@@ -151,6 +174,7 @@ public class HeroSelectState extends BasicGameState {
 					player2HighlightedHero = heroButtons.length -1;
 				}
 				heroButtons[player2HighlightedHero].highlightedByPlayer2 = true;
+				player2Display = getAnimationByHeroNumber(player2HighlightedHero, false);
 			}
 			if(controller2.isRight(in) && player2ScrollWait >= scrollWait) {
 				player2ScrollWait = 0;
@@ -160,20 +184,50 @@ public class HeroSelectState extends BasicGameState {
 					player2HighlightedHero = 0;
 				}
 				heroButtons[player2HighlightedHero].highlightedByPlayer2 = true;
+				player2Display = getAnimationByHeroNumber(player2HighlightedHero, false);
 			}
 			if(controller2.isMenuConfirm(in)) {
 				player2SelectedHero = player2HighlightedHero;
-				heroButtons[player2HighlightedHero].selectedByPlayer2 = true;
+				player2Display = getAnimationByHeroNumber(player2HighlightedHero, true);
 			}
 		}
 		else {
 			if(controller2.isMenuDeny(in)) {
 				player2ScrollWait = scrollWait;
 				player1SelectedHero = -1;
-				heroButtons[player2HighlightedHero].selectedByPlayer2 = false;
 				Settings.Player2Hero = -1;
+				player2Display = getAnimationByHeroNumber(player2HighlightedHero, false);
 			}
 		}
+	}
+	
+	private Animation getAnimationByHeroNumber(int heroNumber, boolean selectedAnimation) {
+		Animation anim;
+		if(heroNumber == 1) {
+			if(selectedAnimation) {
+				anim = MediaLoader.getAnimation(Settings.SugoiTauntAnimationPath, 80, 80);
+			}
+			else {
+				anim = MediaLoader.getAnimation(Settings.SugoiIdleAnimationPath, 80, 80);
+			}
+		}
+		else {
+			if(selectedAnimation) {
+				anim = MediaLoader.getAnimation(Settings.BrawnTauntAnimationPath, 80, 80);
+			}
+			else {
+				anim = MediaLoader.getAnimation(Settings.BrawnIdleAnimationPath, 80, 80);
+			}
+		}
+		
+		if(selectedAnimation) {
+			anim.setLooping(false);
+		}
+		else {
+			anim.setLooping(true);
+		}
+		
+		return anim;
 	}
 
 	@Override

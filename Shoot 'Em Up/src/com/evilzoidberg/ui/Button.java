@@ -1,16 +1,16 @@
 package com.evilzoidberg.ui;
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Rectangle;
 
 public abstract class Button {
-	String text;
+	Image image;
 	Rectangle rect;
 
-	public Button(String text, int x, int y, int width, int height) {
-		rect = new Rectangle(x, y, width, height);
-		this.text = text;
+	public Button(Image image, int x, int y) {
+		rect = new Rectangle(x, y, image.getWidth(), image.getHeight());
+		this.image = image;
 	}
 	
 	public boolean isClicked(int x, int y) {
@@ -24,9 +24,6 @@ public abstract class Button {
 	}
 	
 	public void paint(Graphics g) {
-		g.setColor(Color.black);
-		g.fill(rect);
-		g.setColor(Color.white);
-		g.drawString(text, rect.getMinX() + 5, rect.getMinY() + 5);
+		image.draw(rect.getX(), rect.getY());
 	}
 }

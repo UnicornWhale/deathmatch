@@ -1,5 +1,6 @@
 package com.evilzoidberg.states;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
@@ -10,6 +11,7 @@ import org.newdawn.slick.state.StateBasedGame;
 import com.evilzoidberg.Engine;
 import com.evilzoidberg.Settings;
 import com.evilzoidberg.ui.StateChangeButton;
+import com.evilzoidberg.utility.MediaLoader;
 
 public class MapSelectState extends BasicGameState {
 	StateChangeButton[] stateButtons;
@@ -26,9 +28,9 @@ public class MapSelectState extends BasicGameState {
 	public void enter(GameContainer gc, StateBasedGame sbg) {
 		stateButtons = new StateChangeButton[Settings.MapPaths.length + 1];
 		for(int i = 0; i < Settings.MapPaths.length; i++) {
-			stateButtons[i] = new StateChangeButton(Settings.MapNames[i], Engine.PlayStateID, 50 + (200 * i), 100, 150, 75, sbg);
+			stateButtons[i] = new StateChangeButton(MediaLoader.getImage(Settings.PlayButtonImagePath), Engine.PlayStateID, 50 + (200 * i), 100, sbg);
 		}
-		stateButtons[Settings.MapPaths.length] = new StateChangeButton("Back", Engine.MenuStateID, 50, 600, 75, 75, sbg);
+		stateButtons[Settings.MapPaths.length] = new StateChangeButton(MediaLoader.getImage(Settings.BackButtonImagePath), Engine.MenuStateID, 50, 600, sbg);
 	}
 
 	@Override
@@ -36,6 +38,8 @@ public class MapSelectState extends BasicGameState {
 		/**
 		 * Draw all buttons to the screen
 		 */
+		g.setBackground(Color.darkGray);
+		
 		for(int i = 0; i < stateButtons.length; i++) {
 			stateButtons[i].paint(g);
 		}

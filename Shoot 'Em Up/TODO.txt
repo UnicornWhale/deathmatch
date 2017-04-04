@@ -1,5 +1,6 @@
 TODO (Roughly Prioritized):
-	- (Kyle) Make graphics for menu buttons and character select
+	- (Kyle) Make graphics for map select screen
+	- (Kyle) Add Brawn's blaze of glory taunt animation
 	- (Either) change the way that motion animations (states controlled by the movement state) are handled so that the code can live in hero entity and be shared by all heroes
 	- (Either) program in the walk animations that are in the res folder.
 	- (Either) Sugoi's double jump doesn't work off keyboard controls.
@@ -8,7 +9,7 @@ TODO (Roughly Prioritized):
 	- (Either) Add a way to specify ranges of time during an animation for things to happen.
 	- (Either) Add a way to specify what fps a certain animation should play at, instead of a global timing.
 	- (Either) Make a delay on when the projectile is created so that the animations can sync up with when the projectile appears.
-	- (Kyle) Make taunt and victory animations
+	- (Either) Make taunt animation play on taunt press and on victory
 	- (Either) Program in taunts and victory animations
 	- (Duncan) Deal with resolution.
 	- (Either) Make it possible to play Bo5s or Bo3s or whatever so we don't have to restart whenever someone dies.

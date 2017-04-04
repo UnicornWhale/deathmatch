@@ -83,7 +83,7 @@ public class MediaLoader {
 		 * If it hasn't been loaded before, will load it and store it in memory.
 		 */
 		if(animations.containsKey(path)) {
-			return animations.get(path);
+			return animations.get(path).copy();
 		}
 		Animation anim = null;
 		try {

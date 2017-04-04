@@ -1,13 +1,14 @@
 package com.evilzoidberg.ui;
 
+import org.newdawn.slick.Image;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class StateChangeButton extends Button {
 	int state;
 	StateBasedGame sbg;
 
-	public StateChangeButton(String text, int state, int x, int y, int width, int height, StateBasedGame sbg) {
-		super(text, x, y, width, height);
+	public StateChangeButton(Image image, int state, int x, int y, StateBasedGame sbg) {
+		super(image, x, y);
 		this.state = state;
 		this.sbg = sbg;
 	}
