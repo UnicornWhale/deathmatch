@@ -35,7 +35,7 @@ public class Sugoi extends HeroEntity {
 		currentHealth = 3;
 		
 		//Abilities
-		shootAbility = new Ability(shootAnimation, airShootAnimation, 300);
+		shootAbility = new Ability(shootAnimation, airShootAnimation, 300, 100);
 		
 		currentAnimation = idleAnimation;
 	}

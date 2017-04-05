@@ -63,6 +63,9 @@ public abstract class HeroEntity extends MoveableEntity {
 		
 		//Update whether still shooting
 		if(state == MovementState.SHOOTING) {
+			if(shootAbility.attemptThreshold()) {
+				addProjectile(projectiles);
+			}
 			if(onGround) {
 				//Stops weird sliding when landing while shooting
 				dx = 0.0f;
@@ -112,7 +115,6 @@ public abstract class HeroEntity extends MoveableEntity {
 			
 			//Shooting controls
 			if(controller.isShoot(in) && shootAbility.attemptToUse(this)) {
-				addProjectile(projectiles);
 				state = MovementState.SHOOTING;
 				if(onGround) {
 					dx = 0.0f;

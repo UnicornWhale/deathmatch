@@ -2,19 +2,16 @@ TODO (Roughly Prioritized):
 	- (Kyle) Make graphics for map select screen
 	- (Kyle) Add Brawn's blaze of glory taunt animation
 	- (Either) Add Sugoi's dash
-	- (Either) Add a way to specify ranges of time during an animation for things to happen.
-	- (Either) Make a delay on when the projectile is created so that the animations can sync up with when the projectile appears.
 	- (Either) Program in taunts and victory animations
 	- (Duncan) Deal with resolution.
 	- (Either) Make it possible to play Bo5s or Bo3s or whatever so we don't have to restart whenever someone dies.
-	- (Kyle) Add configurable controls
-	- (Kyle) Add sound/make sounds for the game.
+	- (Either) Add configurable controls
+	- (Either) Add sound/make sounds for the game.
 	- (Either) Add other characters.
 	- (Either) Add capability for up to four players (and possibly a way to set teams)
 	- (Either) Add online play (yeah, this is a big one)
 	
 BUGS:
-	- (Either) Sugoi's double jump doesn't work off keyboard controls.
 	- (Either) P2 after deselecting can't move cursor
 	- (Either) Fix bug where if both players are the same character, animations will play at double speed
 	

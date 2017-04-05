@@ -44,7 +44,7 @@ public class Brawn extends HeroEntity {
 		currentHealth = 3;
 		
 		//Abilities
-		shootAbility = new Ability(shootAnimation, airShootAnimation, 300);
+		shootAbility = new Ability(shootAnimation, airShootAnimation, 300, 50);
 		ability1 = new Ability(flexAnimation, airFlexAnimation, 300);
 		ability2 = new Ability(BoGAnimation, 250);
 		bogLifeTimer = new Cooldown(4000);
@@ -115,11 +115,11 @@ public class Brawn extends HeroEntity {
 
 	@Override
 	public void addProjectile(ArrayList<ProjectileEntity> projectiles) {
-		int projectileX = (int)(x - 10.0f);
+		int projectileX = (int)(x - 15.0f);
 		if(facingRight) {
-			projectileX = (int)(x + width);
+			projectileX = (int)(x + width + 5);
 		}
-		int projectileY = (int)(y + (height / 2.0f)) - 3;
+		int projectileY = (int)(y + (height / 2.0f)) - 10;
 		projectiles.add(new PlasmaBlast(projectileX, projectileY, facingRight, this));
 	}
 }

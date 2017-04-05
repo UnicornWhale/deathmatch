@@ -31,7 +31,7 @@ public class Controller {
 	}
 	
 	public boolean isUp(Input in) {
-		return in.isKeyDown(up) || in.isControlPressed(15, controllerNumber);
+		return in.isKeyPressed(up) || in.isControlPressed(15, controllerNumber);
 	}
 	
 	public boolean isDown(Input in) {
