@@ -11,20 +11,23 @@ import org.newdawn.slick.Input;
 import com.evilzoidberg.Settings;
 import com.evilzoidberg.entities.projectiles.ProjectileEntity;
 import com.evilzoidberg.entities.states.MovementState;
+import com.evilzoidberg.utility.Ability;
 import com.evilzoidberg.utility.Controller;
 
 @SuppressWarnings("serial")
-public class HeroEntity extends MoveableEntity {
+public abstract class HeroEntity extends MoveableEntity {
 	public MovementState state = MovementState.IDLE;
 	Controller controller;
 	boolean facingRight = true;
 	boolean canMove = true;
 	float walkSpeed = 500.0f;
-	float aerialDriftAcceleration = 5000.0f;
+	float aerialDriftAcceleration = 4000.0f;
 	float jumpVelocity = -1600.0f; //Jumps go up, so is negative
 	int currentHealth = 10, maxHealth = 10;
 	int healthBarLength = Settings.TileSize;
 	int healthBarHeight = 8;
+	Animation walkAnimation, shootAnimation, idleAnimation, airIdleAnimation, airShootAnimation;
+	Ability shootAbility, ability1, ability2;
 
 	public HeroEntity(Image image, int playerNumber, float x, float y, int width, int height, float offsetX, float offsetY) {
 		super(image, x, y, width, height, offsetX, offsetY);
@@ -47,12 +50,30 @@ public class HeroEntity extends MoveableEntity {
 		 * Reads keys set in settings to check for inputs and adjusts velocity and acceleration based on what keys
 		 * are being pressed. Then updates physics as any other MoveableEntity would.
 		 */
-		if(canMove) {
-			//Jump
-			if(onGround && controller.isUp(in)) {
-				dy = jumpVelocity;
+		updateByState();
+		
+		//Update Abilities
+		shootAbility.update(delta);
+		if(ability1 != null) {
+			ability1.update(delta);
+		}
+		if(ability2 != null) {
+			ability2.update(delta);
+		}
+		
+		//Update whether still shooting
+		if(state == MovementState.SHOOTING) {
+			if(onGround) {
+				//Stops weird sliding when landing while shooting
+				dx = 0.0f;
 			}
-			
+			if(!shootAbility.running()) {
+				state = MovementState.IDLE;
+				canMove = true;
+			}
+		}
+		
+		if(canMove) {
 			if(onGround) {
 				//Grounded controls
 				ddx = 0.0f;
@@ -76,21 +97,31 @@ public class HeroEntity extends MoveableEntity {
 				if(controller.isRight(in) && !controller.isLeft(in)) {
 					ddx = aerialDriftAcceleration;
 					facingRight = true;
+					state = MovementState.IDLE;
 				}
 				else if(controller.isLeft(in) && !controller.isRight(in)) {
 					ddx = aerialDriftAcceleration * -1.0f;
 					facingRight = false;
+					state = MovementState.IDLE;
 				}
 				else {
 					ddx = 0.0f;
+					state = MovementState.IDLE;
 				}
-				
-				if(dy >= 0) {
-					state = MovementState.FALLING;
+			}
+			
+			//Shooting controls
+			if(controller.isShoot(in) && shootAbility.attemptToUse(this)) {
+				addProjectile(projectiles);
+				state = MovementState.SHOOTING;
+				if(onGround) {
+					dx = 0.0f;
 				}
-				else {
-					state = MovementState.RISING;
-				}
+			}
+			
+			//Jump
+			if(onGround && controller.isUp(in)) {
+				dy = jumpVelocity;
 			}
 		}
 		
@@ -103,6 +134,57 @@ public class HeroEntity extends MoveableEntity {
 				projectiles.get(i).onHit(this);
 			}
 		}
+		
+		updateByState();
+	}
+	
+	public void updateByState() {
+		/**
+		 * Sets the current animation based on the state of the character if needed
+		 * and updates the canMove variable based on the state
+		 */
+		switch(state) {
+		case IDLE:
+			if(onGround) {
+				currentAnimation = idleAnimation;
+			}
+			else {
+				currentAnimation = airIdleAnimation;
+			}
+			canMove = true;
+			break;
+			
+		case WALKING:
+			currentAnimation = walkAnimation;
+			canMove = true;
+			break;
+			
+		case SHOOTING:
+			canMove = false;
+			break;
+			
+		case ABILITY_1:
+			canMove = false;
+			break;
+			
+		case ABILITY_2:
+			canMove = false;
+			break;
+			
+		case DEAD:
+			canMove = false;
+			break;
+			
+		case JUMPING:
+			canMove = true;
+			break;
+			
+		case MISC_1:
+			break;
+			
+		case MISC_2:
+			break;
+		}
 	}
 	
 	public void damage(int damage) {
@@ -112,6 +194,8 @@ public class HeroEntity extends MoveableEntity {
 			state = MovementState.DEAD;
 		}
 	}
+	
+	public abstract void addProjectile(ArrayList<ProjectileEntity> projectiles);
 	
 	@Override
 	public void paint(Graphics g) {

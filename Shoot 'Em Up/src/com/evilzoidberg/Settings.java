@@ -85,6 +85,7 @@ public class Settings {
 	
 	//Sugoi Image Paths
 	public static String SugoiIdleAnimationPath = "res/animations/sugoi/sugoi_idle.png";
+	public static String SugoiWalkAnimationPath = "res/animations/sugoi/sugoi_walk.png";
 	public static String SugoiTauntAnimationPath = "res/animations/sugoi/sugoi_taunt.png";
 	public static String SugoiWallclingAnimationPath = "res/animations/sugoi/sugoi_wallcling.png";
 	public static String SugoiAirIdleAnimationPath = "res/animations/sugoi/sugoi_air_idle.png";
@@ -94,6 +95,7 @@ public class Settings {
 	
 	//Brawn Image Paths
 	public static String BrawnIdleAnimationPath = "res/animations/brawn/brawn_idle.png";
+	public static String BrawnWalkAnimationPath = "res/animations/brawn/brawn_walk.png";
 	public static String BrawnTauntAnimationPath = "res/animations/brawn/brawn_taunt.png";
 	public static String BrawnShootAnimationPath = "res/animations/brawn/brawn_shoot.png";
 	public static String BrawnAirIdleAnimationPath = "res/animations/brawn/brawn_air_idle.png";

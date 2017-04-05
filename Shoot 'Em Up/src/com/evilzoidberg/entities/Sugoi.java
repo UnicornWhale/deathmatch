@@ -8,27 +8,36 @@ import org.newdawn.slick.Input;
 import com.evilzoidberg.Settings;
 import com.evilzoidberg.entities.projectiles.ProjectileEntity;
 import com.evilzoidberg.entities.projectiles.Shuriken;
-import com.evilzoidberg.entities.states.SugoiState;
+import com.evilzoidberg.entities.states.MovementState;
 import com.evilzoidberg.utility.Ability;
 import com.evilzoidberg.utility.MediaLoader;
 
 @SuppressWarnings("serial")
 public class Sugoi extends HeroEntity {
-	SugoiState actionState = SugoiState.IDLE;
 	boolean hasDoubleJump = true;
-	Ability shootAbility;
-	static Animation shootAnimation, airShootAnimation, idleAnimation, airIdleAnimation, wallclingAnimation;
+	static Animation wallclingAnimation;
 
 	public Sugoi(int playerNumber, float x, float y) {
 		super(MediaLoader.getAnimation(Settings.SugoiIdleAnimationPath, 80, 80), playerNumber, x, y, 34, 75, -24.0f, -2.0f);
-		shootAnimation = MediaLoader.getAnimation(Settings.SugoiShootAnimationPath, 80, 80);
-		airShootAnimation = MediaLoader.getAnimation(Settings.SugoiAirShootAnimationPath, 80, 80);
+		
+		//Movement Animations
+		walkAnimation = MediaLoader.getAnimation(Settings.SugoiWalkAnimationPath, 80, 80);
 		idleAnimation = MediaLoader.getAnimation(Settings.SugoiIdleAnimationPath, 80, 80);
 		airIdleAnimation = MediaLoader.getAnimation(Settings.SugoiAirIdleAnimationPath, 80, 80);
+		shootAnimation = MediaLoader.getAnimation(Settings.SugoiShootAnimationPath, 80, 80);
+		airShootAnimation = MediaLoader.getAnimation(Settings.SugoiAirShootAnimationPath, 80, 80);
+		
+		//Ability 2
 		wallclingAnimation = MediaLoader.getAnimation(Settings.SugoiWallclingAnimationPath, 80, 80);
+		
+		//Health
 		maxHealth = 3;
 		currentHealth = 3;
+		
+		//Abilities
 		shootAbility = new Ability(shootAnimation, airShootAnimation, 300);
+		
+		currentAnimation = idleAnimation;
 	}
 	
 	@Override
@@ -38,20 +47,6 @@ public class Sugoi extends HeroEntity {
 		 */
 		super.update(in, delta, mapEntities, projectiles);
 		
-		//Update Abilities
-		shootAbility.update(delta);
-		
-		//Update whether still shooting
-		if(actionState == SugoiState.SHOOTING) {
-			if(onGround) {
-				//Stops weird sliding when landing while shooting
-				dx = 0.0f;
-			}
-			if(!shootAbility.running()) {
-				actionState = SugoiState.IDLE;
-			}
-		}
-		
 		//Update has double jump
 		if(onGround) {
 			hasDoubleJump = true;
@@ -60,20 +55,20 @@ public class Sugoi extends HeroEntity {
 		if(canMove) {
 			//Wall cling controls
 			if(!onGround && controller.isRight(in) && onRightWall && dy > 0.0f) {
-				actionState = SugoiState.WALL_CLINGING;
+				state = MovementState.ABILITY_2;
 				dy = 0.0f;
 				affectedByGravity = false;
 				hasDoubleJump = true;
 			}
 			else if(!onGround && controller.isLeft(in) && onLeftWall && dy > 0.0f) {
-				actionState = SugoiState.WALL_CLINGING;
+				state = MovementState.ABILITY_2;
 				dy = 0.0f;
 				affectedByGravity = false;
 				hasDoubleJump = true;
 			}
-			else {
+			else if(!onGround) {
 				affectedByGravity = true;
-				actionState = SugoiState.IDLE;
+				state = MovementState.IDLE;
 			}
 			
 			//Double jump controls
@@ -87,52 +82,15 @@ public class Sugoi extends HeroEntity {
 					dx = walkSpeed * -1.0f;
 				}
 			}
-		
-			//Shooting controls
-			if(controller.isShoot(in) && shootAbility.ready()) {
-				shootAbility.attemptToUse(this);
-				int projectileX = (int)(x - 5.0f);
-				if(facingRight) {
-					projectileX = (int)(x + width);
-				}
-				int projectileY = (int)(y + (height / 2.0f)) - 3;
-				projectiles.add(new Shuriken(projectileX, projectileY, facingRight, onGround, this));
-				actionState = SugoiState.SHOOTING;
-				if(onGround) {
-					dx = 0.0f;
-				}
-			}
 		}
-		
-		updateByState();
 	}
 	
-	public void updateByState() {
-		/**
-		 * Sets the current animation based on the state of the character if needed
-		 * and updates the canMove variable based on the state
-		 */
-		switch(actionState) {
-		case IDLE:
-			if(onGround) {
-				currentAnimation = idleAnimation;
-			}
-			else {
-				currentAnimation = airIdleAnimation;
-			}
-			canMove = true;
-			break;
-		case SHOOTING:
-			canMove = false;
-			break;
-		case WALL_CLINGING:
-			currentAnimation = wallclingAnimation;
-			canMove = true;
-			break;
-		default:
-			currentAnimation = idleAnimation;
-			canMove = true;
-			break;
+	public void addProjectile(ArrayList<ProjectileEntity> projectiles) {
+		int projectileX = (int)(x - 5.0f);
+		if(facingRight) {
+			projectileX = (int)(x + width);
 		}
+		int projectileY = (int)(y + (height / 2.0f)) - 3;
+		projectiles.add(new Shuriken(projectileX, projectileY, facingRight, onGround, this));
 	}
 }

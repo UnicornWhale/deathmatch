@@ -5,7 +5,8 @@ import org.newdawn.slick.Input;
 import com.evilzoidberg.Settings;
 
 public class Controller {
-	int up, down, left, right, shoot, ability1, ability2, controllerNumber;
+	int up, down, left, right, shoot, ability1, ability2;
+	int controllerNumber;
 	
 	public Controller(int playerNumber) {
 		controllerNumber = playerNumber - 1;
