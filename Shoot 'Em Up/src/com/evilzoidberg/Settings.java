@@ -44,12 +44,13 @@ public class Settings {
 	public static int Player2StartX = WindowWidth - 50;
 	public static int Player2StartY = 100;
 	
-	//Selected Heroes
+	//Current Game Info
 	public static int Player1Hero = -1;
 	public static int Player2Hero = -1;
-	
-	//Selected Map
 	public static int SelectedMap = 0;
+	public static int Player1Score = 0;
+	public static int Player2Score = 0;
+	public static int FirstTo = 5;
 
 	//Map Paths
 	public static String[] MapPaths = new String[] {
@@ -69,6 +70,11 @@ public class Settings {
 	public static String PlayButtonImagePath = "res/images/menu/play_button.png";
 	public static String ExitButtonImagePath = "res/images/menu/exit_button.png";
 	public static String BackButtonImagePath = "res/images/menu/back_button.png";
+	
+	//Scoreboard Image Paths
+	public static String FullSkullImagePath = "res/images/menu/skull_full.png";
+	public static String EmptySkullImagePath = "res/images/menu/skull_empty.png";
+	public static String SparkleImagePath = "res/images/menu/sparkle.png";
 	
 	//Character Select Image Paths
 	public static String BrawnButtonImagePath = "res/images/menu/brawn_char_select.png";

@@ -1,20 +1,37 @@
-TODO (Roughly Prioritized):
-	- (Kyle) Make graphics for map select screen
-	- (Kyle) Add Brawn's blaze of glory taunt animation
-	- (Either) Add Sugoi's dash
-	- (Either) Program in taunts and victory animations
-	- (Duncan) Deal with resolution.
-	- (Either) Make it possible to play Bo5s or Bo3s or whatever so we don't have to restart whenever someone dies.
-	- (Either) Add configurable controls
-	- (Either) Add sound/make sounds for the game.
-	- (Either) Add other characters.
-	- (Either) Add capability for up to four players (and possibly a way to set teams)
-	- (Either) Add online play (yeah, this is a big one)
+TODO:
+	Gameplay:
+		- (Either) Expand the invulnerability mechanic of Brawn's flex to be in the base hero entity to be used by other characters too
+		- (Either) Program in taunts and victory animations
+		- (Either) Add Sugoi's dash (or honestly a teleport with smoke would be cool)
+		- (Either) Add other characters.
+		- (Either) Add online play (yeah, this is a big one)
+		- (Either) Add capability for up to four players (and possibly a way to set teams)
+		
+	Art Stuff:
+		- (Kyle) Automated other colors via color indexes
+		- (Kyle) Add Brawn's blaze of glory taunt animation
+		- (Kyle) Make an alphabet sprite sheet for text in the game
+		- (Kyle) Add alternate colors and make it so you can't play the same color
+		- (Kyle) Make graphics for map select screen
+		- (Kyle) Add backgrounds to the menus
+		- (Kyle) Art for other heroes
+		- (Kyle) Alternate costumes for heroes?
+		
+	Music & Sound:
+		- (Either) Add sound/make sounds for the game.
+		- (Duncan) Music for each screen/stage of the game
+		
+	Settings Page:
+		- (Duncan) Deal with resolution.
+		- (Either) Add settings page with saved settings
+		- (Either) Add configurable controls in settings page
+		- (Either) Add configurable controls from character select screen
+		- (Either) Add user profiles
+		- (Either) Add visible tags for profiles in game
+	
 	
 BUGS:
 	- (Either) P2 after deselecting can't move cursor
-	- (Either) Fix bug where if both players are the same character, animations will play at double speed
-	
 	
 	
 Classes:
@@ -45,6 +62,10 @@ Classes:
 	TBD: Pro Wrestler (MUSCLE POWER)
 		- The Chair: Swing a folding chair and reflect projectiles that you hit with it. If it hits an enemy, one shot them.
 		- Bodyslam: Fall straight down from where you are, one shot any opponents you hit.
+		
+	The Bandit Queen: TBD
+		- TBD
+		- TBD
 		
 	TBD: Flamethrower?
 		

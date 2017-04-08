@@ -10,6 +10,7 @@ import com.evilzoidberg.states.HeroSelectState;
 import com.evilzoidberg.states.MapSelectState;
 import com.evilzoidberg.states.MenuState;
 import com.evilzoidberg.states.PlayState;
+import com.evilzoidberg.states.ScoreboardState;
 
 public class Engine extends StateBasedGame {
 	public static int MenuStateID = 0;
@@ -17,6 +18,7 @@ public class Engine extends StateBasedGame {
 	public static int MapSelectStateID = 2;
 	public static int PlayStateID = 3;
 	public static int ExitStateID = 4;
+	public static int ScoreboardStateID = 5;
 
 	public Engine() {
 		super("Deathmatch");
@@ -29,6 +31,7 @@ public class Engine extends StateBasedGame {
 		this.addState(new MapSelectState(MapSelectStateID));
 		this.addState(new PlayState(PlayStateID));
 		this.addState(new ExitState(ExitStateID));
+		this.addState(new ScoreboardState(ScoreboardStateID));
 	}
 
 	public static void main(String[] args) {

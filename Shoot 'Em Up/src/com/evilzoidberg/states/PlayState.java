@@ -76,7 +76,7 @@ public class PlayState extends BasicGameState {
 			waitCounter += delta;
 			
 			if(waitCounter >= Settings.waitOnVictory) {
-				sbg.enterState(Engine.HeroSelectStateID);
+				sbg.enterState(Engine.ScoreboardStateID);
 			}
 		}
 
@@ -106,6 +106,12 @@ public class PlayState extends BasicGameState {
 		for(int i = heroes.size() - 1; i >= 0; i--) {
 			if(heroes.get(i).state == MovementState.DEAD) {
 				heroes.remove(i);
+				if(i == 0) {
+					Settings.Player2Score++;
+				}
+				else {
+					Settings.Player1Score++;
+				}
 			}
 		}
 		
