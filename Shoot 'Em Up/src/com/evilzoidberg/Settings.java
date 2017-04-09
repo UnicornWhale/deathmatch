@@ -15,7 +15,6 @@ public class Settings {
 	
 	//Wait times
 	public static int waitOnCharacterSelect = 2000;
-	public static int waitOnVictory = 1000;
 
 	//Player 1 Controls
 	public static Color Player1Color = Color.red;
@@ -111,6 +110,7 @@ public class Settings {
 	public static String BrawnBoGShootAnimationPath = "res/animations/brawn/brawn_bog_shoot.png";
 	public static String BrawnBoGAirIdleAnimationPath = "res/animations/brawn/brawn_bog_air_idle.png";
 	public static String BrawnBoGAirShootAnimationPath = "res/animations/brawn/brawn_bog_air_shoot.png";
+	public static String BrawnBoGTauntAnimationPath = "res/animations/brawn/brawn_bog_taunt.png";
 	public static String BrawnFlexAnimationPath = "res/animations/brawn/brawn_flex.png";
 	public static String BrawnAirFlexAnimationPath = "res/animations/brawn/brawn_air_flex.png";
 	public static String BrawnBoGAnimationPath = "res/animations/brawn/brawn_bog.png";

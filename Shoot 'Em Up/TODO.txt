@@ -1,7 +1,5 @@
 TODO:
 	Gameplay:
-		- (Either) Expand the invulnerability mechanic of Brawn's flex to be in the base hero entity to be used by other characters too
-		- (Either) Program in victory animations
 		- (Either) Add Sugoi's dash (or honestly a teleport with smoke would be cool)
 		- (Either) Add other characters.
 		- (Either) Add online play (yeah, this is a big one)

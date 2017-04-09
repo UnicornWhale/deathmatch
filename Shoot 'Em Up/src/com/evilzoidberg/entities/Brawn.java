@@ -16,7 +16,8 @@ import com.evilzoidberg.utility.MediaLoader;
 @SuppressWarnings("serial")
 public class Brawn extends HeroEntity {
 	Cooldown bogLifeTimer;
-	Animation flexAnimation, airFlexAnimation, BoGAirShootAnimation, BoGAnimation, BoGIdleAnimation, BoGAirIdleAnimation, BoGShootAnimation;
+	Animation flexAnimation, airFlexAnimation, BoGAirShootAnimation, BoGAnimation, BoGIdleAnimation;
+	Animation BoGAirIdleAnimation, BoGShootAnimation, BoGTauntAnimation;
 	
 	public Brawn(int playerNumber, float x, float y) {
 		super(MediaLoader.getAnimation(Settings.BrawnIdleAnimationPath, 80, 80), playerNumber, x, y, 38, 76, -18.0f, -2.0f);
@@ -38,6 +39,7 @@ public class Brawn extends HeroEntity {
 		BoGAirIdleAnimation = MediaLoader.getAnimation(Settings.BrawnBoGAirIdleAnimationPath, 80, 80);
 		BoGShootAnimation = MediaLoader.getAnimation(Settings.BrawnBoGShootAnimationPath, 80, 80);
 		BoGAirShootAnimation = MediaLoader.getAnimation(Settings.BrawnBoGAirShootAnimationPath, 80, 80);
+		BoGTauntAnimation = MediaLoader.getAnimation(Settings.BrawnBoGTauntAnimationPath, 80, 80);
 		
 		//Health
 		maxHealth = 3;
@@ -45,7 +47,7 @@ public class Brawn extends HeroEntity {
 		
 		//Abilities
 		shootAbility = new Ability(shootAnimation, airShootAnimation, 300, 50);
-		tauntAbility = new Ability(MediaLoader.getAnimation(Settings.BrawnTauntAnimationPath, 80, 80), 1200);
+		tauntAbility = new Ability(MediaLoader.getAnimation(Settings.BrawnTauntAnimationPath, 80, 80), 1200, 400);
 		ability1 = new Ability(flexAnimation, airFlexAnimation, 500);
 		ability2 = new Ability(BoGAnimation, 500);
 		bogLifeTimer = new Cooldown(4000);
@@ -79,8 +81,12 @@ public class Brawn extends HeroEntity {
 		
 		//Update whether still flexing
 		if(state == MovementState.ABILITY_1) {
+			if(ability1.attemptThreshold()) {
+				invulnerable = true;
+			}
 			if(!ability1.running()) {
 				state = MovementState.IDLE;
+				invulnerable = false;
 			}
 		}
 		
@@ -97,9 +103,8 @@ public class Brawn extends HeroEntity {
 	
 	@Override
 	public void damage(int damage) {
-		//Ignore damage while flexing
-		if(state != MovementState.ABILITY_1 && currentHealth > 0) {
-			currentHealth -= damage;
+		if(currentHealth > 0) {
+			super.damage(damage);
 		}
 		if(currentHealth == 0 && !bogLifeTimer.running()) {
 			state = MovementState.ABILITY_2;
@@ -111,6 +116,8 @@ public class Brawn extends HeroEntity {
 			shootAbility.inAir = BoGAirShootAnimation;
 			idleAnimation = BoGIdleAnimation;
 			airIdleAnimation = BoGAirIdleAnimation;
+			tauntAbility.onGround = BoGTauntAnimation;
+			tauntAbility.inAir = BoGTauntAnimation;
 		}
 	}
 

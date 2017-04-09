@@ -18,7 +18,7 @@ import com.evilzoidberg.entities.states.MovementState;
 import com.evilzoidberg.maploader.Map;
 
 public class PlayState extends BasicGameState {
-	int id, waitCounter = 0;
+	int id;
 	ArrayList<HeroEntity> heroes;
 	Map map;
 	ArrayList<ProjectileEntity> projectiles = new ArrayList<ProjectileEntity>();
@@ -39,7 +39,6 @@ public class PlayState extends BasicGameState {
 		map = new Map(Settings.MapPaths[Settings.SelectedMap]);
 		otherEntities.clear();
 		projectiles.clear();
-		waitCounter = 0;
 	}
 
 	@Override
@@ -73,9 +72,7 @@ public class PlayState extends BasicGameState {
 		 */		
 		//Check Victory
 		if(heroes.size() == 1) {
-			waitCounter += delta;
-			
-			if(waitCounter >= Settings.waitOnVictory) {
+			if(heroes.get(0).doVictoryMotion()) {
 				sbg.enterState(Engine.ScoreboardStateID);
 			}
 		}

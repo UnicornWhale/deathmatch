@@ -18,8 +18,7 @@ import com.evilzoidberg.utility.Controller;
 public abstract class HeroEntity extends MoveableEntity {
 	public MovementState state = MovementState.IDLE;
 	Controller controller;
-	boolean facingRight = true;
-	boolean canMove = true;
+	boolean facingRight = true, canMove = true, invulnerable = false, hasWon;
 	float walkSpeed = 500.0f;
 	float aerialDriftAcceleration = 4000.0f;
 	float jumpVelocity = -1600.0f; //Jumps go up, so is negative
@@ -35,6 +34,7 @@ public abstract class HeroEntity extends MoveableEntity {
 		if(playerNumber == 2) {
 			facingRight = false;
 		}
+		hasWon = false;
 	}
 
 	public HeroEntity(Animation animation, int playerNumber, float x, float y, int width, int height, float offsetX, float offsetY) {
@@ -43,6 +43,7 @@ public abstract class HeroEntity extends MoveableEntity {
 		if(playerNumber == 2) {
 			facingRight = false;
 		}
+		hasWon = false;
 	}
 
 	public void update(Input in, int delta, ArrayList<Entity> mapEntities, ArrayList<ProjectileEntity> projectiles) {
@@ -211,8 +212,27 @@ public abstract class HeroEntity extends MoveableEntity {
 		}
 	}
 	
+	public boolean doVictoryMotion() {
+		/**
+		 * Puts the character in to the taunt animation, makes them
+		 * invulnerable so they don't die after they've won, and returns
+		 * true when the animation has been completed. False otherwise
+		 */
+		if(!hasWon) {
+			tauntAbility.attemptToUse(this);
+		}
+		hasWon = true;
+		state = MovementState.TAUNTING;
+		invulnerable = true;
+		
+		return !tauntAbility.running();
+		
+	}
+	
 	public void damage(int damage) {
-		currentHealth -= damage;
+		if(!invulnerable) {
+			currentHealth -= damage;
+		}
 		
 		if(currentHealth <= 0) {
 			state = MovementState.DEAD;
