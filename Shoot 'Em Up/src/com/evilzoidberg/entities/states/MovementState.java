@@ -5,6 +5,7 @@ public enum MovementState {
 	WALKING,
 	JUMPING,
 	SHOOTING,
+	TAUNTING,
 	DEAD,
 	ABILITY_1,
 	ABILITY_2,

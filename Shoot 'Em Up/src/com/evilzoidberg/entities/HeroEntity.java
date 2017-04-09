@@ -26,8 +26,8 @@ public abstract class HeroEntity extends MoveableEntity {
 	int currentHealth = 10, maxHealth = 10;
 	int healthBarLength = Settings.TileSize;
 	int healthBarHeight = 8;
-	Animation walkAnimation, shootAnimation, idleAnimation, airIdleAnimation, airShootAnimation;
-	Ability shootAbility, ability1, ability2;
+	Animation walkAnimation, idleAnimation, airIdleAnimation;
+	Ability shootAbility, ability1, ability2, tauntAbility;
 
 	public HeroEntity(Image image, int playerNumber, float x, float y, int width, int height, float offsetX, float offsetY) {
 		super(image, x, y, width, height, offsetX, offsetY);
@@ -54,6 +54,7 @@ public abstract class HeroEntity extends MoveableEntity {
 		
 		//Update Abilities
 		shootAbility.update(delta);
+		tauntAbility.update(delta);
 		if(ability1 != null) {
 			ability1.update(delta);
 		}
@@ -71,6 +72,18 @@ public abstract class HeroEntity extends MoveableEntity {
 				dx = 0.0f;
 			}
 			if(!shootAbility.running()) {
+				state = MovementState.IDLE;
+				canMove = true;
+			}
+		}
+		
+		//Update whether still taunting
+		if(state == MovementState.TAUNTING) {
+			if(onGround) {
+				//Stops weird sliding when landing while taunting
+				dx = 0.0f;
+			}
+			if(!tauntAbility.running()) {
 				state = MovementState.IDLE;
 				canMove = true;
 			}
@@ -111,6 +124,11 @@ public abstract class HeroEntity extends MoveableEntity {
 					ddx = 0.0f;
 					state = MovementState.IDLE;
 				}
+			}
+			
+			//Taunting controls
+			if(controller.isTaunt(in) && tauntAbility.attemptToUse(this)) {
+				state = MovementState.TAUNTING;
 			}
 			
 			//Shooting controls
@@ -162,6 +180,10 @@ public abstract class HeroEntity extends MoveableEntity {
 			break;
 			
 		case SHOOTING:
+			canMove = false;
+			break;
+			
+		case TAUNTING:
 			canMove = false;
 			break;
 			

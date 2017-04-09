@@ -17,6 +17,8 @@ public class ScoreboardState extends BasicGameState {
 	Image emptySkull, fullSkull, player1Flag, player2Flag;
 	Controller player1Controller, player2Controller;
 	int offsetX = 100, spacingX = 75, offsetY = 300, spacingY = 75;
+	int player1Score, player2Score, thresholdToAdd = 500, thresholdCounter;
+	boolean addToPlayer1Score, addToPlayer2Score, thresholdUsed;
 	private int id;
 	
 	public ScoreboardState(int id) {
@@ -35,6 +37,13 @@ public class ScoreboardState extends BasicGameState {
 	public void enter(GameContainer gc, StateBasedGame sbg) {
 		player1Controller = new Controller(1);
 		player2Controller = new Controller(2);
+		
+		//See if score has changed since last time
+		addToPlayer1Score = player1Score < Settings.Player1Score;
+		addToPlayer2Score = player2Score < Settings.Player2Score;
+		
+		thresholdCounter = 0;
+		thresholdUsed = false;
 	}
 
 	@Override
@@ -42,13 +51,13 @@ public class ScoreboardState extends BasicGameState {
 		player1Flag.draw(offsetX, offsetY);
 		player2Flag.draw(offsetX, offsetY + spacingY);
 		for(int i = 0; i < Settings.FirstTo; i++) {
-			if(Settings.Player1Score > i) {
+			if(player1Score > i) {
 				fullSkull.getScaledCopy(2.0f).draw(offsetX + (spacingX * (i + 1)), offsetY);
 			}
 			else {
 				emptySkull.getScaledCopy(2.0f).draw(offsetX + (spacingX * (i + 1)), offsetY);
 			}
-			if(Settings.Player2Score > i) {
+			if(player2Score > i) {
 				fullSkull.getScaledCopy(2.0f).draw(offsetX + (spacingX * (i + 1)), offsetY + spacingY);
 			}
 			else {
@@ -60,6 +69,17 @@ public class ScoreboardState extends BasicGameState {
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
 		Input in = gc.getInput();
+		
+		//Check threshold
+		if(!thresholdUsed) {
+			if(thresholdCounter > thresholdToAdd) {
+				player1Score = Settings.Player1Score;
+				player2Score = Settings.Player2Score;
+			}
+			else {
+				thresholdCounter += delta;
+			}
+		}
 		
 		if(player1Controller.isMenuConfirm(in) || player2Controller.isMenuConfirm(in)) {
 			if(Settings.Player1Score < Settings.FirstTo && Settings.Player2Score < Settings.FirstTo) {

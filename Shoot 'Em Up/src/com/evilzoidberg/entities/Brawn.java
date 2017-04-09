@@ -25,8 +25,8 @@ public class Brawn extends HeroEntity {
 		walkAnimation = MediaLoader.getAnimation(Settings.BrawnWalkAnimationPath, 80, 80);
 		idleAnimation = MediaLoader.getAnimation(Settings.BrawnIdleAnimationPath, 80, 80);
 		airIdleAnimation = MediaLoader.getAnimation(Settings.BrawnAirIdleAnimationPath, 80, 80);
-		shootAnimation = MediaLoader.getAnimation(Settings.BrawnShootAnimationPath, 80, 80);
-		airShootAnimation = MediaLoader.getAnimation(Settings.BrawnAirShootAnimationPath, 80, 80);
+		Animation shootAnimation = MediaLoader.getAnimation(Settings.BrawnShootAnimationPath, 80, 80);
+		Animation airShootAnimation = MediaLoader.getAnimation(Settings.BrawnAirShootAnimationPath, 80, 80);
 		
 		//Ability 1 Animations
 		flexAnimation = MediaLoader.getAnimation(Settings.BrawnFlexAnimationPath, 80, 80);
@@ -45,6 +45,7 @@ public class Brawn extends HeroEntity {
 		
 		//Abilities
 		shootAbility = new Ability(shootAnimation, airShootAnimation, 300, 50);
+		tauntAbility = new Ability(MediaLoader.getAnimation(Settings.BrawnTauntAnimationPath, 80, 80), 1000);
 		ability1 = new Ability(flexAnimation, airFlexAnimation, 300);
 		ability2 = new Ability(BoGAnimation, 250);
 		bogLifeTimer = new Cooldown(4000);

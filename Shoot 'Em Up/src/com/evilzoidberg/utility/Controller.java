@@ -58,6 +58,10 @@ public class Controller {
 		return in.isKeyPressed(ability2) || in.isControlPressed(18, controllerNumber);
 	}
 	
+	public boolean isTaunt(Input in) {
+		return in.isControlPressed(16, controllerNumber);
+	}
+	
 	public boolean isMenuConfirm(Input in) {
 		return in.isKeyPressed(shoot) || in.isControlPressed(15, controllerNumber);
 	}

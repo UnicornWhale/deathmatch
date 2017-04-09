@@ -24,8 +24,8 @@ public class Sugoi extends HeroEntity {
 		walkAnimation = MediaLoader.getAnimation(Settings.SugoiWalkAnimationPath, 80, 80);
 		idleAnimation = MediaLoader.getAnimation(Settings.SugoiIdleAnimationPath, 80, 80);
 		airIdleAnimation = MediaLoader.getAnimation(Settings.SugoiAirIdleAnimationPath, 80, 80);
-		shootAnimation = MediaLoader.getAnimation(Settings.SugoiShootAnimationPath, 80, 80);
-		airShootAnimation = MediaLoader.getAnimation(Settings.SugoiAirShootAnimationPath, 80, 80);
+		Animation shootAnimation = MediaLoader.getAnimation(Settings.SugoiShootAnimationPath, 80, 80);
+		Animation airShootAnimation = MediaLoader.getAnimation(Settings.SugoiAirShootAnimationPath, 80, 80);
 		
 		//Ability 2
 		wallclingAnimation = MediaLoader.getAnimation(Settings.SugoiWallclingAnimationPath, 80, 80);
@@ -36,6 +36,7 @@ public class Sugoi extends HeroEntity {
 		
 		//Abilities
 		shootAbility = new Ability(shootAnimation, airShootAnimation, 300, 100);
+		tauntAbility = new Ability(MediaLoader.getAnimation(Settings.SugoiTauntAnimationPath, 80, 80), 1000);
 		
 		currentAnimation = idleAnimation;
 	}
