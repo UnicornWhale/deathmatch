@@ -4,7 +4,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Input;
 
 public class Settings {
-	public static boolean debug = false;
+	public static boolean debug = true;
 	
 	public static int TileSize = 64;
 	public static int WindowWidth = 20 * TileSize;
@@ -79,6 +79,7 @@ public class Settings {
 	//Character Select Image Paths
 	public static String BrawnButtonImagePath = "res/images/menu/brawn_char_select.png";
 	public static String SugoiButtonImagePath = "res/images/menu/sugoi_char_select.png";
+	public static String TimePieceButtonImagePath = "res/images/menu/time_piece_char_select.png";
 	public static String Player1FlagImagePath = "res/images/menu/player_1_flag.png";
 	public static String Player2FlagImagePath = "res/images/menu/player_2_flag.png";
 	
@@ -114,4 +115,15 @@ public class Settings {
 	public static String BrawnAirFlexAnimationPath = "res/animations/brawn/brawn_air_flex.png";
 	public static String BrawnBoGAnimationPath = "res/animations/brawn/brawn_bog.png";
 	public static String PlasmaBlastAnimationPath = "res/animations/brawn/brawn_bullet.png";
+	
+	//Time Piece Image Paths
+	public static String TimePieceIdleAnimationPath = "res/animations/time_piece/time_piece_idle.png";
+	public static String TimePieceAirIdleAnimationPath = "res/animations/time_piece/time_piece_idle.png";
+	public static String TimePieceShootAnimationPath = "res/animations/time_piece/time_piece_shoot.png";
+	public static String TimePieceAirShootAnimationPath = "res/animations/time_piece/time_piece_shoot.png";
+	public static String TimePieceChargeShotAnimationPath = "res/animations/time_piece/time_piece_charge_shot.png";
+	public static String TimePieceTauntAnimationPath = "res/animations/time_piece/time_piece_taunt.png";
+	public static String TimePieceWalkAnimationPath = "res/animations/time_piece/time_piece_idle.png";
+	public static String BulletAnimationPath = "res/animations/time_piece/time_piece_bullet.png";
+	public static String ChargeBulletAnimationPath = "res/animations/time_piece/time_piece_charge_bullet.png";
 }

@@ -10,6 +10,7 @@ import org.newdawn.slick.Sound;
 import org.newdawn.slick.SpriteSheet;
 
 public class MediaLoader {
+	int defaultFrameRate = 10;
 	private static HashMap<String, Image> images = new HashMap<String, Image>();
 	private static HashMap<String, Animation> animations = new HashMap<String, Animation>();
 	private static HashMap<String, Sound> sounds = new HashMap<String, Sound>();

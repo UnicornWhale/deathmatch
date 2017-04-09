@@ -16,7 +16,7 @@ import com.evilzoidberg.utility.MediaLoader;
 @SuppressWarnings("serial")
 public class Brawn extends HeroEntity {
 	Cooldown bogLifeTimer;
-	static Animation flexAnimation, airFlexAnimation, BoGAirShootAnimation, BoGAnimation, BoGIdleAnimation, BoGAirIdleAnimation, BoGShootAnimation;
+	Animation flexAnimation, airFlexAnimation, BoGAirShootAnimation, BoGAnimation, BoGIdleAnimation, BoGAirIdleAnimation, BoGShootAnimation;
 	
 	public Brawn(int playerNumber, float x, float y) {
 		super(MediaLoader.getAnimation(Settings.BrawnIdleAnimationPath, 80, 80), playerNumber, x, y, 38, 76, -18.0f, -2.0f);
@@ -45,9 +45,9 @@ public class Brawn extends HeroEntity {
 		
 		//Abilities
 		shootAbility = new Ability(shootAnimation, airShootAnimation, 300, 50);
-		tauntAbility = new Ability(MediaLoader.getAnimation(Settings.BrawnTauntAnimationPath, 80, 80), 1000);
-		ability1 = new Ability(flexAnimation, airFlexAnimation, 300);
-		ability2 = new Ability(BoGAnimation, 250);
+		tauntAbility = new Ability(MediaLoader.getAnimation(Settings.BrawnTauntAnimationPath, 80, 80), 1200);
+		ability1 = new Ability(flexAnimation, airFlexAnimation, 500);
+		ability2 = new Ability(BoGAnimation, 500);
 		bogLifeTimer = new Cooldown(4000);
 		
 		currentAnimation = idleAnimation;

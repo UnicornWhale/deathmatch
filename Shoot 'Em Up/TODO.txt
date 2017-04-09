@@ -32,9 +32,14 @@ TODO:
 	
 BUGS:
 	- (Either) P2 after deselecting can't move cursor
+	- (Either) Fix jump variance from rounding errors
 	
 	
 Classes:
+	Time Piece: Cowboy
+		Plan: Predict enemy movements and call them out with charged shots. Win with the first six shots because reload is lengthy.
+		- The Long Arm: Holster gun and charge up (can be canceled) if charged for long enough, can take a hitscan shot. Can't move while charging
+		
 	Alistair: Melee fighter. Can avoid damage fairly well and is very lethal, but no ranged options.
 		Plan: Use damage avoidance and different attack angles to get around enemy projectiles and get close.
 		- Dive: Horizontal flurry of blows that dodges all attacks.
@@ -49,11 +54,6 @@ Classes:
 		Plan: Use mine and sticky bomb to corner opponents, then lob grenades at them.
 		- Sticky grenade / trap that sticks to walls and is remote detonated.
 		- Proximity Mine
-		
-	TBD: Cowboy
-		Plan: Predict enemy movements and call them out with charged shots. Win with the first six shots because reload is lengthy.
-		- Six Shooter: Must reload after six shots
-		- The Long Arm: Holster gun and charge up (can be canceled) if charged for long enough, can take a hitscan shot. Can't move while charging
 		
 	TBD: Shotgun
 		- Double Barrelled: Must reload after 2 shots, each shot is a cone with moderate range

@@ -40,6 +40,7 @@ public class HeroSelectState extends BasicGameState {
 		heroButtons = new HeroSelectButton[] {
 				new HeroSelectButton(MediaLoader.getImage(Settings.SugoiButtonImagePath), 1, 600, 100),
 				new HeroSelectButton(MediaLoader.getImage(Settings.BrawnButtonImagePath), 2, 600, 300),
+				new HeroSelectButton(MediaLoader.getImage(Settings.TimePieceButtonImagePath), 3, 600, 500),
 		};
 		stateButtons = new StateChangeButton[] {
 				new StateChangeButton(MediaLoader.getImage(Settings.BackButtonImagePath), Engine.MenuStateID, 50, 600, sbg)
@@ -211,12 +212,20 @@ public class HeroSelectState extends BasicGameState {
 				anim = MediaLoader.getAnimation(Settings.SugoiIdleAnimationPath, 80, 80);
 			}
 		}
-		else {
+		else if(heroNumber == 1){
 			if(selectedAnimation) {
 				anim = MediaLoader.getAnimation(Settings.BrawnTauntAnimationPath, 80, 80);
 			}
 			else {
 				anim = MediaLoader.getAnimation(Settings.BrawnIdleAnimationPath, 80, 80);
+			}
+		}
+		else {
+			if(selectedAnimation) {
+				anim = MediaLoader.getAnimation(Settings.TimePieceTauntAnimationPath, 80, 80);
+			}
+			else {
+				anim = MediaLoader.getAnimation(Settings.TimePieceIdleAnimationPath, 80, 80);
 			}
 		}
 		

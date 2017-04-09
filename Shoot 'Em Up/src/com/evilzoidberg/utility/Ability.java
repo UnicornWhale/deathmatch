@@ -38,8 +38,6 @@ public class Ability extends Cooldown {
 	@Override
 	public void update(int delta) {
 		super.update(delta);
-		onGround.update(delta);
-		inAir.update(delta);
 	}
 	
 	public boolean ready() {

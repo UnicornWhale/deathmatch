@@ -251,6 +251,9 @@ public abstract class HeroEntity extends MoveableEntity {
 		else if(heroNumber == 2) {
 			return new Brawn(playerNumber, startX, startY);
 		}
+		else if(heroNumber == 3) {
+			return new TimePiece(playerNumber, startX, startY);
+		}
 		return null;
 	}
 }

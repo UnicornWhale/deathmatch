@@ -15,7 +15,7 @@ import com.evilzoidberg.utility.MediaLoader;
 @SuppressWarnings("serial")
 public class Sugoi extends HeroEntity {
 	boolean hasDoubleJump = true;
-	static Animation wallclingAnimation;
+	Animation wallclingAnimation;
 
 	public Sugoi(int playerNumber, float x, float y) {
 		super(MediaLoader.getAnimation(Settings.SugoiIdleAnimationPath, 80, 80), playerNumber, x, y, 34, 75, -24.0f, -2.0f);
@@ -35,8 +35,8 @@ public class Sugoi extends HeroEntity {
 		currentHealth = 3;
 		
 		//Abilities
-		shootAbility = new Ability(shootAnimation, airShootAnimation, 300, 100);
-		tauntAbility = new Ability(MediaLoader.getAnimation(Settings.SugoiTauntAnimationPath, 80, 80), 1000);
+		shootAbility = new Ability(shootAnimation, airShootAnimation, 400, 150);
+		tauntAbility = new Ability(MediaLoader.getAnimation(Settings.SugoiTauntAnimationPath, 80, 80), 1200);
 		
 		currentAnimation = idleAnimation;
 	}
