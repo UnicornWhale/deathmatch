@@ -6,6 +6,7 @@ TODO:
 		- (Either) Add capability for up to four players (and possibly a way to set teams)
 		
 	Art Stuff:
+		- (Kyle) Art for Time Piece
 		- (Kyle) Automated other colors via color indexes
 		- (Kyle) Add Brawn's blaze of glory taunt animation
 		- (Kyle) Make an alphabet sprite sheet for text in the game

@@ -4,7 +4,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Input;
 
 public class Settings {
-	public static boolean debug = true;
+	public static boolean debug = false;
 	
 	public static int TileSize = 64;
 	public static int WindowWidth = 20 * TileSize;
@@ -83,8 +83,7 @@ public class Settings {
 	public static String Player2FlagImagePath = "res/images/menu/player_2_flag.png";
 	
 	//Tile Image Paths
-	public static String BackgroundTilePath = "res/images/map/background_tile.png";
-	public static String PlatformTilePath = "res/images/map/platform_tile.png";
+	public static String MapTileSheetPath = "res/images/map/map_tiles.png";
 	
 	//Giblet Image Path
 	public static String GibletImagePath = "res/images/giblet.png";

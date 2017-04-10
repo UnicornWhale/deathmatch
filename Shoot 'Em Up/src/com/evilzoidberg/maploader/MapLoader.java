@@ -6,11 +6,15 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import org.newdawn.slick.SpriteSheet;
+
 import com.evilzoidberg.Settings;
 import com.evilzoidberg.utility.MediaLoader;
 
 public class MapLoader {
 	public static ArrayList<Tile> loadMap(String path) {
+		SpriteSheet map_tiles = new SpriteSheet(MediaLoader.getImage(Settings.MapTileSheetPath), 64, 64);
+		
 		ArrayList<Tile> map = new ArrayList<Tile>();
 		BufferedReader in;
 	    String line;
@@ -21,10 +25,19 @@ public class MapLoader {
 			    char[] chars = line.toCharArray();
 			    for(int x = 0; x < chars.length; x++) {
 			    	if(chars[x] == '.') {
-			    		map.add(new Tile(MediaLoader.getImage(Settings.BackgroundTilePath), x * Settings.TileSize, y * Settings.TileSize, false));
+			    		map.add(new Tile(map_tiles.getSubImage(4, 0), x * Settings.TileSize, y * Settings.TileSize, false));
+			    	}
+			    	else if(chars[x] == 'L') {
+			    		map.add(new Tile(map_tiles.getSubImage(1, 0), x * Settings.TileSize, y * Settings.TileSize, true));
+			    	}
+			    	else if(chars[x] == 'R') {
+			    		map.add(new Tile(map_tiles.getSubImage(3, 0), x * Settings.TileSize, y * Settings.TileSize, true));
+			    	}
+			    	else if(chars[x] == 'O') {
+			    		map.add(new Tile(map_tiles.getSubImage(2, 0), x * Settings.TileSize, y * Settings.TileSize, true));
 			    	}
 			    	else {
-			    		map.add(new Tile(MediaLoader.getImage(Settings.PlatformTilePath), x * Settings.TileSize, y * Settings.TileSize, true));
+			    		map.add(new Tile(map_tiles.getSubImage(0, 0), x * Settings.TileSize, y * Settings.TileSize, false));
 			    	}
 			    }
 			    y++;
